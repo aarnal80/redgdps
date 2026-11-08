@@ -321,7 +321,7 @@
     "9": "Transcripción: iniciar con permiso",
     "10": "Escuchar a Adriana sin perder el contacto",
     "consulta3000-web": "Demo de Consulta3000 en ChatGPT",
-    "13": "DiabetesAPP · Consulta GDPS",
+    "13": "GlucoGuía · Edición Congreso redGDPS",
     "14": "Adriana: recomendaciones según los algoritmos",
     "15": "Del algoritmo al plan acordado",
     "16": "Una hoja imprimible para Adriana",
