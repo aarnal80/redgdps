@@ -26,6 +26,8 @@
 #spost .line p {font-size:26px;line-height:1.29;color:var(--ink);margin-top:5px}
 #spost .line {cursor:pointer}
 #spost .foot {position:absolute;bottom:41px;left:110px;right:110px;border-top:1px solid var(--line);padding-top:15px;font-size:20px;color:var(--muted)}
+#spost .ring-replay{display:block;margin:0 auto 14px;padding:10px 18px;border:0;border-radius:8px;background:var(--accent);color:#fff;font:600 21px var(--font);cursor:pointer}
+#spost .ring-replay:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
 </style>
 <div id="spost" class="fill">
   <div class="kicker">Sara · Postconsulta · Dos semanas después</div>
@@ -40,6 +42,8 @@
         </video>
         <div class="fallback" aria-live="polite"><span class="mark">▶</span><strong>Postconsulta</strong><span>Vídeo pendiente de incorporar</span></div>
       </div>
+      <audio class="phone-ring" src="assets/telefono-inicio.ogg" preload="auto" aria-hidden="true"></audio>
+      <button type="button" class="ring-replay" data-no-advance>Reproducir llamada</button>
       <div class="media-label">Adriana × Sara</div>
       <p class="media-caption">El seguimiento continúa después de la consulta.</p>
     </div>
@@ -95,7 +99,41 @@
   });
   track.track.mode='hidden';
   video.addEventListener('timeupdate',highlight);
-  Deck.register("postconsulta-video",{onLeave(){video.pause();}});
+  const ring=slide.querySelector('.phone-ring');
+  const replay=slide.querySelector('.ring-replay');
+  let ringing=false;
+
+  function stopRing(){
+    ringing=false;
+    ring.pause();
+  }
+
+  function startVideo(){
+    if(!ringing)return;
+    stopRing();
+    video.play().catch(()=>{
+      status.textContent='Pulsa reproducir en el vídeo para iniciar la llamada.';
+    });
+  }
+
+  replay.addEventListener('click',()=>{
+    video.pause();
+    video.currentTime=0;
+    ring.currentTime=0;
+    ring.volume=video.volume;
+    ring.muted=video.muted;
+    ringing=true;
+    ring.play().catch(startVideo);
+  });
+  ring.addEventListener('ended',startVideo);
+  ring.addEventListener('error',startVideo);
+  video.addEventListener('play',stopRing);
+  video.addEventListener('seeking',()=>{
+    if(video.currentTime>0)stopRing();
+  });
+  Deck.register("postconsulta-video",{
+    onLeave(){stopRing();video.pause();}
+  });
 })();</script>
 </section>
 
