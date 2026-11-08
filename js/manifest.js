@@ -27,6 +27,7 @@ window.DECK_MANIFEST = [
   "10-consulta-escuchar.html",
   "12b-consulta3000-web.html",
   "13-diabetesapp.html",
+  "13b-feedback-chat.html",
   "16-hoja-imprimible.html",
   "17a-sara-seguimiento.html",
   "17b-postconsulta-video.html",

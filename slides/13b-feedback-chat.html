@@ -1,0 +1,41 @@
+<section class="slide" data-slide="feedback">
+<style>
+#sfeedback{inset:0;background:#f7f7f5;color:#242424;font-family:var(--font);padding:44px 112px 55px}
+#sfeedback .chat-shell{height:100%;max-width:1500px;margin:auto;background:#fff;border:1px solid #e5e5e2;border-radius:22px;box-shadow:0 20px 60px #20202014;overflow:hidden;display:flex;flex-direction:column}
+#sfeedback .chat-head{height:94px;flex:none;border-bottom:1px solid #e9e9e7;display:flex;align-items:center;justify-content:space-between;padding:0 54px}
+#sfeedback .chat-brand{display:flex;align-items:center;gap:17px;font-size:32px;font-weight:750;letter-spacing:-.025em}
+#sfeedback .chat-mark{width:45px;height:45px;display:grid;place-items:center;background:#171717;color:white;border-radius:12px;font-size:30px;font-weight:700;line-height:1}
+#sfeedback .chat-context{font-size:22px;color:#696969}
+#sfeedback .chat-body{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:29px 75px 35px;gap:7px}
+#sfeedback .row{display:flex;align-items:flex-start;gap:16px}
+#sfeedback .row.user{justify-content:flex-end}
+#sfeedback .avatar{width:45px;height:45px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:750;background:#141414;color:#fff}
+#sfeedback .row.assistant .avatar{background:#169b7c}
+#sfeedback .bubble{max-width:1080px;padding:14px 23px;border-radius:20px;font-size:27px;line-height:1.22;letter-spacing:-.012em}
+#sfeedback .user .bubble{background:#f0f0ee;border-top-right-radius:5px}
+#sfeedback .assistant .bubble{background:#fff;border:1px solid #e6e6e3;border-top-left-radius:5px}
+#sfeedback .row.emphasis .bubble{font-weight:750}
+#sfeedback .row.request .bubble{max-width:1220px}
+#sfeedback .row.punchline{align-items:center}
+#sfeedback .row.punchline .avatar{background:#a6093d}
+#sfeedback .row.punchline .bubble{max-width:1240px;background:#fbeef2;border:2px solid #a6093d;color:#7d072e;font-size:35px;font-weight:850;line-height:1.18;padding:21px 29px;box-shadow:0 8px 26px #a6093d16}
+#sfeedback .punchline.fragment{transform:translateY(12px)}
+#sfeedback .punchline.fragment.revealed{transform:none}
+</style>
+<div id="sfeedback" class="fill">
+  <div class="chat-shell" aria-label="Conversación humorística entre Antonio y ChatGPT">
+    <header class="chat-head"><div class="chat-brand"><span class="chat-mark" aria-hidden="true">✳</span>ChatGPT</div><div class="chat-context">Antonio · Feedback de la presentación</div></header>
+    <div class="chat-body">
+      <div class="row user"><div class="bubble">Chat, hazme una presentación.</div><div class="avatar" aria-hidden="true">A</div></div>
+      <div class="row assistant"><div class="avatar" aria-hidden="true">✳</div><div class="bubble">La hago.</div></div>
+      <div class="row user"><div class="bubble">Está genial, pero cambia la diapositiva 18.</div><div class="avatar" aria-hidden="true">A</div></div>
+      <div class="row assistant"><div class="avatar" aria-hidden="true">✳</div><div class="bubble">La cambio.</div></div>
+      <div class="row user emphasis"><div class="bubble">¡AHORA LA 19 NO SE ENTIENDE!</div><div class="avatar" aria-hidden="true">A</div></div>
+      <div class="row assistant"><div class="avatar" aria-hidden="true">✳</div><div class="bubble">La arreglo.</div></div>
+      <div class="row user request"><div class="bubble">Mete una aplicación web interactiva de diabetes entre la 29 y la 30, que funcione dentro de la diapositiva, sin salir de ella.</div><div class="avatar" aria-hidden="true">A</div></div>
+      <div class="row assistant punchline fragment"><div class="avatar" aria-hidden="true">✳</div><div class="bubble">PERO TÚ QUÉ QUIERES, ANTONIO, ¿UN POWERPOINT O LA ESTACIÓN ESPACIAL INTERNACIONAL? 😂</div></div>
+    </div>
+  </div>
+</div>
+<aside hidden data-speaker-notes>Tras enseñar la aplicación, contar que Antonio y ChatGPT siempre intercambian feedback. Leer la conversación y hacer una pausa antes del remate. Un clic revela la última respuesta.</aside>
+</section>
