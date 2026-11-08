@@ -1,0 +1,273 @@
+<section class="slide" data-slide="ia5">
+  <style>
+    #sia5 { overflow: hidden; }
+    #sia5 .sia5-head { position:absolute; left:var(--pad); top:96px; right:var(--pad); }
+    #sia5 .sia5-head h2 { margin-top:18px; }
+
+    #sia5 .sia5-wrap { position:absolute; left:120px; top:322px; width:1680px; height:600px; }
+
+    /* Zona "punto de inflexión" (2017 en adelante): tinte carmesí MUY sutil y ESTÁTICO.
+       Sin animación de raya: solo un fondo tenue que aparece al llegar a 2017. */
+    #sia5 .sia5-band { position:absolute; top:2px; height:300px; border-radius:16px;
+                   background:linear-gradient(180deg, rgba(166,9,61,.085), rgba(166,9,61,.015));
+                   opacity:0; transition:opacity .5s ease; pointer-events:none; z-index:0; }
+
+    /* Eje estático y sutil (sin animación de dibujado) */
+    #sia5 .sia5-axis { position:absolute; left:0; right:0; top:152px; height:2px;
+                   background:var(--line-2); border-radius:2px; z-index:1; }
+
+    /* Línea de progreso: crece sobre el eje en sincronía con los hitos revelados */
+    #sia5 .sia5-progress { position:absolute; left:105px; top:150.5px; width:1470px; height:3px;
+                       background:var(--accent); border-radius:2px; z-index:1;
+                       transform-origin:left center; transform:scaleX(0); pointer-events:none; }
+
+    #sia5 .sia5-flag { position:absolute; top:-46px; margin-left:-105px; width:210px; text-align:center;
+                   font-family:var(--font); font-size:17px; font-weight:700; letter-spacing:.13em;
+                   text-transform:uppercase; color:var(--accent); opacity:0; transition:opacity .5s ease; z-index:3; }
+    #sia5 .sia5-flag.on { opacity:1; }
+    #sia5 .sia5-flag::after { content:""; display:block; width:2px; height:20px; margin:6px auto 0;
+                          background:var(--accent); opacity:.45; border-radius:2px; }
+
+    #sia5 .sia5-mile { position:absolute; width:210px; margin-left:-105px; top:0; text-align:center; z-index:2; }
+    #sia5 .sia5-mile .ic  { width:88px; height:88px; display:block; margin:0 auto;
+                        opacity:.86; transition:opacity .3s ease; }
+    #sia5 .sia5-mile .yr  { font-family:var(--serif); font-size:32px; font-weight:700; color:var(--faint);
+                        line-height:1; margin-top:10px; }
+    #sia5 .sia5-mile .dot { width:18px; height:18px; border-radius:50%; background:var(--line-2);
+                        border:3px solid var(--bg); box-shadow:0 0 0 3px var(--line-2); margin:14px auto 0;
+                        position:relative; z-index:3; transition:transform .3s ease; }
+    #sia5 .sia5-mile .txt { margin-top:22px; font-family:var(--font); font-size:22px; line-height:1.3; color:var(--muted); }
+
+    /* Narrativa: hitos anteriores a 2017 = apagados (pero con color); de 2017 en adelante = encendidos */
+    #sia5 .sia5-mile.hot .yr  { color:var(--accent); }
+    #sia5 .sia5-mile.hot .ic  { opacity:1; filter:drop-shadow(0 6px 14px rgba(166,9,61,.16)); }
+    #sia5 .sia5-mile.hot .dot { background:var(--accent); box-shadow:0 0 0 3px var(--accent); }
+    #sia5 .sia5-mile.hot .txt { color:var(--ink); font-weight:600; }
+    #sia5 .sia5-mile.hot.revealed .dot { animation: s5pulse 1.6s ease-out 1; }
+    @keyframes s5pulse {
+      0%   { box-shadow:0 0 0 3px var(--accent), 0 0 0 4px rgba(166,9,61,.5); }
+      100% { box-shadow:0 0 0 3px var(--accent), 0 0 0 24px rgba(166,9,61,0); }
+    }
+
+    #sia5 .sia5-close { position:absolute; left:120px; bottom:74px; font-family:var(--serif);
+                    font-size:38px; font-style:italic; color:var(--ink); }
+    #sia5 .sia5-close .mk { color:var(--accent); font-style:normal; }
+  </style>
+
+  <div id="sia5" class="fill">
+    <div class="sia5-head">
+      <div class="kicker">Bloque 1 · Qué es la IA</div>
+      <h2>La IA no nació en 2022</h2>
+    </div>
+
+    <div class="sia5-wrap">
+      <div class="sia5-band"></div>
+      <div class="sia5-axis"></div>
+      <div class="sia5-progress"></div>
+      <div class="sia5-flag">Punto de inflexión</div>
+
+      <!-- 1950 · Turing -->
+      <div class="sia5-mile fragment" data-step="1" style="left:105px">
+        <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
+          <circle cx="44" cy="46" r="34" fill="#eef2f7"/>
+          <path d="M20 74c0-14 11-22 24-22s24 8 24 22z" fill="#1f3a5f"/>
+          <path d="M20 74c0-14 11-22 24-22 3 0 6 .4 9 1.2-11 3-18 11-18 20.8z" fill="#0a6b78" opacity=".5"/>
+          <circle cx="44" cy="30" r="15" fill="#1f3a5f"/>
+          <circle cx="44" cy="30" r="15" fill="none" stroke="#0a6b78" stroke-width="2" opacity=".45"/>
+        </svg>
+        <div class="yr">1950</div><div class="dot"></div>
+        <div class="txt">Test de Turing:<br>¿piensa una máquina?</div>
+      </div>
+
+      <!-- 1966 · ELIZA -->
+      <div class="sia5-mile fragment" data-step="2" style="left:315px">
+        <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
+          <rect x="10" y="18" width="68" height="52" rx="7" fill="#14171c"/>
+          <path d="M10 25a7 7 0 0 1 7-7h54a7 7 0 0 1 7 7v4H10z" fill="#1f3a5f"/>
+          <circle cx="19" cy="23.5" r="2.4" fill="#d99a1c"/>
+          <circle cx="27" cy="23.5" r="2.4" fill="#2ec26e"/>
+          <rect x="18" y="38" width="26" height="4" rx="2" fill="#2ec26e"/>
+          <rect x="18" y="48" width="40" height="4" rx="2" fill="#2ec26e"/>
+          <rect x="18" y="58" width="16" height="4" rx="2" fill="#2ec26e"/>
+          <rect x="38" y="56" width="8" height="8" fill="#2ec26e"/>
+        </svg>
+        <div class="yr">1966</div><div class="dot"></div>
+        <div class="txt">ELIZA, el primer<br>«chatbot»</div>
+      </div>
+
+      <!-- 1997 · Deep Blue -->
+      <div class="sia5-mile fragment" data-step="3" style="left:525px">
+        <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
+          <ellipse cx="44" cy="80" rx="26" ry="4.5" fill="#1f3a5f" opacity=".16"/>
+          <rect x="41" y="8" width="6" height="14" rx="2" fill="#1f3a5f"/>
+          <rect x="35" y="12" width="18" height="6" rx="2" fill="#1f3a5f"/>
+          <path d="M44 22c-11 0-19 8-19 18 0 7 5 11 8 18h22c3-7 8-11 8-18 0-10-8-18-19-18z" fill="#24507f"/>
+          <path d="M44 22c-11 0-19 8-19 18 0 7 5 11 8 18h6c-3-7-6-11-6-18 0-10 3-18 10-18z" fill="#1f3a5f"/>
+          <rect x="29" y="58" width="30" height="8" rx="3" fill="#1f3a5f"/>
+          <path d="M27 66h34l-3.5 9H30.5z" fill="#24507f"/>
+          <rect x="24" y="74" width="40" height="6" rx="3" fill="#1f3a5f"/>
+        </svg>
+        <div class="yr">1997</div><div class="dot"></div>
+        <div class="txt">Deep Blue gana<br>al ajedrez</div>
+      </div>
+
+      <!-- 2011 · Watson -->
+      <div class="sia5-mile fragment" data-step="4" style="left:735px">
+        <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
+          <rect x="12" y="14" width="64" height="60" rx="6" fill="#1f3a5f"/>
+          <rect x="17" y="19" width="54" height="50" rx="3" fill="#274a78"/>
+          <rect x="12" y="14" width="64" height="60" rx="6" fill="none" stroke="#d99a1c" stroke-width="3"/>
+          <rect x="40" y="27" width="8" height="24" rx="4" fill="#f0b429"/>
+          <circle cx="44" cy="60" r="5" fill="#f0b429"/>
+        </svg>
+        <div class="yr">2011</div><div class="dot"></div>
+        <div class="txt">Watson gana<br>a «Jeopardy!»</div>
+      </div>
+
+      <!-- 2016 · AlphaGo -->
+      <div class="sia5-mile fragment" data-step="5" style="left:945px">
+        <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
+          <rect x="12" y="12" width="64" height="64" rx="4" fill="#e6b96f"/>
+          <g stroke="#8a5a1e" stroke-width="1.6">
+            <line x1="24" y1="22" x2="24" y2="66"/>
+            <line x1="38" y1="22" x2="38" y2="66"/>
+            <line x1="50" y1="22" x2="50" y2="66"/>
+            <line x1="64" y1="22" x2="64" y2="66"/>
+            <line x1="22" y1="24" x2="66" y2="24"/>
+            <line x1="22" y1="38" x2="66" y2="38"/>
+            <line x1="22" y1="50" x2="66" y2="50"/>
+            <line x1="22" y1="64" x2="66" y2="64"/>
+          </g>
+          <circle cx="38" cy="38" r="6.5" fill="#14171c"/>
+          <circle cx="50" cy="24" r="6.5" fill="#14171c"/>
+          <circle cx="50" cy="50" r="6.5" fill="#fbfbfb" stroke="#cfd4dc" stroke-width="1"/>
+          <circle cx="24" cy="50" r="6.5" fill="#fbfbfb" stroke="#cfd4dc" stroke-width="1"/>
+        </svg>
+        <div class="yr">2016</div><div class="dot"></div>
+        <div class="txt">AlphaGo domina<br>el Go</div>
+      </div>
+
+      <!-- 2017 · Transformers (PUNTO DE INFLEXIÓN) -->
+      <div class="sia5-mile hot fragment" data-step="6" style="left:1155px">
+        <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
+          <g stroke="#c9ced7" stroke-width="1.6">
+            <line x1="18" y1="22" x2="44" y2="33"/><line x1="18" y1="22" x2="44" y2="55"/>
+            <line x1="18" y1="44" x2="44" y2="33"/><line x1="18" y1="44" x2="44" y2="55"/>
+            <line x1="18" y1="66" x2="44" y2="33"/><line x1="18" y1="66" x2="44" y2="55"/>
+            <line x1="44" y1="33" x2="70" y2="22"/><line x1="44" y1="33" x2="70" y2="44"/>
+            <line x1="44" y1="33" x2="70" y2="66"/><line x1="44" y1="55" x2="70" y2="22"/>
+            <line x1="44" y1="55" x2="70" y2="44"/><line x1="44" y1="55" x2="70" y2="66"/>
+          </g>
+          <circle cx="18" cy="22" r="6" fill="#a6093d"/>
+          <circle cx="18" cy="44" r="6" fill="#a6093d"/>
+          <circle cx="18" cy="66" r="6" fill="#a6093d"/>
+          <circle cx="44" cy="33" r="7" fill="#0a6b78"/>
+          <circle cx="44" cy="55" r="7" fill="#0a6b78"/>
+          <circle cx="70" cy="22" r="6" fill="#a6093d"/>
+          <circle cx="70" cy="44" r="6" fill="#a6093d"/>
+          <circle cx="70" cy="66" r="6" fill="#a6093d"/>
+        </svg>
+        <div class="yr">2017</div><div class="dot"></div>
+        <div class="txt">Transformers:<br>«Attention is all you need»</div>
+      </div>
+
+      <!-- 2022 · ChatGPT -->
+      <div class="sia5-mile hot fragment" data-step="7" style="left:1365px">
+        <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
+          <path d="M48 16h24a6 6 0 0 1 6 6v13a6 6 0 0 1-6 6H61l-8 7 1.4-7H48a6 6 0 0 1-6-6V22a6 6 0 0 1 6-6z" fill="#0a6b78" opacity=".92"/>
+          <path d="M16 30h34a7 7 0 0 1 7 7v17a7 7 0 0 1-7 7H33l-12 9 2.4-9H16a7 7 0 0 1-7-7V37a7 7 0 0 1 7-7z" fill="#a6093d"/>
+          <circle cx="26" cy="45.5" r="3.3" fill="#fff"/>
+          <circle cx="36" cy="45.5" r="3.3" fill="#fff"/>
+          <circle cx="46" cy="45.5" r="3.3" fill="#fff"/>
+        </svg>
+        <div class="yr">2022</div><div class="dot"></div>
+        <div class="txt">ChatGPT<br>llega a todos</div>
+      </div>
+
+      <!-- 2024-26 · Hoy -->
+      <div class="sia5-mile hot fragment" data-step="8" style="left:1575px">
+        <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
+          <path d="M44 76C23 61 11 50 11 34 11 23.5 19 16 28.5 16c6 0 11.4 3 15.5 8 4.1-5 9.5-8 15.5-8C69 16 77 23.5 77 34c0 16-12 27-33 42z" fill="#a6093d"/>
+          <path d="M17 47h11l4-10 6.5 20 5-13 4 6.5h20" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M70 12l2.6 7L80 21.6l-7.4 2.6L70 31l-2.6-6.8L60 21.6l7.4-2.6z" fill="#0a6b78"/>
+        </svg>
+        <div class="yr">2024&ndash;26</div><div class="dot"></div>
+        <div class="txt">Hoy: en la<br>consulta</div>
+      </div>
+    </div>
+
+    <div class="sia5-close fragment" data-step="9">
+      70 años de historia. Pero algo cambió <span class="mk">hace muy poco.</span>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const g = window.gsap || null;
+    const band = root.querySelector('.sia5-band');
+    const flag = root.querySelector('.sia5-flag');
+    const progress = root.querySelector('.sia5-progress');
+    const miles = Array.from(root.querySelectorAll('.sia5-mile'));
+    // Zona de inflexión: desde la columna de 2017 (centro x=1155) hasta el final.
+    band.style.left = '1050px';
+    band.style.width = '630px';
+    flag.style.left = '1155px';
+
+    const MILE_STEPS = miles.length; // 8 hitos = pasos 1..8
+    let milePlayed = new Array(MILE_STEPS).fill(false);
+    let settling = true; // tras onEnter: posiciona sin animar hasta el primer avance real del usuario
+
+    function progressFrac(i) { return Math.max(0, Math.min(i, MILE_STEPS)) / MILE_STEPS; }
+    function setProgress(i, instant) {
+      const frac = progressFrac(i);
+      if (g) {
+        if (instant) g.set(progress, { scaleX: frac });
+        else g.to(progress, { scaleX: frac, duration: .6, ease: 'power2.out' });
+      } else {
+        progress.style.transform = 'scaleX(' + frac + ')';
+      }
+    }
+
+    function setMile(k, i, instant) {
+      if (!g) return;
+      const m = miles[k];
+      const active = i > k;
+      if (active && !milePlayed[k]) {
+        milePlayed[k] = true;
+        if (instant) g.set(m, { scale: 1 });
+        else g.to(m, { scale: 1, duration: .55, ease: 'back.out(1.6)' });
+      } else if (!active && milePlayed[k]) {
+        milePlayed[k] = false;
+        g.set(m, { scale: .55 });
+      }
+    }
+
+    function reset() {
+      milePlayed = new Array(MILE_STEPS).fill(false);
+      band.style.opacity = 0;
+      flag.classList.remove('on');
+      setProgress(0, true);
+      if (g) miles.forEach(m => g.set(m, { scale: .55, transformOrigin: '50% 60%' }));
+    }
+
+    Deck.register("ia5", {
+      onReset(el){ reset(); },
+      onEnter(el){
+        settling = true;
+        requestAnimationFrame(() => { settling = false; });
+      },
+      onLeave(el){ if (g) { g.killTweensOf(progress); g.killTweensOf(miles); } },
+      onStep(el, i){
+        // Al alcanzar los Transformers (2017 = paso 6) se enciende la zona carmesí.
+        const on = i >= 6;
+        band.style.opacity = on ? 1 : 0;
+        flag.classList.toggle('on', on);
+
+        setProgress(i, settling);
+        for (let k = 0; k < MILE_STEPS; k++) setMile(k, i, settling);
+      }
+    });
+  })();
+  </script>
+</section>

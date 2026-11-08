@@ -1,0 +1,17 @@
+<section class="slide" data-slide="13">
+<style>
+#s13 {background:#f3f5f7;font-family:var(--font);color:#18212a;}
+#s13 .app-heading {height:72px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #dfe4e9;gap:24px;}
+#s13 h2 {font:750 26px var(--font);margin:0;}
+#s13 .actions {display:flex;align-items:center;gap:18px;font-size:19px;}
+#s13 .actions a {color:#a6093d;text-decoration:none;font-weight:650;}
+#s13 button {font:650 19px var(--font);padding:9px 15px;background:white;border:1px solid #ccd5de;border-radius:8px;color:#273746;cursor:pointer;}
+#s13 button:focus-visible,#s13 a:focus-visible {outline:3px solid #1665b0;outline-offset:4px;}
+#s13 iframe {display:block;width:75%;height:708px;transform:scale(1.333333);transform-origin:top left;border:0;background:#f7f8fa;}
+</style>
+<div id="s13" class="fill" data-no-advance>
+<header class="app-heading"><h2>DiabetesAPP · Referencias para la decisión</h2><div class="actions"><a href="app/" data-embed="DiabetesAPP" data-internal>Ampliar app</a><button type="button" data-reload>Reiniciar app</button></div></header>
+<iframe title="DiabetesAPP: módulos de referencia, incluido el abordaje del peso" data-src="app/" allow="fullscreen" allowfullscreen></iframe>
+</div>
+<script>(function(){const root=document.currentScript.closest('.slide');const frame=root.querySelector('iframe');root.querySelector('[data-reload]').addEventListener('click',()=>{frame.src=frame.dataset.src;});root.addEventListener('keydown',e=>{if(e.target.closest('button')&&[' ','Enter'].includes(e.key))e.stopPropagation();});Deck.register(13,{onEnter(){if(!frame.getAttribute('src'))frame.src=frame.dataset.src;}});})();</script>
+</section>

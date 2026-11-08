@@ -1,0 +1,226 @@
+<section class="slide" data-slide="ia39">
+  <style>
+    #sia39 { padding: 58px 120px; }
+    #sia39 .sia39-head { max-width: 1600px; }
+    #sia39 h2 { margin-top: 22px; }
+    #sia39 h2 .mk { color: var(--accent); font-style: italic; }
+
+    #sia39 .sia39-insight {
+      margin-top: 18px; font-size: 32px; line-height: 1.4; color: var(--ink-soft); max-width: 1500px;
+    }
+    #sia39 .sia39-insight b { color: var(--ink); }
+    #sia39 .sia39-insight .hi {
+      color: var(--accent); font-weight: 700;
+      border-bottom: 3px solid rgba(166,9,61,.28);
+    }
+
+    #sia39 .sia39-stage {
+      margin-top: 26px; display: grid; grid-template-columns: 900px 1fr; gap: 60px; align-items: start;
+    }
+
+    /* --- Caso + sugerencia IA --- */
+    #sia39 .sia39-case {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden;
+    }
+    #sia39 .sia39-casehd {
+      padding: 18px 30px; border-bottom: 1px solid var(--line); background: var(--panel-2);
+      font-family: var(--font); font-size: 19px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    #sia39 .sia39-casebd { padding: 30px 34px; font-size: 28px; line-height: 1.5; color: var(--ink-soft); }
+    #sia39 .sia39-ia {
+      margin: 24px 34px 30px; padding: 22px 26px; border-radius: var(--radius-sm);
+      background: var(--accent-soft); border: 1px solid rgba(166,9,61,.20);
+    }
+    #sia39 .sia39-ia .lab {
+      font-family: var(--font); font-size: 17px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent-ink); margin-bottom: 8px; display: block;
+    }
+    #sia39 .sia39-ia .sg { font-size: 27px; line-height: 1.4; color: var(--ink); }
+    #sia39 .sia39-ia .sg.typing::after {
+      content: ''; display: inline-block; width: 3px; height: 24px; margin-left: 3px;
+      background: var(--accent); vertical-align: -4px;
+      animation: sia39cursor .8s steps(1) infinite;
+    }
+    @keyframes sia39cursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    #sia39 .sia39-fic { padding: 0 34px 26px; font-size: 20px; color: var(--faint); }
+
+    /* --- Opciones --- */
+    #sia39 .sia39-quiz { display: grid; gap: 14px; }
+    #sia39 .sia39-q { font-size: 30px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    #sia39 .sia39-opt {
+      text-align: left; width: 100%; cursor: pointer;
+      background: var(--panel); border: 2px solid var(--line-2); border-radius: var(--radius-sm);
+      padding: 18px 24px; font-family: var(--font); font-size: 26px; line-height: 1.32; color: var(--ink-soft);
+      display: flex; gap: 18px; align-items: flex-start;
+      transition: border-color .2s ease, background .2s ease, transform .12s ease, box-shadow .2s ease;
+    }
+    #sia39 .sia39-opt:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    #sia39 .sia39-opt .k {
+      flex: 0 0 auto; width: 40px; height: 40px; border-radius: 8px; display: grid; place-items: center;
+      font-weight: 800; font-size: 22px; color: var(--muted); background: var(--bg-2); border: 1px solid var(--line-2);
+      transition: all .3s ease;
+    }
+    #sia39 .sia39-opt.correct { border-color: var(--green); background: rgba(28,122,77,.07); }
+    #sia39 .sia39-opt.correct .k { background: var(--green); color: #fff; border-color: var(--green); }
+    #sia39 .sia39-opt.wrong { border-color: var(--danger); background: rgba(179,38,30,.06); }
+    #sia39 .sia39-opt.wrong .k { background: var(--danger); color: #fff; border-color: var(--danger); }
+    #sia39 .sia39-opt.shake { animation: sia39shake .42s ease; }
+    @keyframes sia39shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-7px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(3px)} }
+    #sia39 .sia39-opt.dim { opacity: .5; }
+    #sia39 .sia39-opt[disabled] { cursor: default; }
+    #sia39 .sia39-opt[disabled]:hover { transform: none; box-shadow: none; border-color: var(--line-2); }
+    #sia39 .sia39-opt.correct[disabled]:hover { border-color: var(--green); }
+    #sia39 .sia39-opt.wrong[disabled]:hover { border-color: var(--danger); }
+
+    #sia39 .sia39-reveal {
+      margin-top: 16px; padding: 18px 24px; border-radius: var(--radius-sm);
+      background: var(--bg-2); border-left: 5px solid var(--accent);
+      font-size: 25px; line-height: 1.45; color: var(--ink-soft);
+      opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease;
+    }
+    #sia39 .sia39-reveal.on { opacity: 1; transform: none; }
+    #sia39 .sia39-reveal b { color: var(--ink); }
+    #sia39 .sia39-reveal .trap { color: var(--danger); font-weight: 700; }
+
+    #sia39 .sia39-msg {
+      margin-top: 18px; font-family: var(--serif); font-size: 36px; line-height: 1.2; color: var(--ink);
+      opacity: 0; transform: translateY(12px); transition: opacity .6s ease .2s, transform .6s ease .2s;
+    }
+    #sia39 .sia39-msg.on { opacity: 1; transform: none; }
+    #sia39 .sia39-msg .mk { color: var(--accent); font-style: italic; }
+  </style>
+
+  <div id="sia39" class="fill">
+    <div class="sia39-head">
+      <div class="kicker">El riesgo humano</div>
+      <h2>El peligro <span class="mk">no</span> es que la IA se equivoque</h2>
+    </div>
+
+    <p class="sia39-insight fragment fade-only" data-step="1">
+      Se llama <b>sesgo de automatización</b>:
+      <span class="hi">fiarte cuando acierta el 95 % te desentrena para el 5 %</span> que falla.
+    </p>
+
+    <div class="sia39-stage">
+      <!-- CASO -->
+      <div class="sia39-case">
+        <div class="sia39-casehd">Caso · consulta</div>
+        <div class="sia39-casebd">
+          Mujer de 72 años con disnea y edema en las piernas desde hace 3 días.
+          El edema es <b>en una sola pierna</b>, con dolor en la pantorrilla.
+          Volvió hace una semana de un viaje largo en autobús.
+        </div>
+        <div class="sia39-ia">
+          <span class="lab">◆ Sugerencia de la IA</span>
+          <div class="sg">«Cuadro compatible con insuficiencia cardíaca. Iniciar diurético y control en 48 h.»</div>
+        </div>
+        <div class="sia39-fic">Caso ficticio · salida ilustrativa</div>
+      </div>
+
+      <!-- QUIZ -->
+      <div>
+        <div class="sia39-q">¿Qué haces?</div>
+        <div class="sia39-quiz">
+          <button class="sia39-opt" data-no-advance data-r="wrong">
+            <span class="k">A</span>
+            <span>Acepto la sugerencia e inicio el diurético. Suena razonable.</span>
+          </button>
+          <button class="sia39-opt" data-no-advance data-r="correct">
+            <span class="k">B</span>
+            <span>Me paro: edema unilateral, dolor y viaje reciente. Pienso en TVP y descarto TEP.</span>
+          </button>
+          <button class="sia39-opt" data-no-advance data-r="wrong">
+            <span class="k">C</span>
+            <span>Pido una analítica de rutina y cito para revisión.</span>
+          </button>
+        </div>
+
+        <div class="sia39-reveal">
+          <b>La trampa:</b> la sugerencia era plausible, pero los datos gritaban
+          <span class="trap">edema unilateral + dolor + inmovilización</span>.
+          Eso es una <b>TVP</b> hasta que se demuestre lo contrario, con riesgo de TEP.
+          Un diurético habría retrasado el diagnóstico correcto.
+        </div>
+
+        <div class="sia39-msg">El peligro es que <span class="mk">tú dejes de mirar</span>.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const _cs = document.currentScript;
+    const root = (_cs && _cs.closest('.slide')) || document.querySelector('.slide[data-slide="ia39"]');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+    const opts = Array.from(root.querySelectorAll('.sia39-opt'));
+    const reveal = root.querySelector('.sia39-reveal');
+    const msg = root.querySelector('.sia39-msg');
+    const sg = root.querySelector('.sia39-ia .sg');
+    let answered = false;
+
+    // Captura el texto original UNA sola vez (antes de que nada lo vacíe).
+    if (sg && sg.dataset.orig === undefined) sg.dataset.orig = sg.textContent;
+
+    let typeInterval = null;
+    let cursorTimeout = null;
+
+    function stopTyping() {
+      if (typeInterval) { clearInterval(typeInterval); typeInterval = null; }
+      if (cursorTimeout) { clearTimeout(cursorTimeout); cursorTimeout = null; }
+      if (sg) sg.classList.remove('typing');
+    }
+
+    function typeText() {
+      if (!sg) return;
+      stopTyping();
+      const full = sg.dataset.orig || '';
+      sg.textContent = '';
+      sg.classList.add('typing');
+      let idx = 0;
+      typeInterval = setInterval(() => {
+        idx++;
+        sg.textContent = full.slice(0, idx);
+        if (idx >= full.length) {
+          clearInterval(typeInterval); typeInterval = null;
+          cursorTimeout = setTimeout(() => { sg.classList.remove('typing'); cursorTimeout = null; }, 600);
+        }
+      }, 28);
+    }
+
+    function onPick(btn) {
+      if (answered) return;
+      answered = true;
+      opts.forEach(o => {
+        o.setAttribute('disabled', '');
+        const r = o.dataset.r;
+        if (r === 'correct') o.classList.add('correct');
+        else if (o === btn) o.classList.add('wrong');
+        else o.classList.add('dim');
+      });
+      if (btn.dataset.r === 'wrong') { btn.classList.add('shake'); setTimeout(() => btn.classList.remove('shake'), 450); }
+      setTimeout(() => reveal.classList.add('on'), 220);
+      setTimeout(() => msg.classList.add('on'), 900);
+    }
+
+    function reset() {
+      answered = false;
+      opts.forEach(o => { o.removeAttribute('disabled'); o.classList.remove('correct', 'wrong', 'dim'); });
+      reveal.classList.remove('on');
+      msg.classList.remove('on');
+      // Vacía la frase de la IA antes de retipear, para no duplicar en reentradas.
+      stopTyping();
+      if (sg) sg.textContent = '';
+    }
+
+    opts.forEach(o => o.addEventListener('click', () => onPick(o)));
+
+    Deck.register("ia39", {
+      onReset() { reset(); },
+      onEnter() { typeText(); },
+      onLeave() { stopTyping(); }
+    });
+  })();
+  </script>
+</section>

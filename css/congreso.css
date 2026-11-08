@@ -1,0 +1,21 @@
+/* Plantilla oficial: portada, agradecimiento, Turing y escenas con pie libre.
+   Los PNG proceden del PPTX del congreso y se conservan sin modificaciones. */
+.slide.congreso-plantilla { overflow:hidden; }
+.congreso-plantilla .congreso-pie {
+  position:absolute; left:0; right:0; bottom:0; height:190px;
+  overflow:hidden; z-index:30; pointer-events:none; background:#fff;
+}
+.congreso-plantilla .congreso-pie img {
+  position:absolute; left:0; bottom:0; width:1920px; height:1080px;
+  max-width:none;
+}
+
+/* El contenido conserva su tamaño y deja libre la franja del congreso. */
+.congreso-interior #s-bienvenida .byline { bottom:220px; }
+.congreso-interior #s2 .s2-band { bottom:245px; }
+.congreso-interior #s2 .s2-foot { bottom:200px; }
+
+/* Los controles del visor se apartan de los logotipos de las escenas con marca del congreso. */
+body:has(.congreso-plantilla.active) #brand,
+body:has(.congreso-plantilla.active) #hint { display:none; }
+body:has(.congreso-plantilla.active) #hud-cluster { top:14px; bottom:auto; }

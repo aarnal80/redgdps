@@ -1,0 +1,251 @@
+<section class="slide" data-slide="ia37">
+  <style>
+    #sia37 { padding: 76px 120px; }
+    #sia37 .sia37-head { max-width: 1560px; }
+    #sia37 h2 { margin-top: 22px; }
+    #sia37 h2 .mk { color: var(--accent); font-style: italic; }
+
+    #sia37 .sia37-stage {
+      margin-top: 44px; display: grid;
+      grid-template-columns: 980px 1fr; gap: 64px; align-items: start;
+    }
+
+    /* --- Documento: nota clínica --- */
+    #sia37 .sia37-doc {
+      position: relative; background: var(--panel);
+      border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    #sia37 .sia37-doctop {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 34px; border-bottom: 1px solid var(--line); background: var(--panel-2);
+    }
+    #sia37 .sia37-doctitle {
+      font-family: var(--font); font-size: 21px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    }
+    #sia37 .sia37-state {
+      font-family: var(--font); font-size: 18px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 999px;
+      border: 1px solid var(--line-2); color: var(--faint); background: #fff;
+      transition: color .4s ease, border-color .4s ease, background .4s ease;
+    }
+    #sia37 .sia37-state.warn { color: var(--danger); border-color: rgba(179,38,30,.35); background: rgba(179,38,30,.06); }
+    #sia37 .sia37-state.ok   { color: var(--green);  border-color: rgba(28,122,77,.35);  background: rgba(28,122,77,.07); }
+
+    #sia37 .sia37-body {
+      padding: 40px 40px 44px; font-family: var(--font);
+      font-size: 33px; line-height: 1.62; color: var(--ink-soft);
+    }
+    #sia37 .sia37-body .lbl { color: var(--faint); }
+
+    /* --- Tokens sensibles --- */
+    #sia37 .tok {
+      border-radius: 6px; padding: 1px 4px; margin: 0 1px;
+      transition: background .35s ease, color .35s ease, box-shadow .35s ease;
+      white-space: nowrap;
+    }
+    #sia37 .tok.flag {
+      background: rgba(179,38,30,.13); color: var(--danger); font-weight: 600;
+      box-shadow: inset 0 0 0 1.5px rgba(179,38,30,.42);
+    }
+    #sia37 .tok.done { color: var(--green); font-weight: 700; background: rgba(28,122,77,.10); box-shadow: none; }
+    #sia37 .tok.bar {
+      color: transparent; background: var(--ink); box-shadow: none;
+      border-radius: 3px; letter-spacing: .02em; user-select: none;
+    }
+    #sia37 .sia37-fic { margin-top: 18px; font-size: 21px; color: var(--faint); }
+
+    /* --- Proceso / resultado (derecha) --- */
+    #sia37 .sia37-side { align-self: stretch; }
+    #sia37 .sia37-steps { list-style: none; }
+    #sia37 .sia37-steps li {
+      display: flex; gap: 20px; align-items: flex-start; padding: 4px 0;
+    }
+    #sia37 .sia37-steps li + li { margin-top: 20px; }
+    #sia37 .sia37-num {
+      flex: 0 0 auto; width: 46px; height: 46px; border-radius: 50%;
+      display: grid; place-items: center; font-family: var(--serif);
+      font-size: 24px; font-weight: 700; color: var(--faint);
+      border: 2px solid var(--line-2); background: #fff;
+      transition: all .4s ease;
+    }
+    #sia37 .fragment.revealed .sia37-num { color: var(--accent); border-color: var(--accent); }
+    #sia37 .sia37-steptxt { font-size: 27px; line-height: 1.4; color: var(--ink-soft); padding-top: 6px; }
+    #sia37 .sia37-steptxt b { color: var(--ink); }
+
+    #sia37 .sia37-result {
+      margin-top: 30px; background: var(--bg-2);
+      border: 1px solid var(--line); border-left: 5px solid var(--green);
+      border-radius: var(--radius-sm); padding: 26px 30px;
+    }
+    #sia37 .sia37-result .r-tag {
+      font-family: var(--font); font-size: 17px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--green); margin-bottom: 12px; display: block;
+    }
+    #sia37 .sia37-result .r-txt { font-size: 27px; line-height: 1.5; color: var(--ink); }
+
+    #sia37 .sia37-msg {
+      margin-top: 30px; font-family: var(--serif); font-size: 30px; line-height: 1.4;
+      color: var(--ink); border-left: 4px solid var(--accent); padding-left: 26px;
+    }
+    #sia37 .sia37-msg .mk { color: var(--accent); font-style: italic; }
+  </style>
+
+  <div id="sia37" class="fill">
+    <div class="sia37-head">
+      <div class="kicker">Bloque 4 · Seguridad</div>
+      <h2>Nunca pegues datos que <span class="mk">identifiquen al paciente</span></h2>
+    </div>
+
+    <div class="sia37-stage">
+      <!-- DOCUMENTO -->
+      <div class="sia37-doc">
+        <div class="sia37-doctop">
+          <span class="sia37-doctitle">Nota clínica</span>
+          <span class="sia37-state">Original</span>
+        </div>
+        <div class="sia37-body">
+          <span class="lbl">Paciente:</span>
+          <span class="tok" data-k="name">Antonio Giménez Sanz</span>,
+          DNI <span class="tok" data-k="dni">17.482.936-B</span>
+          (nº historia <span class="tok" data-k="hist">4471209</span>),
+          nacido el <span class="tok" data-k="date">12/05/1959</span>,
+          domicilio en <span class="tok" data-k="addr">Calle Mayor 23, 3.º B, Zaragoza</span>.
+          Acude por dolor torácico opresivo de 2 horas, irradiado a brazo izquierdo,
+          con sudoración. Antecedentes de HTA y tabaquismo.
+          <div class="sia37-fic">Caso ficticio</div>
+        </div>
+      </div>
+
+      <!-- PROCESO Y RESULTADO -->
+      <div class="sia37-side">
+        <ul class="sia37-steps">
+          <li class="fragment" data-step="1">
+            <span class="sia37-num">1</span>
+            <span class="sia37-steptxt"><b>Detectar lo identificable.</b> Nombre, DNI, nº de historia, fecha exacta, dirección.</span>
+          </li>
+          <li class="fragment" data-step="2">
+            <span class="sia37-num">2</span>
+            <span class="sia37-steptxt"><b>Redactar y generalizar.</b> Sexo y edad; lo demás, tachado.</span>
+          </li>
+          <li class="fragment" data-step="3">
+            <span class="sia37-num">3</span>
+            <span class="sia37-steptxt"><b>Queda un caso, no una persona.</b></span>
+          </li>
+        </ul>
+
+        <div class="sia37-result fragment fade-only" data-step="3">
+          <span class="r-tag">✓ Anonimizado · usable</span>
+          <div class="r-txt">Varón de 67 años. Dolor torácico opresivo de 2 horas, irradiado a
+            brazo izquierdo, con sudoración. Antecedentes de HTA y tabaquismo.</div>
+        </div>
+
+        <div class="sia37-msg fragment fade-only" data-step="3">
+          El RGPD es claro: pegar datos identificativos en una IA pública es una
+          <span class="mk">brecha de seguridad</span>. Anonimizado, el caso clínico deja de ser dato personal.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const _cs = document.currentScript;
+    const root = (_cs && _cs.closest('.slide')) || document.querySelector('.slide[data-slide="ia37"]');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+    const tokens = Array.from(root.querySelectorAll('.tok'));
+    const state = root.querySelector('.sia37-state');
+    let lastI = 0;
+
+    tokens.forEach(t => { if (!t.dataset.orig) t.dataset.orig = t.textContent; });
+
+    function restore() {
+      tokens.forEach(t => {
+        t.className = 'tok';
+        t.textContent = t.dataset.orig;
+        // Limpia restos inline de animaciones interrumpidas (opacity del
+        // cross-fade, clip-path de la barra) para que el estado instantáneo
+        // parta siempre limpio.
+        t.style.opacity = '';
+        t.style.clipPath = '';
+      });
+    }
+
+    function killAnim() {
+      if (!g) return;
+      g.killTweensOf(tokens);
+      g.killTweensOf(state);
+    }
+
+    function setBadge(newState, animate) {
+      const map = { 0: ['Original', 'sia37-state'], 1: ['Datos personales', 'sia37-state warn'], 2: ['Anonimizado', 'sia37-state ok'] };
+      const [txt, cls] = map[newState] || map[0];
+      state.textContent = txt;
+      state.className = cls;
+      if (animate && g) {
+        g.fromTo(state, { scale: .85 }, { scale: 1, duration: .35, ease: 'back.out(2)' });
+      } else if (g) {
+        g.set(state, { clearProps: 'transform' });
+      }
+    }
+
+    // Aplica el estado FINAL de golpe, sin animar. Se usa en onEnter (saltos
+    // directos, incluido el retroceso que reaplica todos los pasos de una
+    // vez) y como base de reseteo.
+    function applyFinal(i) {
+      killAnim();
+      restore();
+      if (i >= 1) tokens.forEach(t => t.classList.add('flag'));
+      if (i >= 2) {
+        tokens.forEach(t => {
+          t.classList.remove('flag'); t.classList.add('done');
+          const k = t.dataset.k;
+          if (k === 'name') t.textContent = 'varón';
+          else if (k === 'date') t.textContent = '67 años';
+          else { t.classList.add('bar'); t.textContent = '█████'; }
+        });
+      }
+      setBadge(i >= 2 ? 2 : (i >= 1 ? 1 : 0), false);
+      lastI = i;
+    }
+
+    // Secuencia animada del paso 2 (redactar/generalizar), token a token con
+    // stagger. Solo se dispara cuando el paso 2 llega como avance incremental
+    // real desde el paso 1 (ver onStep) — nunca en un salto directo.
+    function animateToStep2() {
+      killAnim();
+      tokens.forEach((t, idx) => {
+        const k = t.dataset.k;
+        const delay = idx * .12;
+        if (k === 'name' || k === 'date') {
+          const tl = g.timeline({ delay });
+          tl.to(t, { opacity: 0, duration: .16, ease: 'power1.in' })
+            .add(() => {
+              t.classList.remove('flag'); t.classList.add('done');
+              t.textContent = k === 'name' ? 'varón' : '67 años';
+            })
+            .to(t, { opacity: 1, duration: .22, ease: 'power1.out' });
+        } else {
+          t.classList.remove('flag'); t.classList.add('done', 'bar');
+          t.textContent = '█████';
+          g.fromTo(t, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .4, delay, ease: 'power2.out' });
+        }
+      });
+      setBadge(2, true);
+      lastI = 2;
+    }
+
+    Deck.register("ia37", {
+      onReset() { applyFinal(0); },
+      onEnter() { applyFinal(Deck.step || 0); },
+      onStep(el, i) {
+        if (g && i === 2 && lastI === 1) animateToStep2();
+        else applyFinal(i);
+      },
+      onLeave() { killAnim(); }
+    });
+  })();
+  </script>
+</section>

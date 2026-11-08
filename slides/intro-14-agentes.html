@@ -1,0 +1,31 @@
+<section class="slide" data-slide="ia-agentes">
+<style>
+#sagentes { padding: 66px 120px 44px; background: var(--bg); }
+#sagentes h2 { font-size: 76px; line-height: 1.08; margin: 18px 0 16px; }
+#sagentes h2 em { color: var(--accent); font-style: italic; }
+#sagentes .intro { font-size: 30px; line-height: 1.28; color: var(--muted); max-width: 1620px; }
+#sagentes .figures { display: block; width: 1600px; height: auto; margin: 4px auto 0; }
+#sagentes .roles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: -70px 0 0; }
+#sagentes .role { min-height: 166px; border-top: 3px solid var(--tone); padding: 17px 6px 0; }
+#sagentes .role h3 { font-family: var(--serif); font-size: 38px; line-height: 1.1; margin: 0 0 5px; color: var(--tone); }
+#sagentes .role h3 small { font-family: var(--font); font-size: 25px; font-weight: 700; color: var(--ink); }
+#sagentes .role p { font-size: 25px; line-height: 1.28; color: var(--ink-soft); max-width: 350px; }
+#sagentes .bottom { position: absolute; bottom: 38px; left: 120px; right: 120px; border-top: 1px solid var(--line); padding-top: 16px; display: flex; justify-content: space-between; gap: 40px; color: var(--muted); font-size: 21px; }
+#sagentes .bottom strong { color: var(--ink); font-weight: 700; }
+#sagentes .arnal-logo{position:absolute;right:120px;top:18px;width:320px;height:90px;object-fit:contain}
+</style>
+<div id="sagentes" class="fill">
+<img class="arnal-logo" src="assets/brands/antonioarnal.png" alt="Medicina e inteligencia artificial · antonioarnal.es">
+  <div class="kicker">Del modelo al trabajo clínico</div>
+  <h2>Cuatro agentes. <em>Una misma historia clínica.</em></h2>
+  <p class="intro">Un sistema de agentes reparte tareas: cada uno recibe el contexto de Adriana y deja un resultado para el siguiente.</p>
+  <img class="figures" src="assets/agents-clinic.png" alt="Cuatro personajes abstractos: azul, turquesa, naranja y magenta, uno por cada agente">
+  <div class="roles">
+    <div class="role fragment" style="--tone:#1665b0"><h3>Ada <small>Agenda</small></h3><p>Detecta revisiones pendientes y propone el contacto.</p></div>
+    <div class="role fragment" style="--tone:#087e8b"><h3>Lía <small>Preconsulta</small></h3><p>Entrevista antes de la cita; entrega transcripción y resumen.</p></div>
+    <div class="role fragment" style="--tone:#b45309"><h3>Nora <small>Consulta</small></h3><p>Prepara un borrador de la visita para revisión médica.</p></div>
+    <div class="role fragment" style="--tone:#a6093d"><h3>Sara <small>Seguimiento</small></h3><p>Recoge la evolución y señala incidencias al equipo.</p></div>
+  </div>
+  <div class="bottom"><span><strong>El relevo:</strong> cita, entrevista, consulta y seguimiento comparten contexto.</span><span>Propuesta docente · El médico decide y valida</span></div>
+</div>
+</section>

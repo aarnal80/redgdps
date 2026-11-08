@@ -1,0 +1,92 @@
+<section class="slide" data-slide="ia16">
+  <style>
+    #sia16 { padding: 66px 120px 48px; }
+    #sia16 h2 .mk { color: var(--accent); font-style: italic; }
+    #sia16 .sia16-sub { max-width: 1550px; margin-top: 18px; }
+    #sia16 .sia16-chart { margin-top: 28px; }
+    #sia16 .sia16-axis { display: grid; grid-template-columns: 410px 1fr; gap: 28px; align-items: end; color: var(--faint); font-family: var(--font); font-size: 18px; }
+    #sia16 .sia16-ticks { display: flex; justify-content: space-between; }
+    #sia16 .sia16-row { display: grid; grid-template-columns: 410px 1fr; gap: 28px; align-items: center; margin-top: 19px; }
+    #sia16 .sia16-name { font-family: var(--font); font-size: 28px; color: var(--ink-soft); text-align: right; line-height: 1.12; }
+    #sia16 .sia16-name small { display: block; margin-top: 5px; font-size: 18px; color: var(--faint); }
+    #sia16 .sia16-track { position: relative; height: 58px; background: var(--bg-3); border-radius: 9px; overflow: hidden; }
+    #sia16 .sia16-fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 9px; }
+    #sia16 .sia16-fill.o3 { background: linear-gradient(90deg, #7aa7d9, #1f3a5f); }
+    #sia16 .sia16-fill.luna { background: linear-gradient(90deg, #8ad2b0, #1c7a4d); }
+    #sia16 .sia16-fill.astra { background: linear-gradient(90deg, #b9c0cc, #545b66); }
+    #sia16 .sia16-fill.fable { background: linear-gradient(90deg, #c084c9, #a6093d); }
+    #sia16 .sia16-value { position: absolute; top: 50%; right: 18px; transform: translateY(-50%); color: #fff; font-family: var(--serif); font-weight: 700; font-size: 31px; opacity: 0; }
+    #sia16 .sia16-takeaway { display: flex; justify-content: space-between; gap: 40px; margin-top: 38px; border-left: 5px solid var(--accent); padding: 13px 0 13px 28px; font-family: var(--serif); font-size: 34px; line-height: 1.2; color: var(--ink); }
+    #sia16 .sia16-takeaway .mk { color: var(--accent); font-style: italic; }
+    #sia16 .sia16-takeaway small { align-self: center; max-width: 560px; font-family: var(--font); font-size: 20px; line-height: 1.35; color: var(--faint); }
+    #sia16 .sia16-source { position: absolute; left: 120px; right: 120px; bottom: 22px; font-family: var(--font); font-size: 16px; color: var(--faint); }
+  #sia16 .sia16-fill.opus {background:linear-gradient(90deg,#e8a05a,#b45309)}
+</style>
+
+  <div id="sia16" class="fill">
+    <div class="kicker">El nivel de acceso importa · 2/2</div>
+    <h2 style="margin-top:22px">Mismo examen. <span class="mk">Otra escala.</span></h2>
+    <p class="lead sia16-sub">Aquí ya no comparamos una respuesta fácil: mantenemos o3, Luna, Astra y Fable, y añadimos Claude Opus 5.5 Max a la comparación.</p>
+
+    <div class="sia16-chart">
+      <div class="sia16-axis"><span></span><div class="sia16-ticks"><span>0 %</span><span>35 %</span><span>70 %</span></div></div>
+
+      <div class="sia16-row">
+        <div class="sia16-name">o3<small>2025 · referencia original †</small></div>
+        <div class="sia16-track"><div class="sia16-fill o3" data-pct="29"></div><span class="sia16-value">20,3 %</span></div>
+      </div>
+      <div class="sia16-row">
+        <div class="sia16-name">GPT-5.6 Luna<small>2026 · referencia original †</small></div>
+        <div class="sia16-track"><div class="sia16-fill luna" data-pct="53.1"></div><span class="sia16-value">37,2 %</span></div>
+      </div>
+      <div class="sia16-row">
+        <div class="sia16-name">GPT-6 Astra<small>2026 · con herramientas</small></div>
+        <div class="sia16-track"><div class="sia16-fill astra" data-pct="81.7"></div><span class="sia16-value">57,2 %</span></div>
+      </div>
+      <div class="sia16-row">
+        <div class="sia16-name">Claude Fable 5.1 Max<small>2026 · máximo · con herramientas</small></div>
+        <div class="sia16-track"><div class="sia16-fill fable" data-pct="93.7143"></div><span class="sia16-value">65,6 %</span></div>
+      </div>
+      <div class="sia16-row">
+        <div class="sia16-name">Claude Opus 5.5 Max<small>2026 · máximo · con herramientas</small></div>
+        <div class="sia16-track"><div class="sia16-fill opus" data-pct="96.7143"></div><span class="sia16-value">67,7 %</span></div>
+      </div>
+    </div>
+
+    <div class="sia16-takeaway"><span>De o3 a Opus: <span class="mk">+47,4 puntos †</span></span><small>Humanity’s Last Exam · con herramientas. Resultados de distintas publicaciones y configuraciones.</small></div>
+    <div class="sia16-source">Fuente: <a href="https://www.anthropic.com/claude-opus-5-5" target="_blank" rel="noopener" style="color:inherit">Anthropic, Opus 5.5</a>: Astra 57,2 %, Fable 65,6 %, Opus 67,7 %. † o3 y Luna: cifras de la comparativa original, fuente/configuración pendientes de confirmar.</div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const g = window.gsap || null;
+    const fills = Array.from(root.querySelectorAll('.sia16-fill'));
+    const values = Array.from(root.querySelectorAll('.sia16-value'));
+    let tl = null;
+    function reset() {
+      fills.forEach(el => { el.style.width = '0%'; });
+      values.forEach(el => { el.style.opacity = 0; });
+    }
+    function play() {
+      reset();
+      if (!g) {
+        fills.forEach(el => { el.style.transition = 'width 1s ease'; el.style.width = el.dataset.pct + '%'; });
+        values.forEach(el => { el.style.opacity = 1; });
+        return;
+      }
+      if (tl) tl.kill();
+      tl = g.timeline({ delay: .15 });
+      fills.forEach((el, i) => {
+        tl.to(el, { width: el.dataset.pct + '%', duration: 1.05, ease: 'power2.out' }, i * .2);
+        tl.to(values[i], { opacity: 1, duration: .35 }, i * .2 + .62);
+      });
+    }
+    Deck.register("ia16", {
+      onReset() { reset(); },
+      onEnter() { requestAnimationFrame(play); },
+      onLeave() { if (tl) { tl.kill(); tl = null; } }
+    });
+  })();
+  </script>
+<aside hidden data-speaker-notes>Se conservan las cuatro filas originales y se añade Claude Opus 5.5 Max. o3 20,3 % y GPT-5.6 Luna 37,2 % son cifras heredadas de la comparativa original: su fuente y configuración exactas requieren confirmación; se señalan con †. No se presentan como una reevaluación independiente. Anthropic publica Astra 57,2 %, Fable 5.1 65,6 % y Opus 5.5 Max 67,7 % con herramientas. Se corrige Fable de 65,0 a 65,6. La tabla no especifica esfuerzo Max para Astra en HLE. No renombrar versiones antiguas ni extrapolar las puntuaciones a GPT-6.1. Fuente: https://www.anthropic.com/claude-opus-5-5.</aside></section>

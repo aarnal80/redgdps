@@ -1,0 +1,68 @@
+<section class="slide" data-slide="amie-seguimiento">
+<style>
+#samieseg {padding:64px 110px 42px;background:var(--bg)}
+#samieseg h2 {font-size:76px;line-height:1.08;margin:18px 0 15px}
+#samieseg h2 em {color:var(--accent)}
+#samieseg .intro {font-size:29px;line-height:1.34;color:var(--muted);max-width:1570px}
+#samieseg .views {display:flex;align-items:center;gap:28px;margin:28px 0 17px;border-bottom:1px solid var(--line);padding-bottom:12px}
+#samieseg .views button {font:600 23px var(--font);background:none;border:0;border-bottom:3px solid transparent;padding:8px 2px;color:var(--muted);cursor:pointer}
+#samieseg .views button[aria-pressed="true"] {color:var(--accent);border-bottom-color:var(--accent)}
+#samieseg .views button:focus-visible {outline:3px solid var(--accent);outline-offset:4px}
+#samieseg .visual {height:400px;position:relative}
+#samieseg .visual video,#samieseg .visual img {width:100%;height:100%;object-fit:contain;display:block;background:#fff}
+#samieseg .visual [hidden] {display:none}
+#samieseg .caption {font-size:24px;line-height:1.3;color:var(--muted);margin-top:12px;min-height:32px}
+#samieseg .connection {display:grid;grid-template-columns:1fr 1fr;gap:58px;margin-top:25px;border-top:1px solid var(--line-2);padding-top:21px}
+#samieseg .connection h3 {font-family:var(--serif);font-size:33px;color:var(--accent);margin-bottom:9px}
+#samieseg .connection p {font-size:25px;line-height:1.32;color:var(--ink-soft)}
+#samieseg .foot {position:absolute;left:110px;right:110px;bottom:36px;border-top:1px solid var(--line);padding-top:14px;font-size:19px;color:var(--muted);line-height:1.35}
+#samieseg .foot a {color:inherit}
+#samieseg .provider-logo{position:absolute;right:90px;top:48px;width:66px;height:66px;object-fit:contain}
+</style>
+<div id="samieseg" class="fill">
+<img class="provider-logo" src="assets/brands/google-color.svg" width="66" height="66" alt="Google">
+  <div class="kicker">Google AMIE · Manejo longitudinal · 2/2</div>
+  <h2>El seguimiento <em>entre consultas</em></h2>
+  <p class="intro">AMIE integra conversaciones previas y guías clínicas para proponer planes y revisarlos según la evolución. Un agente dialoga y otro razona sobre el manejo.</p>
+  <div class="views" role="group" aria-label="Medios originales de Google sobre manejo longitudinal" data-no-advance>
+    <button type="button" data-view="overview" aria-pressed="true">Varias visitas</button>
+    <button type="button" data-view="context" aria-pressed="false">Contexto y guías</button>
+    <button type="button" data-view="architecture" aria-pressed="false">Dos agentes</button>
+  </div>
+  <div class="visual" data-no-advance>
+    <video data-panel="overview" controls muted loop playsinline preload="none" poster="assets/amie/overview-poster.jpg" aria-label="Animación original de Google sobre consultas sucesivas de AMIE"><source src="assets/amie/overview.mp4" type="video/mp4"></video>
+    <video data-panel="context" controls muted loop playsinline preload="none" poster="assets/amie/long-context-poster.jpg" aria-label="Animación original de Google sobre contexto clínico y guías" hidden><source src="assets/amie/long-context.mp4" type="video/mp4"></video>
+    <img data-panel="architecture" src="assets/amie/two-agents.png" alt="Diagrama original de Google: un agente de diálogo se comunica con el paciente y un agente de manejo integra el contexto y las guías para preparar y refinar un plan" hidden>
+  </div>
+  <p class="caption" aria-live="polite">La propuesta se actualiza con la información de las sucesivas visitas.</p>
+  <div class="connection">
+    <div><h3>Qué se ha evaluado</h3><p>100 escenarios de varias visitas frente a 20 médicos de Atención Primaria. Consultas simuladas con actores.</p></div>
+    <div><h3>Aplicación potencial en diabetes</h3><p>Recoger evolución y dificultades para preparar la revisión médica, como ilustra Sara en nuestro caso docente.</p></div>
+  </div>
+  <div class="foot">Animaciones y figura originales: Google Research. <a href="https://research.google/blog/from-diagnosis-to-treatment-advancing-amie-for-longitudinal-disease-management/" target="_blank" rel="noopener">Liévin et al. · Nature, 2026</a>. Este estudio no demuestra una mejora de HbA1c ni valida nuestra demo.</div>
+</div>
+<aside hidden data-speaker-notes>Este trabajo utiliza un agente de diálogo y otro para el manejo (Mx). El agente Mx puede integrar el contexto de varias consultas y documentos de guías, incluidas NICE y BMJ Best Practice. El estudio aleatorizado y ciego utilizó 100 escenarios de múltiples visitas y 20 médicos de Atención Primaria, mediante chat con actores. La arquitectura de dos agentes corresponde a esta versión longitudinal, mientras que la versión de vídeo usa tres agentes. Relacionar su potencial con diabetes sin atribuir resultados sobre HbA1c, hipoglucemia o reducción de ingresos. El bloque siguiente presenta nuestra propuesta docente con Ada, Lía, Nora y Sara, que no constituye una implementación de AMIE. Fuente: https://research.google/blog/from-diagnosis-to-treatment-advancing-amie-for-longitudinal-disease-management/</aside>
+<script>(function(){
+  const root=document.currentScript.closest('.slide');
+  const videos=[...root.querySelectorAll('video')];
+  const buttons=[...root.querySelectorAll('[data-view]')];
+  const panels=[...root.querySelectorAll('[data-panel]')];
+  const caption=root.querySelector('.caption');
+  const captions={overview:'La propuesta se actualiza con la información de las sucesivas visitas.',context:'El agente de manejo integra el contexto del paciente y las guías clínicas.',architecture:'El agente de diálogo conversa y el agente de manejo prepara y refina el plan.'};
+  let selected='overview';
+  function pause(){videos.forEach(v=>v.pause());}
+  function play(){const video=panels.find(p=>p.dataset.panel===selected&&p.tagName==='VIDEO');if(video)video.play().catch(()=>{caption.textContent='Pulsa reproducir para ver la animación original.';});}
+  function select(view,autoplay){
+    selected=view;pause();
+    panels.forEach(p=>{p.hidden=p.dataset.panel!==view;});
+    buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===view)));
+    caption.textContent=captions[view];
+    const video=panels.find(p=>p.dataset.panel===view&&p.tagName==='VIDEO');
+    if(video){if(video.readyState===0)video.load();else video.currentTime=0;}
+    if(autoplay)play();
+  }
+  buttons.forEach(b=>b.addEventListener('click',()=>select(b.dataset.view,true)));
+  videos.forEach(v=>v.addEventListener('error',()=>{if(!v.hidden)caption.textContent='No se pudo cargar la animación. Puedes seleccionar la figura original de los dos agentes.';}));
+  Deck.register('amie-seguimiento',{onReset(){select('overview',false);},onArrive(){play();},onLeave(){pause();}});
+})();</script>
+</section>

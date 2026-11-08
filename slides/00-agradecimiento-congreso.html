@@ -1,0 +1,24 @@
+<section class="slide congreso-plantilla congreso-interior" data-slide="bienvenida">
+<style>
+#s-bienvenida {background:var(--bg);overflow:hidden;font-family:var(--font);padding:90px 120px;}
+#s-bienvenida .watermark {position:absolute;right:20px;top:-130px;font-family:var(--serif);font-size:1050px;line-height:1;color:#a6093d05;pointer-events:none;}
+#s-bienvenida .event {position:relative;font-size:23px;font-weight:750;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
+#s-bienvenida .place {position:relative;font-size:22px;color:var(--muted);margin-top:14px;letter-spacing:.06em;}
+#s-bienvenida h1 {position:relative;font-family:var(--serif);font-size:108px;line-height:1.02;letter-spacing:-.025em;margin:76px 0 36px;max-width:1500px;}
+#s-bienvenida h1 em {color:var(--accent);}
+#s-bienvenida .thanks {position:relative;font-size:33px;line-height:1.45;color:var(--ink-soft);max-width:1450px;}
+#s-bienvenida .moderator {position:relative;margin-top:40px;border-left:5px solid var(--accent);padding:8px 0 8px 30px;max-width:1490px;}
+#s-bienvenida .moderator .label {font-size:19px;font-weight:750;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;}
+#s-bienvenida .moderator p {font-family:var(--serif);font-size:40px;line-height:1.3;color:var(--ink);margin:0;}
+#s-bienvenida .byline {position:absolute;left:120px;bottom:90px;font-size:22px;color:var(--muted);}
+</style>
+<div id="s-bienvenida" class="fill"><div class="watermark" aria-hidden="true">5</div>
+<div class="event">5º Congreso Nacional de Diabetes · redGDPS</div><div class="place">Zaragoza · 12–13 de noviembre de 2026 · Los pilares de la diabetes</div>
+<h1>Gracias por<br><em>vuestra confianza.</em></h1>
+<div class="thanks">A la organización y a todos los compañeros del congreso redGDPS,<br>gracias por invitarme y por compartir este encuentro.</div>
+<div class="moderator"><div class="label">Una mención especial al moderador</div><p><b>Francisco Adán Gil</b><br>Gracias por confiar en mí y darme la oportunidad de estar aquí.</p></div>
+<div class="byline">Dr. Antonio José Arnal Meinhardt</div>
+</div>
+<div class="congreso-pie"><img src="assets/congreso/pie.png" width="1920" height="1080" alt="5º Congreso Nacional de Diabetes de la Fundación redGDPS · Los pilares de la diabetes"></div>
+<script>(function(){const root=document.currentScript.closest('.slide');const els=root.querySelectorAll('h1,.thanks,.moderator');Deck.register('bienvenida',{onEnter(){if(window.gsap)gsap.fromTo(els,{opacity:0,y:18},{opacity:1,y:0,duration:.7,stagger:.18,ease:'power2.out'});},onLeave(){if(window.gsap)gsap.killTweensOf(els);}});})();</script>
+</section>

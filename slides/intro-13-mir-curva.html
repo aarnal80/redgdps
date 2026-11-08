@@ -1,0 +1,182 @@
+<section class="slide" data-slide="ia13">
+  <style>
+    #sia13 { padding: 90px 120px; }
+    #sia13 .sia13-head { max-width: 1500px; }
+    #sia13 h2 .mk { color: var(--accent); font-style: italic; }
+    #sia13 .sia13-stage { margin-top: 40px; display: grid; grid-template-columns: 1180px 1fr; gap: 60px; align-items: center; }
+
+    #sia13 .sia13-chart { position: relative; }
+    #sia13 svg { display: block; width: 1180px; height: 620px; }
+
+    #sia13 .grid-l { stroke: var(--line); stroke-width: 1; }
+    #sia13 .axis   { stroke: var(--line-2); stroke-width: 2; }
+    #sia13 .axlab  { font-family: var(--font); font-size: 22px; fill: var(--faint); }
+    #sia13 .ylab   { font-family: var(--font); font-size: 22px; fill: var(--muted); }
+
+    #sia13 .ref     { stroke-width: 2.5; stroke-dasharray: 9 9; fill: none; opacity: 0; }
+    #sia13 .ref.aprob { stroke: var(--amber); }
+    #sia13 .ref.med   { stroke: var(--slate); }
+    #sia13 .ref-tag {
+      font-family: var(--font); font-size: 22px; font-weight: 700; opacity: 0;
+    }
+    #sia13 .ref-tag.aprob { fill: var(--amber); }
+    #sia13 .ref-tag.med   { fill: var(--slate); }
+
+    #sia13 .curve { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+    /* transform-origin se fija por punto en JS (cx,cy exactos): transform-box:fill-box
+       en <circle> resuelve mal el origen en varios navegadores (usa r,r en vez de cx,cy),
+       haciendo que el scale() pivote cerca de (0,0) del SVG en vez del propio centro. */
+    #sia13 .dot { fill: #fff; stroke: var(--accent); stroke-width: 4; opacity: 0; transform: scale(.2); }
+    #sia13 .yr  { font-family: var(--font); font-size: 24px; font-weight: 700; fill: var(--ink); }
+
+    #sia13 .cross {
+      font-family: var(--font); font-size: 21px; font-weight: 700; fill: var(--green);
+      opacity: 0;
+    }
+
+    #sia13 .sia13-side { align-self: center; }
+    #sia13 .sia13-close {
+      font-family: var(--serif); font-size: 40px; line-height: 1.35; color: var(--ink);
+      border-left: 4px solid var(--accent); padding-left: 30px;
+    }
+    #sia13 .sia13-close .mk { color: var(--accent); font-style: italic; }
+    #sia13 .sia13-note { margin-top: 30px; font-size: 22px; color: var(--faint); }
+  </style>
+
+  <div id="sia13" class="fill">
+    <div class="sia13-head">
+      <div class="kicker">Bloque 2 · De juguete a herramienta</div>
+      <h2 style="margin-top:26px">Ya aprueban el <span class="mk">MIR</span> y el <span class="mk">USMLE</span></h2>
+      <p class="lead" style="margin-top:14px">Aciertos en exámenes médicos tipo test (MIR español · USMLE de EE. UU.), año a año.</p>
+    </div>
+
+    <div class="sia13-stage">
+      <div class="sia13-chart">
+        <svg viewBox="0 0 1180 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- rejilla horizontal -->
+          <g class="grid-l">
+            <line x1="150" y1="80"  x2="1120" y2="80"/>
+            <line x1="150" y1="190" x2="1120" y2="190"/>
+            <line x1="150" y1="300" x2="1120" y2="300"/>
+            <line x1="150" y1="410" x2="1120" y2="410"/>
+            <line x1="150" y1="520" x2="1120" y2="520"/>
+          </g>
+
+          <!-- ejes -->
+          <line class="axis" x1="150" y1="80" x2="150" y2="520"/>
+          <line class="axis" x1="150" y1="520" x2="1120" y2="520"/>
+
+          <!-- etiquetas eje Y -->
+          <text class="ylab" x="132" y="528" text-anchor="end">0</text>
+          <text class="ylab" x="132" y="418" text-anchor="end">25</text>
+          <text class="ylab" x="132" y="308" text-anchor="end">50</text>
+          <text class="ylab" x="132" y="198" text-anchor="end">75</text>
+          <text class="ylab" x="132" y="88"  text-anchor="end">100</text>
+          <text class="axlab" x="46" y="300" text-anchor="middle" transform="rotate(-90 46 300)">Aciertos (%)</text>
+
+          <!-- líneas de referencia -->
+          <!-- Aprobado ~ 60% -> y = 520 - 60*4.4 = 256 -->
+          <line class="ref aprob" x1="150" y1="256" x2="1120" y2="256"/>
+          <text class="ref-tag aprob" x="1116" y="248" text-anchor="end">Aprobado</text>
+          <!-- Médico medio ~ 80% -> y = 520 - 80*4.4 = 168 -->
+          <line class="ref med" x1="150" y1="168" x2="1120" y2="168"/>
+          <text class="ref-tag med" x="1116" y="160" text-anchor="end">Médico medio</text>
+
+          <!-- curva: 2021..2026, x uniformemente espaciado cada 170px -->
+          <!-- x: 230,400,570,740,910,1080  y por %  y=520-%*4.4 -->
+          <!-- 2021 ~42% =335 · 2022 ~58% =265 · 2023 ~68% =221 · 2024 ~82% =159 · 2025 ~88% =133 · 2026 ~90% =124 -->
+          <path class="curve" d="M 230 335 L 400 265 L 570 221 L 740 159 L 910 133 L 1080 124"/>
+
+          <!-- marcadores -->
+          <circle class="dot" data-i="0" cx="230"  cy="335" r="11"/>
+          <circle class="dot" data-i="1" cx="400"  cy="265" r="11"/>
+          <circle class="dot" data-i="2" cx="570"  cy="221" r="11"/>
+          <circle class="dot" data-i="3" cx="740"  cy="159" r="11"/>
+          <circle class="dot" data-i="4" cx="910"  cy="133" r="11"/>
+          <circle class="dot" data-i="5" cx="1080" cy="124" r="11"/>
+
+          <!-- años -->
+          <text class="yr" x="230"  y="560" text-anchor="middle">2021</text>
+          <text class="yr" x="400"  y="560" text-anchor="middle">2022</text>
+          <text class="yr" x="570"  y="560" text-anchor="middle">2023</text>
+          <text class="yr" x="740"  y="560" text-anchor="middle">2024</text>
+          <text class="yr" x="910"  y="560" text-anchor="middle">2025</text>
+          <text class="yr" x="1080" y="560" text-anchor="middle">2026</text>
+
+          <!-- anotaciones de cruce -->
+          <text class="cross" data-c="aprob" x="400" y="248" text-anchor="middle">roza el aprobado</text>
+          <text class="cross" data-c="med"   x="740" y="145" text-anchor="middle">supera al médico medio</text>
+        </svg>
+      </div>
+
+      <div class="sia13-side">
+        <div class="sia13-close fragment fade-only">
+          Aprobar un test <span class="mk">no es ejercer</span> la medicina. Pero fija el listón de lo que ya saben.
+        </div>
+        <div class="sia13-note">
+          Datos ilustrativos del rendimiento por año.
+          <!-- VERIFICAR: cifras de rendimiento por año -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+    const curve = root.querySelector('.curve');
+    const dots  = Array.from(root.querySelectorAll('.dot'));
+    const refs  = Array.from(root.querySelectorAll('.ref'));
+    const refTags = Array.from(root.querySelectorAll('.ref-tag'));
+    const crosses = Array.from(root.querySelectorAll('.cross'));
+    let tl = null;
+
+    function reset() {
+      const L = curve.getTotalLength();
+      curve.style.strokeDasharray = L;
+      curve.style.strokeDashoffset = L;
+      dots.forEach(d => {
+        // Origen de escala fijado a las coordenadas reales del punto (cx,cy).
+        // No usar transform-box:fill-box aquí: varios navegadores lo resuelven
+        // mal en <circle> y el scale() pivota cerca de (0,0) del SVG.
+        d.style.transformOrigin = d.getAttribute('cx') + 'px ' + d.getAttribute('cy') + 'px';
+        d.style.opacity = 0; d.style.transform = 'scale(.2)';
+      });
+      refs.forEach(r => r.style.opacity = 0);
+      refTags.forEach(r => r.style.opacity = 0);
+      crosses.forEach(c => c.style.opacity = 0);
+    }
+
+    function play() {
+      const L = curve.getTotalLength();
+      if (g) {
+        if (tl) tl.kill();
+        tl = g.timeline();
+        tl.to(refs, { opacity: .95, duration: .5, stagger: .15 })
+          .to(refTags, { opacity: 1, duration: .5, stagger: .15 }, '<')
+          .to(curve, { strokeDashoffset: 0, duration: 2.6, ease: 'power1.inOut' }, '+=0.1');
+        dots.forEach((d, i) => {
+          const origin = d.getAttribute('cx') + 'px ' + d.getAttribute('cy') + 'px';
+          tl.to(d, { opacity: 1, scale: 1, transformOrigin: origin, duration: .4, ease: 'back.out(2)' }, 0.9 + i * 0.42);
+        });
+        tl.to(crosses[0], { opacity: 1, duration: .5 }, 1.5)
+          .to(crosses[1], { opacity: 1, duration: .5 }, 2.4);
+      } else {
+        curve.style.transition = 'stroke-dashoffset 2.6s ease-in-out';
+        refs.forEach(r => r.style.opacity = .95);
+        refTags.forEach(r => r.style.opacity = 1);
+        requestAnimationFrame(() => { curve.style.strokeDashoffset = 0; });
+        dots.forEach(d => { d.style.transition = 'opacity .4s ease, transform .4s ease'; d.style.opacity = 1; d.style.transform = 'scale(1)'; });
+        crosses.forEach(c => c.style.opacity = 1);
+      }
+    }
+
+    Deck.register("ia13", {
+      onReset() { reset(); },
+      onEnter() { reset(); requestAnimationFrame(play); },
+      onLeave() { if (tl) { tl.kill(); tl = null; } }
+    });
+  })();
+  </script>
+</section>

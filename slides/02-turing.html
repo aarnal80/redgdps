@@ -1,0 +1,195 @@
+<section class="slide congreso-plantilla congreso-interior" data-slide="2">
+  <style>
+    #s2 { padding: 66px 100px; }
+    #s2 .s2-top { position: relative; z-index: 3; }
+    #s2 h2.s2-q { font-size: 50px; line-height: 1.14; margin-top: 14px; max-width: 1500px; }
+    #s2 h2.s2-q .mk { color: var(--accent); font-style: italic; }
+
+    /* --- Zona de tarjetas --- */
+    #s2 .s2-grid { position: relative; z-index: 2; margin-top: 40px; }
+    #s2 .s2-cardwrap { position: relative; }
+    #s2 .s2-card {
+      position: relative; overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 34px 40px 30px;
+      box-shadow: var(--shadow);
+      min-height: 466px;
+    }
+    #s2 .s2-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 20px;
+    }
+    #s2 .s2-name { font-family: var(--serif); font-size: 34px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+    #s2 .s2-meta { font-family: var(--mono); font-size: 18px; color: var(--faint); letter-spacing: .04em; }
+    #s2 .s2-note {
+      font-family: var(--serif); font-size: 27px; line-height: 1.5; color: var(--ink-soft);
+    }
+    #s2 .s2-note .lbl { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent-ink); letter-spacing: .02em; }
+
+    /* --- Sello "ESCRITO POR IA" --- */
+    #s2 .s2-stamp {
+      position: absolute; top: 168px; left: 50%;
+      transform: translate(-50%, -50%) rotate(-13deg);
+      opacity: 0; pointer-events: none; z-index: 5;
+      border: 6px double var(--accent);
+      color: var(--accent);
+      font-family: var(--font); font-weight: 800; letter-spacing: .10em;
+      font-size: 40px; text-transform: uppercase;
+      padding: 14px 30px; border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      box-shadow: inset 0 0 0 2px rgba(166,9,61,.18);
+      text-align: center; white-space: nowrap; mix-blend-mode: multiply;
+    }
+    #s2 .s2-stamp small { display: block; font-size: 17px; font-weight: 700; letter-spacing: .26em; opacity: .82; margin-top: 2px; }
+
+    /* --- Banda inferior: mano alzada --- */
+    #s2 .s2-band { position: absolute; left: 100px; right: 100px; bottom: 46px; z-index: 3; text-align: center; }
+    #s2 .s2-hand {
+      opacity: 0; transform: translateY(14px);
+      transition: opacity .5s ease, transform .5s ease;
+      font-family: var(--font); font-size: 34px; font-weight: 600; color: var(--ink);
+    }
+    #s2 .s2-hand.on { opacity: 1; transform: none; }
+    #s2 .s2-hand b { color: var(--accent); }
+    #s2 .s2-foot { position: absolute; left: 100px; bottom: 110px; z-index: 3; font-size: 19px; }
+
+    /* --- Cierre grande (overlay) --- */
+    #s2 .s2-closing {
+      position: absolute; inset: 0; z-index: 8;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .55s ease;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,.94) 40%, rgba(255,255,255,.82) 100%);
+    }
+    #s2 .s2-closing.on { opacity: 1; }
+    #s2 .s2-closing .inner { max-width: 1420px; text-align: center; padding: 0 60px; }
+    #s2 .s2-closing .rule { width: 90px; height: 4px; background: var(--accent); margin: 0 auto 34px; }
+    #s2 .s2-closing p { font-family: var(--serif); font-size: 68px; line-height: 1.18; color: var(--ink); font-weight: 700; letter-spacing: -.01em; }
+    #s2 .s2-closing p .mk { color: var(--accent); font-style: italic; }
+  </style>
+
+  <div id="s2" class="fill">
+    <div class="s2-top">
+      <div class="kicker">Para empezar</div>
+      <h2 class="s2-q">¿Cuál de estos dos informes lo escribió una <span class="mk">inteligencia artificial</span>?</h2>
+    </div>
+
+    <div class="s2-grid grid grid-2">
+      <div class="s2-cardwrap">
+        <div class="s2-card">
+          <div class="s2-head">
+            <span class="s2-name">Informe A</span>
+            <span class="s2-meta">Resumen clínico · Adriana</span>
+          </div>
+          <p class="s2-note">Adriana, 42 años, consulta por el peso y la alimentación. Tuvo diabetes gestacional y ahora presenta prediabetes: HbA1c 6,1 %. Refiere 87 kg, toma metformina y utilizó Ozempic. <span class="lbl">Plan:</span> explorar hábitos, revisar la toma real y acordar cambios sostenibles.</p>
+        </div>
+        <div class="s2-stamp">Escrito por IA<small>Informe A</small></div>
+      </div>
+
+      <div class="s2-cardwrap">
+        <div class="s2-card">
+          <div class="s2-head">
+            <span class="s2-name">Informe B</span>
+            <span class="s2-meta">Plan preconsulta · Adriana</span>
+          </div>
+          <p class="s2-note">Adriana quiere comer mejor y reducir su riesgo de diabetes. Cena tarde, refiere ingestas nocturnas y le cuesta mantener la pauta de metformina. <span class="lbl">Plan:</span> revisar resultados, confirmar medicación y organizar apoyo nutricional y seguimiento. La pregunta sobre fármacos para el peso se aborda con el médico.</p>
+        </div>
+        <div class="s2-stamp">Escrito por IA<small>Informe B</small></div>
+      </div>
+    </div>
+
+    <div class="s2-band">
+      <div class="s2-hand">Levantad la mano: <b>¿A o B?</b></div>
+    </div>
+
+    <div class="s2-foot small">Caso ficticio de Adriana · dos ejemplos de redacción</div>
+
+    <!-- marcadores de paso (definen el ritmo; el contenido lo mueve onStep) -->
+    <i class="fragment" data-step="1" style="display:none"></i>
+    <i class="fragment" data-step="2" style="display:none"></i>
+    <i class="fragment" data-step="3" style="display:none"></i>
+
+    <div class="s2-closing">
+      <div class="inner">
+        <div class="rule"></div>
+        <p>Ya está pasando. La pregunta no es <span class="mk">si</span> llegará: es si sabréis <span class="mk">usarla</span>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="congreso-pie"><img src="assets/congreso/pie.png" width="1920" height="1080" alt="5º Congreso Nacional de Diabetes de la Fundación redGDPS · Los pilares de la diabetes"></div>
+
+  <script>
+  (function () {
+    const _cs = document.currentScript;
+    const root = (_cs && _cs.closest('.slide')) || document.querySelector('.slide[data-slide="2"]');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+    const stamps = Array.from(root.querySelectorAll('.s2-stamp'));
+    const hand = root.querySelector('.s2-hand');
+    const grid = root.querySelector('.s2-grid');
+    const closing = root.querySelector('.s2-closing');
+    const cardwraps = Array.from(root.querySelectorAll('.s2-cardwrap'));
+    const notes = Array.from(root.querySelectorAll('.s2-note'));
+    let stamped = false;
+
+    function playEntrance() {
+      if (!g) return;
+      g.killTweensOf(cardwraps); g.killTweensOf(notes);
+      g.fromTo(cardwraps, { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: .6, ease: 'power2.out', stagger: .15 });
+      notes.forEach((n, k) => {
+        g.fromTo(n, { clipPath: 'inset(0 0 100% 0)' },
+          { clipPath: 'inset(0 0 0% 0)', duration: .7, ease: 'power2.out', delay: .12 + k * .15 });
+      });
+    }
+
+    const CENTER = { xPercent: -50, yPercent: -50, transformOrigin: '50% 50%' };
+    function resetStamps() {
+      stamped = false;
+      stamps.forEach(s => {
+        if (g) g.set(s, Object.assign({ opacity: 0, rotate: -13, scale: 2.6, y: 0 }, CENTER));
+        else { s.style.opacity = 0; }
+      });
+    }
+    function playStamps() {
+      if (stamped) return; stamped = true;
+      stamps.forEach((s, k) => {
+        if (g) {
+          g.fromTo(s,
+            Object.assign({ opacity: 0, rotate: -46, scale: 2.7, y: -30 }, CENTER),
+            Object.assign({ opacity: 1, rotate: -13, scale: 1, y: 0, duration: .5, delay: k * .16, ease: 'back.out(2.2)',
+              onComplete() { g.fromTo(s, { rotate: -13 }, { rotate: -11, duration: .09, yoyo: true, repeat: 3 }); } }, CENTER));
+        } else { s.style.opacity = 1; s.style.transform = 'translate(-50%,-50%) rotate(-13deg) scale(1)'; }
+      });
+    }
+    function base() {
+      resetStamps();
+      hand.classList.remove('on');
+      closing.classList.remove('on');
+      if (g) g.set(grid, { opacity: 1 });
+    }
+
+    Deck.register(2, {
+      onEnter(el) { base(); playEntrance(); },
+      onReset(el) { base(); },
+      onLeave(el) { if (g) { g.killTweensOf(stamps); g.killTweensOf(cardwraps); g.killTweensOf(notes); } },
+      onStep(el, i) {
+        hand.classList.toggle('on', i >= 1);
+        if (i >= 2) playStamps(); else resetStamps();
+        if (i >= 3) {
+          closing.classList.add('on');
+          if (g) g.to(grid, { opacity: .12, duration: .5 });
+          else grid.style.opacity = .12;
+        } else {
+          closing.classList.remove('on');
+          if (g) g.to(grid, { opacity: 1, duration: .4 });
+          else grid.style.opacity = 1;
+        }
+      }
+    });
+  })();
+  </script>
+</section>

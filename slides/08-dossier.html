@@ -1,0 +1,133 @@
+<section class="slide" data-slide="8">
+<style>
+#s8 {background:#f3f5f7;color:#18212a;font-family:var(--font);font-size:24px;overflow:hidden;}
+#s8 * {box-sizing:border-box;}
+#s8 button {font:inherit;cursor:pointer;}
+#s8 button:focus-visible {outline:3px solid #1665b0;outline-offset:4px;}
+#s8 .appbar {height:72px;background:#fff;border-bottom:1px solid #dfe4e9;display:flex;align-items:center;justify-content:space-between;padding:0 32px;}
+#s8 .product {font-size:25px;font-weight:800;display:flex;align-items:center;gap:14px;}
+#s8 .mark {background:#a6093d;color:white;width:38px;height:38px;display:grid;place-items:center;border-radius:10px;}
+#s8 .env {font-size:19px;color:#64717d;}
+#s8 .appbody {display:grid;grid-template-columns:242px 1fr;height:944px;}
+#s8 .sidebar {padding:32px 18px;background:#fff;border-right:1px solid #dfe4e9;}
+#s8 .navlabel {font-size:17px;text-transform:uppercase;letter-spacing:.12em;color:#6b7784;margin:0 16px 22px;}
+#s8 .nav {display:flex;flex-direction:column;gap:12px;}
+#s8 .nav button {text-align:left;border:0;background:transparent;color:#56616f;padding:14px 16px;border-radius:10px;font-size:23px;display:flex;gap:12px;align-items:center;}
+#s8 .nav button[aria-selected="true"] {background:#faeaf0;color:#990636;font-weight:700;}
+#s8 .nav .ico {width:26px;text-align:center;font-size:25px;}
+#s8 .sidecase {margin:26px 14px 0;padding-top:22px;border-top:1px solid #e2e5e9;font-size:20px;line-height:1.6;color:#687582;}
+#s8 .sidecase b {color:#273442;display:block;}
+#s8 .workspace {padding:26px 32px 20px;overflow:hidden;}
+#s8 .patient {display:flex;align-items:center;gap:20px;margin-bottom:16px;}
+#s8 .avatar {width:72px;height:72px;border-radius:20px;background:#ece3e8;color:#9f1a43;display:grid;place-items:center;font-size:28px;font-weight:800;flex-shrink:0;}
+#s8 h2 {font-family:var(--font);font-size:39px;line-height:1.15;margin:0 0 7px;letter-spacing:-.02em;}
+#s8 .identity {font-size:22px;color:#626f7d;}
+#s8 .appointment {margin-left:auto;text-align:right;font-size:22px;line-height:1.6;}
+#s8 .appointment b {color:#9b0e3b;}
+#s8 .flag {display:inline-block;background:#fff2de;color:#92570b;padding:5px 12px;border-radius:7px;font-size:18px;font-weight:700;}
+#s8 [hidden] {display:none!important;}
+#s8 .panel {height:766px;}
+#s8 .panelhead {display:flex;align-items:center;justify-content:space-between;margin:4px 0 20px;}
+#s8 h3 {font-family:var(--font);font-size:27px;font-weight:750;line-height:1.25;margin:0;}
+#s8 .muted {color:#697581;font-size:21px;line-height:1.5;}
+#s8 .alert {background:#fff1f3;border:1px solid #f1c5d0;border-left:6px solid #a6093d;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-radius:12px;margin-bottom:18px;}
+#s8 .alert b {color:#9e123b;font-size:25px;}
+#s8 .alert p {font-size:22px;margin:6px 0 0;line-height:1.35;}
+#s8 .btn {border:1px solid #ccd5de;background:white;border-radius:9px;padding:10px 17px;font-size:20px;font-weight:650;white-space:nowrap;color:#273746;}
+#s8 .btn.primary {background:#a6093d;border-color:#a6093d;color:#fff;}
+#s8 .metrics {display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px;}
+#s8 .metric {padding:16px 22px;background:#fff;border:1px solid #dfe5ea;border-radius:12px;}
+#s8 .metric .label {font-size:19px;color:#65717e;}
+#s8 .metric strong {font-size:36px;line-height:1.25;display:block;margin-top:6px;letter-spacing:-.02em;}
+#s8 .metric small {font-size:17px;font-weight:500;}
+#s8 .metric .meta {font-size:18px;color:#73808b;margin-top:4px;}
+#s8 .dashgrid {display:grid;grid-template-columns:1.05fr 1fr;gap:18px;}
+#s8 .box {border:1px solid #dfe5ea;background:#fff;border-radius:12px;padding:20px 22px;}
+#s8 .boxhead {display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px;}
+#s8 .boxhead h3 {font-size:24px;}
+#s8 .link {border:0;background:transparent;color:#a6093d;padding:5px 0;font-size:19px;font-weight:700;}
+#s8 .chart {width:100%;display:block;}
+#s8 .legend {display:flex;gap:22px;color:#5f6f7d;font-size:18px;margin:4px 0 8px;flex-wrap:wrap;}
+#s8 .legend span:before {content:'';display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:8px;}
+#s8 .compact {width:100%;border-collapse:collapse;font-size:21px;}
+#s8 .compact td {padding:10px 0;border-bottom:1px solid #edf0f3;vertical-align:top;}
+#s8 .compact td:last-child {text-align:right;color:#687480;padding-left:12px;}
+#s8 .warntext {color:#a6093d!important;font-weight:650;}
+#s8 .taskrow {display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+#s8 .taskrow .box {padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+#s8 .taskrow p {font-size:21px;color:#64717e;margin:6px 0 0;}
+#s8 .foot {font-size:17px;line-height:1.4;color:#73808b;margin-top:14px;}
+#s8 .twocol {display:grid;grid-template-columns:1.2fr .85fr;gap:22px;}
+#s8 .transcript {height:623px;overflow-y:auto;padding-right:10px;}
+#s8 .message {border:1px solid #e0e5eb;background:#fff;padding:18px 22px;border-radius:12px;margin-bottom:14px;}
+#s8 .message.patientmsg {background:#f4f7fa;margin-left:70px;}
+#s8 .speaker {font-size:17px;font-weight:750;letter-spacing:.05em;color:#9c163c;}
+#s8 .message p {font-size:23px;line-height:1.4;margin:7px 0 0;}
+#s8 .list {padding-left:25px;font-size:24px;line-height:1.5;}
+#s8 .list li {margin-bottom:16px;}
+#s8 .recordthumb {display:block;width:100%;border:0;background:transparent;padding:0;text-align:left;}
+#s8 .recordthumb .recordphoto {width:100%;height:510px;object-fit:contain;display:block;border-radius:8px;}
+#s8 .statusline {display:flex;gap:12px;align-items:center;margin:16px 0;font-size:22px;}
+#s8 .tag {font-size:18px;line-height:1.4;font-weight:700;letter-spacing:0;text-transform:none;border-radius:7px;padding:4px 10px;}
+#s8 .tag.done {color:#216e54;background:#e9f4ee;}
+#s8 .tag.pending {color:#945710;background:#fff1d8;}
+#s8 .largechart {height:400px;}
+#s8 .data {width:100%;border-collapse:collapse;font-size:22px;}
+#s8 .data th {text-align:left;color:#65717d;font-weight:600;background:#f5f7f9;padding:10px 14px;}
+#s8 .data td {padding:11px 14px;border-bottom:1px solid #e8edf1;line-height:1.25;vertical-align:top;}
+#s8 .data .low {color:#a6093d;font-weight:750;background:#fff1f4;}
+#s8 .meds {font-size:21px;}
+#s8 .meds td {padding:8px 14px;}
+#s8-view-tratamiento .alert {padding:14px 22px;}
+#s8 .meds th:first-child {width:28%;}
+#s8 .meds th:nth-child(2) {width:31%;}
+#s8 .dm-med td {background:#eaf5f8;}
+#s8 .dm-med td:first-child {border-left:4px solid #08778b;padding-left:12px;color:#075568;}
+#s8 .med-key {font-size:18px;color:#075568;display:flex;align-items:center;gap:9px;margin:0 0 12px;}
+#s8 .med-key:before {content:'';width:14px;height:14px;border-radius:3px;background:#08778b;}
+#s8 .compact {font-size:19px;}
+#s8 .compact td {padding:7px 0;}
+#s8-view-resumen .alert {padding:14px 22px;}
+#s8-view-resumen .metric {padding:10px 22px;}
+#s8-view-resumen > .foot {margin-top:8px;}
+#s8-view-resumen .dashgrid .box {padding:16px 22px;}
+#s8 .diagnosis-summary {margin-top:12px;padding:10px 20px;}
+#s8 .diagnosis-summary .boxhead {margin-bottom:8px;}
+#s8 .diagnosis-chips {display:flex;flex-wrap:wrap;gap:7px 10px;list-style:none;margin:0;padding:0;}
+#s8 .diagnosis-chips li {font-size:18px;line-height:1.3;padding:5px 10px;background:#f0f3f6;border-radius:6px;}
+#s8 .diagnosis-grid {display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+#s8 .diagnosis-grid .list {font-size:21px;line-height:1.35;margin-bottom:0;}
+#s8 .diagnosis-grid .list li {margin-bottom:13px;}
+#s8 .overlay {position:absolute;inset:20px 34px 70px;background:#fff;border:1px solid #dce3e9;border-radius:18px;box-shadow:0 0 0 80px #18212abf,0 20px 70px #18212a33;z-index:10;padding:26px;}
+#s8 .overlayhead {display:flex;align-items:center;justify-content:space-between;}
+#s8 .zoomrecord {height:800px;width:100%;object-fit:contain;display:block;}
+</style>
+<div id="s8" class="fill" data-no-advance><header class="appbar"><div class="product"><span class="mark">+</span>Consulta · preparación con IA</div><div class="env">SIMULACIÓN DOCENTE · ADRIANA</div></header><div class="appbody"><aside class="sidebar"><div class="navlabel">Dossier de preconsulta</div><nav class="nav" role="tablist" aria-label="Apartados del dossier" aria-orientation="vertical"><button type="button" role="tab" id="s8-tab-resumen" data-view="resumen" aria-controls="s8-view-resumen" aria-selected="true" tabindex="0">Resumen</button><button type="button" role="tab" id="s8-tab-antecedentes" data-view="antecedentes" aria-controls="s8-view-antecedentes" aria-selected="false" tabindex="-1">Antecedentes</button><button type="button" role="tab" id="s8-tab-llamada" data-view="llamada" aria-controls="s8-view-llamada" aria-selected="false" tabindex="-1">Llamada de Lía</button><button type="button" role="tab" id="s8-tab-habitos" data-view="habitos" aria-controls="s8-view-habitos" aria-selected="false" tabindex="-1">Peso y hábitos</button><button type="button" role="tab" id="s8-tab-analitica" data-view="analitica" aria-controls="s8-view-analitica" aria-selected="false" tabindex="-1">Analítica</button><button type="button" role="tab" id="s8-tab-tratamiento" data-view="tratamiento" aria-controls="s8-view-tratamiento" aria-selected="false" tabindex="-1">Tratamiento</button><button type="button" role="tab" id="s8-tab-plan" data-view="plan" aria-controls="s8-view-plan" aria-selected="false" tabindex="-1">Preparar consulta</button></nav><div class="sidecase"><b>Adriana · 42 años</b>Peso y nutrición<br>Diabetes gestacional previa<br>Prediabetes<br><br>Lía prepara la información.<br>El Dr. Arnal la revisa.</div></aside><main class="workspace"><header class="patient"><div class="avatar">A</div><div><h2>Adriana</h2><div class="identity">42 años · Control de peso y mejora de la alimentación</div></div><div class="appointment"><b>Consulta con el Dr. Arnal</b><br><span class="flag">Preconsulta realizada</span></div></header><section class="panel" id="s8-view-resumen" role="tabpanel" aria-labelledby="s8-tab-resumen" ><div class="alert"><div><b>Motivo de consulta: controlar el peso y mejorar la nutrición</b><p>Antecedente de diabetes gestacional y prediabetes. Quiere entender su riesgo y revisar las opciones de tratamiento.</p></div><button class="btn" data-open="plan">Ver prioridades</button></div>
+<div class="metrics"><div class="metric"><div class="label">Peso actual referido</div><strong>87 <small>kg</small></strong><div class="meta">Confirmar en consulta</div></div><div class="metric"><div class="label">HbA1c reciente</div><strong>6,1 <small>%</small></strong><div class="meta">Datos del caso docente</div></div><div class="metric"><div class="label">Glucosa en ayunas</div><strong>112 <small>mg/dl</small></strong><div class="meta">Analítica disponible</div></div><div class="metric"><div class="label">Filtrado estimado</div><strong>96 <small>ml/min/1,73 m²</small></strong><div class="meta">Función renal conservada</div></div></div>
+<div class="dashgrid"><article class="box"><div class="boxhead"><h3>Lo que cuenta Adriana</h3><button class="link" data-open="habitos">Ver hábitos</button></div><table class="compact"><tbody><tr><td><b>Peso y nutrición</b></td><td>Quiere un plan sostenible</td></tr><tr><td><b>Ozempic previo</b></td><td>Suspendido; recuperación de peso</td></tr><tr><td><b>Ingesta nocturna</b></td><td>2–3 veces por semana</td></tr><tr><td><b>Actividad física</b></td><td>Ha retomado el gimnasio</td></tr><tr><td><b>Tabaco</b></td><td>4–5 cigarrillos al día</td></tr></tbody></table><p class="muted" style="margin-top:12px">La sensación de «bajada de azúcar» carece de medición durante los episodios.</p></article>
+<article class="box"><div class="boxhead"><h3>Conciliación pendiente</h3><button class="link" data-open="tratamiento">Ver tratamiento</button></div><table class="compact"><tbody><tr><td><b>Metformina 500 mg</b></td><td>Confirmar formulación, horario y toma real</td></tr><tr><td><b>Ozempic</b></td><td>Uso previo, no actual</td></tr><tr><td><b>Eutirox</b></td><td>Mencionado en la grabación</td></tr><tr><td><b>Envases y receta</b></td><td>Revisar en la visita</td></tr></tbody></table><p class="muted" style="margin-top:12px">La llamada y el caso escrito contienen diferencias de pauta que el resumen deja visibles.</p></article></div>
+<article class="box diagnosis-summary"><div class="boxhead"><h3>Antecedentes y problemas relevantes</h3><button class="link" data-open="antecedentes">Ver historia</button></div><ul class="diagnosis-chips"><li>Diabetes gestacional previa</li><li>Prediabetes</li><li>Exceso de peso</li><li>Madre con diabetes tipo 2</li><li>Dislipidemia leve</li><li>Tabaquismo</li><li>Ingestas nocturnas</li><li>Nódulo tiroideo en seguimiento</li></ul></article>
+<div class="foot">Dossier docente de Adriana · Peso actualizado a 87 kg según la corrección del caso. El médico verifica medidas, resultados y tratamiento.</div></section><section class="panel" id="s8-view-antecedentes" role="tabpanel" aria-labelledby="s8-tab-antecedentes" hidden><div class="panelhead"><h3>Antecedentes de Adriana</h3><span class="muted">Caso ficticio · 42 años</span></div>
+<div class="diagnosis-grid"><article class="box"><h3>Riesgo metabólico</h3><ul class="list"><li><b>Diabetes gestacional en 2015.</b> Segundo embarazo, controlada con alimentación y autocontroles.</li><li><b>Prueba posparto normal.</b> Seguimiento posterior irregular.</li><li><b>Prediabetes registrada en 2024.</b> HbA1c actual del caso: 6,1 %.</li><li><b>Madre con diabetes tipo 2.</b></li><li><b>Dislipidemia leve.</b> LDL 132 mg/dl y triglicéridos 168 mg/dl.</li></ul></article>
+<article class="box"><h3>Historia y contexto</h3><ul class="list"><li><b>Dos cesáreas.</b></li><li><b>Nódulo tiroideo benigno de 9 mm.</b> Seguimiento previo estable.</li><li><b>Sin alergias medicamentosas conocidas</b> en el caso escrito.</li><li><b>Trabajo administrativo sedentario.</b> Convive con su pareja y dos hijos.</li><li><b>Tabaco:</b> 4–5 cigarrillos diarios.</li></ul></article>
+<article class="box"><h3>Aspectos por explorar</h3><ul class="list"><li><b>Reganancia de peso</b> después de suspender semaglutida.</li><li><b>Ingestas nocturnas</b> con sensación de pérdida de control.</li><li><b>Sueño corto</b> y horarios de comida irregulares.</li><li><b>Toma real de medicamentos</b> y motivos de omisión.</li><li><b>Expectativas:</b> alimentación, prevención y opciones para el peso.</li></ul></article></div>
+<div class="foot">Los resultados disponibles del caso corresponden a prediabetes. No consta diabetes tipo 2 establecida ni hipoglucemia documentada.</div></section><section class="panel" id="s8-view-llamada" role="tabpanel" aria-labelledby="s8-tab-llamada" hidden><div class="panelhead"><h3>Extracto de la preconsulta con Lía</h3><span class="flag">Grabación simulada aportada</span></div><div class="twocol"><div class="transcript" tabindex="0">
+<div class="message"><div class="speaker">LÍA</div><p>¿Qué te gustaría conseguir exactamente con esta consulta?</p></div>
+<div class="message patientmsg"><div class="speaker">ADRIANA</div><p>Pautas generales y específicas para la pérdida de peso, un plan dietético y opciones de medicamentos para controlar el apetito.</p></div>
+<div class="message"><div class="speaker">LÍA</div><p>¿Cuánto pesas actualmente?</p></div>
+<div class="message patientmsg"><div class="speaker">ADRIANA</div><p>Ochenta y siete kilos.</p></div>
+<div class="message patientmsg"><div class="speaker">ADRIANA · HÁBITOS</div><p>Influyen el sedentarismo y la mala alimentación, sobre todo por la noche, cuando estamos cansados.</p></div>
+<div class="message patientmsg"><div class="speaker">ADRIANA · MEDICACIÓN REFERIDA</div><p>Estoy tomando metformina de quinientos por la mañana y también Eutirox.</p></div>
+</div><article class="box"><h3>Información para la visita</h3><ul class="list"><li>Confirmar peso y talla con mediciones actuales.</li><li>Explorar las ingestas nocturnas y la pérdida de control.</li><li>Conciliar la metformina y el tratamiento tiroideo mencionado.</li><li>Revisar expectativas sobre la medicación para el peso.</li></ul><p class="muted">Extracto editado para lectura. El vídeo y su transcripción completa aparecen en la diapositiva de preconsulta.</p></article></div></section><section class="panel" id="s8-view-habitos" role="tabpanel" aria-labelledby="s8-tab-habitos" hidden><div class="panelhead"><h3>Peso, alimentación y vida cotidiana</h3><span class="muted">Información de preconsulta</span></div><div class="diagnosis-grid">
+<article class="box"><h3>Evolución del peso</h3><ul class="list"><li><b>Peso actual referido: 87 kg.</b> Medición clínica pendiente.</li><li><b>Uso previo de Ozempic.</b> Pérdida de peso y recuperación posterior.</li><li><b>Quiere pautas nutricionales</b> y revisar opciones farmacológicas.</li><li><b>Talla a verificar.</b> La grabación y el caso escrito difieren; no calcular un IMC definitivo con medidas discordantes.</li></ul></article>
+<article class="box"><h3>Patrón de alimentación</h3><ul class="list"><li><b>Comidas irregulares</b> y cenas tardías o rápidas.</li><li><b>Dulces nocturnos 2–3 veces por semana</b> y también después de algunas siestas, según la llamada.</li><li><b>Pérdida de control referida.</b> Caracterizar frecuencia, cantidad y malestar.</li><li><b>Sin glucemia medida</b> durante la sensación de «bajada».</li></ul></article>
+<article class="box"><h3>Hábitos y apoyos</h3><ul class="list"><li><b>Ha retomado el gimnasio</b> con su pareja.</li><li><b>Trabajo sedentario</b> y cansancio al final del día.</li><li><b>Dificultad para conciliar el sueño.</b></li><li><b>Fuma 4–5 cigarrillos al día.</b></li><li><b>Objetivo:</b> organizar un plan compatible con sus horarios.</li></ul></article></div></section><section class="panel" id="s8-view-analitica" role="tabpanel" aria-labelledby="s8-tab-analitica" hidden><div class="panelhead"><h3>Analítica disponible</h3><span class="muted">Caso escrito · realizada tres semanas antes</span></div><article class="box"><table class="data"><thead><tr><th>Prueba</th><th>Resultado</th><th>Contexto</th></tr></thead><tbody><tr><td>HbA1c</td><td>6,1 %</td><td>Prediabetes en el caso</td></tr><tr><td>Glucosa en ayunas</td><td>112 mg/dl</td><td>Glucemia basal alterada</td></tr><tr><td>Creatinina / filtrado</td><td>0,78 mg/dl / 96 ml/min/1,73 m²</td><td>Función renal conservada</td></tr><tr><td>Colesterol total / LDL / HDL</td><td>211 / 132 / 46 mg/dl</td><td>Revisar riesgo cardiovascular</td></tr><tr><td>Triglicéridos</td><td>168 mg/dl</td><td>Elevación leve</td></tr><tr><td>ALT / AST</td><td>28 / 23 U/l</td><td>Sin elevación en esta determinación</td></tr><tr><td>TSH</td><td>2,1 mUI/l</td><td>Resultado del caso escrito</td></tr><tr><td>Hemoglobina</td><td>13,4 g/dl</td><td>Sin anemia en este análisis</td></tr></tbody></table></article><div class="foot">Recuperar el informe original y su fecha. Revisar los resultados existentes antes de solicitar nuevas pruebas.</div></section><section class="panel" id="s8-view-tratamiento" role="tabpanel" aria-labelledby="s8-tab-tratamiento" hidden><div class="panelhead"><h3>Conciliación de medicación</h3><span class="flag">Verificar receta y envases</span></div><article class="box"><table class="data"><thead><tr><th>Producto</th><th>Información disponible</th><th>Pendiente de confirmar</th></tr></thead><tbody>
+<tr><td><b>Metformina 500 mg</b></td><td>Caso escrito: XR con la cena, 4–5 días/semana.<br>Grabación: refiere toma por la mañana.</td><td>Formulación, pauta vigente, toma real y tolerancia.</td></tr>
+<tr><td><b>Ozempic</b></td><td>Uso previo para el peso, ya suspendido.</td><td>Duración, dosis previas, tolerancia y motivo de suspensión.</td></tr>
+<tr><td><b>Eutirox</b></td><td>Mencionado en la llamada; ausente del tratamiento del caso escrito.</td><td>Indicación, dosis y forma de administración.</td></tr>
+<tr><td><b>Vitaminas / suplementos</b></td><td>Uso ocasional según el caso escrito.</td><td>Nombre, composición y frecuencia.</td></tr>
+</tbody></table></article><div class="alert" style="margin-top:24px"><div><b>Pregunta de Adriana</b><p>«¿Qué opciones tengo para perder peso y controlar el apetito?»</p></div><button class="btn" data-open="plan">Preparar revisión</button></div></section><section class="panel" id="s8-view-plan" role="tabpanel" aria-labelledby="s8-tab-plan" hidden><div class="panelhead"><h3>Agenda clínica que prepara Lía</h3><span class="flag">Para revisión por el Dr. Arnal</span></div><div class="twocol"><article class="box"><h3>Confirmar y comprender</h3><ul class="list"><li>Medir peso, talla, cintura y presión arterial.</li><li>Revisar el antecedente de diabetes gestacional y la evolución analítica.</li><li>Conciliar medicación, horarios y dificultades de cumplimiento.</li><li>Explorar las ingestas nocturnas, el sueño y la sensación de pérdida de control.</li></ul><h3>Acordar con Adriana</h3><ul class="list"><li>Prioridad nutricional y objetivos de peso sostenibles.</li><li>Opciones terapéuticas según la valoración clínica.</li><li>Apoyo nutricional y seguimiento de las dificultades.</li></ul></article>
+<article class="box"><h3>Material preparado</h3><div class="statusline"><span class="tag done">Disponible</span>Motivo y expectativas</div><div class="statusline"><span class="tag done">Disponible</span>Vídeo y transcripción de la llamada</div><div class="statusline"><span class="tag done">Disponible</span>Analítica del caso docente</div><div class="statusline"><span class="tag pending">Por verificar</span>Antropometría actual</div><div class="statusline"><span class="tag pending">Por conciliar</span>Metformina y Eutirox</div><div class="statusline"><span class="tag pending">Por acordar</span>Plan y próxima revisión</div><p class="muted" style="margin-top:24px">El dossier conserva las dudas pendientes para que la consulta se centre en verificarlas y tomar decisiones con Adriana.</p></article></div></section></main></div></div>
+<script>(function(){const app=document.currentScript.closest('.slide').querySelector('#s8');const tabs=[...app.querySelectorAll('[data-view]')],panels=[...app.querySelectorAll('[role="tabpanel"]')];function openView(view){tabs.forEach(t=>{let active=t.dataset.view===view;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1});panels.forEach(p=>p.hidden=p.id!=='s8-view-'+view)}app.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&(b.dataset.view||b.dataset.open))openView(b.dataset.view||b.dataset.open)});app.addEventListener('keydown',e=>{let tab=e.target.closest('[data-view]');if(tab&&['ArrowDown','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();e.stopPropagation();let i=tabs.indexOf(tab);i=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowDown'?1:-1)+tabs.length)%tabs.length;openView(tabs[i].dataset.view);tabs[i].focus()}if(e.target.closest('button')&&[' ','Enter'].includes(e.key))e.stopPropagation()});Deck.register(8,{onEnter(){openView('resumen')}})})();</script>
+</section>
+

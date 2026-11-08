@@ -1,0 +1,59 @@
+<section class="slide" data-slide="4">
+<style>
+#s4 {padding:64px 110px 44px;background:var(--bg)}
+#s4 h2 {font-family:var(--serif);font-size:72px;line-height:1.06;letter-spacing:-.025em;margin:17px 0 13px}
+#s4 h2 em {color:var(--accent)}
+#s4 .lead {font-size:29px;color:var(--muted);line-height:1.3;margin-bottom:31px}
+#s4 .grid {display:grid;grid-template-columns:680px 1fr;gap:36px}
+#s4 .case {background:var(--bg-2);border-radius:20px;padding:36px 42px;border-left:6px solid var(--accent);min-height:634px}
+#s4 .eyebrow {font-size:20px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+#s4 .case h3 {font-family:var(--serif);font-size:59px;margin:12px 0 4px}
+#s4 .case .reason {font-size:33px;line-height:1.24;color:var(--ink);margin:0 0 27px}
+#s4 .facts {display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;border-top:1px solid var(--line-2);padding-top:26px}
+#s4 .fact {font-size:24px;line-height:1.23;color:var(--ink-soft)}
+#s4 .fact b {display:block;font-size:20px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
+#s4 .fact.wide {grid-column:1/-1}
+#s4 .handoff {display:grid;grid-template-columns:1fr 1fr;gap:24px;align-content:start}
+#s4 .agent {border:1px solid var(--line);border-top:5px solid var(--tone);border-radius:16px;background:var(--panel);box-shadow:var(--shadow-sm);padding:22px 28px 24px;min-height:390px}
+#s4 .portrait {width:196px;height:158px;margin:0 auto 6px;background-image:url('assets/agents-clinic.png');background-size:400% 100%;background-repeat:no-repeat;background-position:var(--position);filter:drop-shadow(0 10px 12px rgba(20,23,28,.12))}
+#s4 .agent h3 {font-family:var(--serif);font-size:46px;color:var(--tone);line-height:1.1;margin:0 0 12px}
+#s4 .agent h3 small {font:700 23px var(--font);color:var(--ink)}
+#s4 .agent p {font-size:25px;line-height:1.3;color:var(--ink-soft)}
+#s4 .handover {grid-column:1/-1;background:var(--accent-soft);border-radius:16px;padding:23px 30px;font-size:26px;line-height:1.3;color:var(--ink-soft)}
+#s4 .handover strong {color:var(--accent-ink)}
+#s4 .bottom {position:absolute;bottom:42px;left:110px;right:110px;border-top:1px solid var(--line);padding-top:15px;font-size:21px;color:var(--muted);display:flex;justify-content:space-between;gap:36px}
+</style>
+<div id="s4" class="fill">
+  <div class="kicker">Del sistema de agentes a Adriana</div>
+  <h2>Antes de la visita, <em>un relevo con contexto.</em></h2>
+  <p class="lead">Ada coordina la cita; Lía recibe la información necesaria para hacer una preconsulta útil.</p>
+  <div class="grid">
+    <div class="case">
+      <div class="eyebrow">Caso docente · Motivo de consulta</div>
+      <h3>Adriana, 42 años</h3>
+      <p class="reason">«Quiero controlar el peso, comer mejor y prevenir la diabetes».</p>
+      <div class="facts">
+        <div class="fact"><b>Antecedente</b>Diabetes gestacional en 2015</div>
+        <div class="fact"><b>Situación actual</b>Exceso de peso y prediabetes</div>
+        <div class="fact"><b>Tratamiento</b>Metformina; revisar la toma real</div>
+        <div class="fact"><b>Experiencia previa</b>Ozempic para pérdida de peso</div>
+        <div class="fact wide"><b>Objetivo de la visita</b>Explorar hábitos, nutrición y expectativas sin adelantar decisiones clínicas.</div>
+      </div>
+    </div>
+    <div class="handoff">
+      <div class="agent fragment" style="--tone:#1665b0;--position:0% center">
+        <div class="portrait" role="img" aria-label="Ada, agente de agenda"></div>
+        <h3>Ada <small>Agenda</small></h3>
+        <p>Gestiona la cita y comunica a Lía el motivo: control del peso y mejora de la alimentación.</p>
+      </div>
+      <div class="agent fragment" style="--tone:#087e8b;--position:33.333% center">
+        <div class="portrait" role="img" aria-label="Lía, agente de preconsulta"></div>
+        <h3>Lía <small>Preconsulta</small></h3>
+        <p>Recibe el resumen de la historia y pregunta por hábitos, medicación y prioridades de Adriana.</p>
+      </div>
+      <div class="handover fragment"><strong>El relevo Ada → Lía:</strong> cita + motivo + resumen clínico pertinente. Lía entrevista antes de la visita y prepara un informe para revisión por el Dr. Arnal.</div>
+    </div>
+  </div>
+  <div class="bottom"><span>Datos del caso ficticio aportado para la presentación</span><span>La IA organiza y recoge información; el médico valida</span></div>
+</div>
+</section>

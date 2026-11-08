@@ -1,0 +1,215 @@
+<section class="slide" data-slide="ia8">
+  <style>
+    #sia8 { overflow: hidden; }
+    #sia8 .sia8-head { position:absolute; left:var(--pad); top:96px; right:var(--pad); }
+    #sia8 .sia8-head h2 { margin-top:18px; }
+
+    /* Frase clínica que se construye palabra a palabra */
+    #sia8 .sia8-phrase { position:absolute; left:120px; top:300px; width:1680px; min-height:190px;
+                     font-family:var(--serif); font-size:56px; line-height:1.34; color:var(--ink); }
+    #sia8 .sia8-phrase .w { transition:color .3s ease; }
+    #sia8 .sia8-phrase .w.fixed { color:var(--ink); }
+    #sia8 .sia8-phrase .w.picked { color:var(--accent); font-weight:700; }
+    #sia8 .sia8-phrase .slot { display:inline-block; min-width:220px; border-bottom:5px solid var(--accent);
+                           height:.9em; vertical-align:-.08em; animation:sia8Blink 1.1s steps(1) infinite; }
+    #sia8 .sia8-phrase .slot.hide { display:none; }
+    @keyframes sia8Blink { 0%,45%{opacity:1;} 50%,95%{opacity:.15;} 100%{opacity:1;} }
+    #sia8 .sia8-ficticio { position:absolute; left:120px; top:250px; font-size:20px; color:var(--faint);
+                       letter-spacing:.04em; }
+
+    /* Panel de candidatas con barras de probabilidad */
+    #sia8 .sia8-panel { position:absolute; left:120px; top:560px; width:1200px; }
+    #sia8 .sia8-plabel { font-family:var(--font); font-size:22px; font-weight:700; letter-spacing:.1em;
+                     text-transform:uppercase; color:var(--muted); margin-bottom:22px; }
+    #sia8 .sia8-plabel b { color:var(--accent); }
+    #sia8 .sia8-cand { display:flex; align-items:center; height:64px; }
+    #sia8 .sia8-cand .word { width:280px; flex:0 0 280px; text-align:right; padding-right:28px;
+                         font-family:var(--font); font-size:32px; font-weight:600; color:var(--ink); }
+    #sia8 .sia8-cand .meter { position:relative; flex:1; height:38px; background:var(--bg-3);
+                          border-radius:8px; overflow:hidden; }
+    #sia8 .sia8-cand .fill { position:absolute; left:0; top:0; bottom:0; width:0; border-radius:8px;
+                         background:var(--slate); }
+    #sia8 .sia8-cand .pct { width:110px; flex:0 0 110px; text-align:right; font-family:var(--serif);
+                        font-size:30px; font-weight:700; color:var(--muted); }
+    /* La candidata ganadora (mayor probabilidad) resaltada en carmesí */
+    #sia8 .sia8-cand.top .word { color:var(--accent-ink); }
+    #sia8 .sia8-cand.top .fill { background:var(--accent); }
+    #sia8 .sia8-cand.top .pct  { color:var(--accent); }
+
+    #sia8 .sia8-right { position:absolute; right:120px; top:560px; width:360px; }
+    #sia8 .sia8-stepbadge { font-family:var(--mono); font-size:20px; color:var(--faint); letter-spacing:.14em; }
+    #sia8 .sia8-brain { margin-top:18px; font-family:var(--font); font-size:24px; color:var(--muted); line-height:1.5; }
+    #sia8 .sia8-tok { margin-top:26px; padding-top:18px; border-top:1px solid var(--line);
+                  font-family:var(--font); font-size:20px; color:var(--faint); line-height:1.45; }
+    #sia8 .sia8-tok b { color:var(--accent-ink); }
+
+    #sia8 .sia8-close { position:absolute; left:120px; bottom:64px; width:1680px; font-family:var(--serif);
+                    font-size:36px; font-style:italic; color:var(--ink); opacity:0; transition:opacity .6s ease; }
+    #sia8 .sia8-close.on { opacity:1; }
+    #sia8 .sia8-close .mk { color:var(--accent); font-style:normal; }
+
+    #sia8 .sia8-hidden { position:absolute; width:0; height:0; overflow:hidden; opacity:0; }
+  </style>
+
+  <div id="sia8" class="fill">
+    <div class="sia8-head">
+      <div class="kicker">Cómo funciona</div>
+      <h2>Un LLM es autocompletar con esteroides</h2>
+    </div>
+
+    <div class="sia8-ficticio">Caso ficticio · demostración</div>
+    <div class="sia8-phrase">
+      <span class="sia8-fixed"></span><span class="slot"></span>
+    </div>
+
+    <div class="sia8-panel">
+      <div class="sia8-plabel">Siguiente palabra &mdash; probabilidad estimada</div>
+      <div class="sia8-cands"></div>
+    </div>
+
+    <div class="sia8-right">
+      <div class="sia8-stepbadge"></div>
+      <div class="sia8-brain"></div>
+      <div class="sia8-tok">Con precisión: no predice palabras enteras, sino <b>«tokens»</b> — fragmentos de palabra.</div>
+    </div>
+
+    <div class="sia8-hidden">
+      <span class="fragment" data-step="1"></span>
+      <span class="fragment" data-step="2"></span>
+      <span class="fragment" data-step="3"></span>
+      <span class="fragment" data-step="4"></span>
+      <span class="fragment" data-step="5"></span>
+      <span class="fragment" data-step="6"></span>
+      <span class="fragment" data-step="7"></span>
+    </div>
+
+    <div class="sia8-close">
+      Esto es TODO lo que hace: predecir la siguiente palabra.
+      <span class="mk">Lo asombroso es lo que emerge al hacerlo a una escala descomunal.</span>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const g = window.gsap || null;
+
+    // Prefijo fijo de la frase clínica.
+    const PREFIX = ['El', 'paciente', 'refiere', 'dolor', 'torácico', 'de', 'tipo'];
+
+    // Cada paso: candidatas para la siguiente palabra + la elegida (mayor probabilidad).
+    const STEPS = [
+      { cands: [['opresivo',62],['punzante',21],['pleurítico',9],['urente',5],['quemante',3]], pick:'opresivo' },
+      { cands: [['que',84],['de',6],['e',4],['y',3],['sin',3]],                                pick:'que' },
+      { cands: [['aumenta',46],['empeora',27],['se',13],['no',8],['irradia',6]],               pick:'aumenta' },
+      { cands: [['con',78],['al',12],['ante',6],['durante',4]],                                pick:'con' },
+      { cands: [['el',74],['los',12],['la',8],['ejercicio',6]],                                pick:'el' },
+      { cands: [['esfuerzo',69],['ejercicio',18],['movimiento',8],['frío',3],['decúbito',2]],  pick:'esfuerzo' },
+      { cands: [['.',64],[',',20],['y',13],['que',3]],                                         pick:'.' }
+    ];
+
+    const fixedEl = root.querySelector('.sia8-fixed');
+    const slotEl  = root.querySelector('.slot');
+    const candsEl = root.querySelector('.sia8-cands');
+    const badge   = root.querySelector('.sia8-stepbadge');
+    const brain   = root.querySelector('.sia8-brain');
+    const close   = root.querySelector('.sia8-close');
+
+    // Palabras ya elegidas (además del prefijo).
+    let chosen = [];
+
+    function renderPhrase(justPicked){
+      // Prefijo
+      let html = PREFIX.map(w => '<span class="w fixed">' + w + '</span>').join(' ');
+      // Palabras elegidas
+      chosen.forEach((w, idx) => {
+        const isLast = (idx === chosen.length - 1) && justPicked;
+        const cls = isLast ? 'w picked' : 'w fixed';
+        html += (w === '.' || w === ',') ? '' : ' ';
+        html += '<span class="' + cls + '">' + w + '</span>';
+      });
+      fixedEl.innerHTML = html;
+      // El render acaba de reconstruir el innerHTML: capturamos el target DESPUÉS.
+      if (justPicked) {
+        const picked = fixedEl.querySelector('.w.picked');
+        if (picked) {
+          if (g) {
+            g.killTweensOf(picked);
+            g.fromTo(picked,
+              { scale: .7, opacity: 0, color: 'var(--accent)' },
+              { scale: 1, opacity: 1, duration: .4, ease: 'back.out(1.8)',
+                onComplete(){ g.to(picked, { color: 'var(--ink)', duration: .4, delay: .05, ease: 'power1.inOut' }); } });
+          }
+        }
+      }
+    }
+
+    function renderCands(stepIdx){
+      const step = STEPS[stepIdx];
+      if (g) g.killTweensOf(candsEl.children);
+      candsEl.innerHTML = '';
+      if (!step) return;
+      const rows = [];
+      step.cands.forEach((c, k) => {
+        const row = document.createElement('div');
+        row.className = 'sia8-cand' + (k === 0 ? ' top' : '');
+        row.innerHTML =
+          '<div class="word">' + (c[0] === '.' ? '«punto»' : c[0]) + '</div>' +
+          '<div class="meter"><div class="fill"></div></div>' +
+          '<div class="pct">' + c[1] + '%</div>';
+        candsEl.appendChild(row);
+        rows.push({ rowEl: row, el: row.querySelector('.fill'), pct: c[1] });
+      });
+      // Animar la entrada de cada fila y el ancho de sus barras.
+      rows.forEach((r, k) => {
+        if (g) {
+          g.fromTo(r.rowEl, { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: .4, delay: k * .05, ease: 'power2.out' });
+          g.fromTo(r.el, { width: '0%' }, { width: r.pct + '%', duration: .6, delay: k * .05, ease: 'power2.out' });
+        } else {
+          r.el.style.width = r.pct + '%';
+        }
+      });
+    }
+
+    function setContext(stepIdx){
+      // stepIdx = índice del paso cuyas candidatas se muestran (0..6). -1 = frase completa.
+      badge.textContent = stepIdx < 0 ? 'FRASE COMPLETA' : 'PREDICCIÓN ' + (stepIdx + 1) + ' / ' + STEPS.length;
+      if (stepIdx < 0) {
+        brain.innerHTML = 'Diagnóstico sugerido por el patrón: <b style="color:var(--accent)">angina de esfuerzo</b>.';
+        candsEl.innerHTML = '';
+        slotEl.classList.add('hide');
+      } else {
+        brain.innerHTML = 'El modelo mira el contexto y calcula qué palabra es más probable a continuación.';
+        slotEl.classList.remove('hide');
+      }
+    }
+
+    function reset(){
+      chosen = [];
+      renderPhrase(false);
+      slotEl.classList.remove('hide');
+      setContext(0);
+      renderCands(0);
+      close.classList.remove('on');
+    }
+
+    Deck.register("ia8", {
+      onReset(el){ if (g) g.killTweensOf(root.querySelectorAll('*')); reset(); },
+      onEnter(el){ /* estado inicial en onReset */ },
+      onLeave(el){ if (g) g.killTweensOf(root.querySelectorAll('*')); /* sin bucles, pero limpiamos flashes/entradas en curso */ },
+      onStep(el, i){
+        // i = nº de palabras ya elegidas.
+        chosen = STEPS.slice(0, i).map(s => s.pick);
+        renderPhrase(i > 0);
+        if (i < STEPS.length) {
+          setContext(i);        // muestra candidatas para la siguiente palabra
+          renderCands(i);
+        } else {
+          setContext(-1);       // frase completa
+        }
+        close.classList.toggle('on', i >= STEPS.length);
+      }
+    });
+  })();
+  </script>
+</section>

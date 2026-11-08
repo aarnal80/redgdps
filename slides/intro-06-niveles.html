@@ -1,0 +1,186 @@
+<section class="slide" data-slide="ia6">
+  <style>
+    #sia6 { overflow: hidden; }
+    #sia6 .sia6-head { position:absolute; left:var(--pad); top:96px; }
+    #sia6 .sia6-head h2 { margin-top:18px; }
+
+    #sia6 .sia6-stage { position:absolute; left:120px; top:300px; width:980px; height:640px; }
+    #sia6 svg.sia6-svg { width:980px; height:640px; overflow:visible; }
+    #sia6 .sia6-step rect { fill:var(--bg-2); stroke:var(--line-2); stroke-width:2; }
+    #sia6 .sia6-step .n { font-family:var(--serif); font-size:120px; font-weight:700; fill:#d7dbe2; }
+    #sia6 .sia6-step .lb { font-family:var(--font); font-size:30px; font-weight:800; fill:var(--ink);
+                       letter-spacing:.02em; }
+    /* Escalón 1 (los LLM viven aquí) resaltado en carmesí suave */
+    #sia6 .sia6-step.here rect { fill:var(--accent-soft); stroke:rgba(166,9,61,.35); }
+    #sia6 .sia6-step.here .n  { fill:#e7b9c8; }
+    #sia6 .sia6-step.here .lb { fill:var(--accent-ink); }
+
+    /* Conector punteado que enlaza los tres escalones, se dibuja hito a hito */
+    #sia6 .sia6-link { fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:round; stroke-dasharray:3 11; opacity:.85; }
+
+    #sia6 .sia6-pin { position:absolute; left:250px; top:250px; width:220px; text-align:center;
+                  opacity:0; pointer-events:none; }
+    #sia6 .sia6-pin .head { display:inline-block; font-family:var(--font); font-size:22px; font-weight:800;
+                        letter-spacing:.12em; text-transform:uppercase; color:#fff; background:var(--accent);
+                        padding:12px 20px; border-radius:10px; box-shadow:var(--shadow); white-space:nowrap; }
+    #sia6 .sia6-pin .needle { width:3px; height:64px; background:var(--accent); margin:0 auto; }
+    #sia6 .sia6-pin .tip { width:16px; height:16px; border-radius:50%; background:var(--accent);
+                       margin:-4px auto 0; box-shadow:0 0 0 6px rgba(166,9,61,.18); }
+
+    #sia6 .sia6-cards { position:absolute; right:120px; top:290px; width:640px; }
+    #sia6 .sia6-card { border-left:5px solid var(--line-2); padding:8px 0 8px 30px; }
+    #sia6 .sia6-card + .sia6-card { margin-top:34px; }
+    #sia6 .sia6-card .t { font-family:var(--font); font-size:30px; font-weight:800; color:var(--ink);
+                      display:flex; align-items:baseline; gap:14px; }
+    #sia6 .sia6-card .t .num { font-family:var(--serif); color:var(--faint); font-size:26px; }
+    #sia6 .sia6-card .d { font-family:var(--font); font-size:26px; color:var(--muted); line-height:1.42; margin-top:8px; }
+    #sia6 .sia6-card.k1 { border-left-color:var(--accent); }
+    #sia6 .sia6-card .tag-here { font-size:16px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+                            color:var(--accent); }
+
+    #sia6 .sia6-close { position:absolute; left:120px; bottom:70px; width:1680px; font-family:var(--serif);
+                    font-size:38px; font-style:italic; color:var(--ink); }
+    #sia6 .sia6-close .mk { color:var(--accent); font-style:normal; }
+  </style>
+
+  <div id="sia6" class="fill">
+    <div class="sia6-head">
+      <div class="kicker">Conceptos</div>
+      <h2>Tres niveles de inteligencia artificial</h2>
+    </div>
+
+    <div class="sia6-stage">
+      <svg class="sia6-svg" viewBox="0 0 980 640" aria-hidden="true">
+        <defs>
+          <clipPath id="s6clip" clipPathUnits="userSpaceOnUse">
+            <rect id="s6clipRect" x="150" y="90" width="0" height="440"></rect>
+          </clipPath>
+          <marker id="s6arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#a6093d"></path>
+          </marker>
+        </defs>
+        <!-- Conector punteado entre los tres escalones, revelado progresivamente vía clip-path -->
+        <path class="sia6-link" d="M170,430 L490,300 L810,150" clip-path="url(#s6clip)" marker-end="url(#s6arrow)"></path>
+
+        <!-- baseline compartida en y=620 -->
+        <g class="sia6-step here" data-lvl="1">
+          <rect x="20"  y="430" width="300" height="190" rx="10"></rect>
+          <text class="n"  x="46"  y="595">1</text>
+          <text class="lb" x="120" y="530">IA</text>
+          <text class="lb" x="120" y="566">estrecha</text>
+        </g>
+        <g class="sia6-step" data-lvl="2">
+          <rect x="340" y="300" width="300" height="320" rx="10"></rect>
+          <text class="n"  x="366" y="595">2</text>
+          <text class="lb" x="440" y="400">IA general</text>
+          <text class="lb" x="440" y="436">(AGI)</text>
+        </g>
+        <g class="sia6-step" data-lvl="3">
+          <rect x="660" y="150" width="300" height="470" rx="10"></rect>
+          <text class="n"  x="686" y="595">3</text>
+          <text class="lb" x="740" y="250">Super-</text>
+          <text class="lb" x="740" y="286">inteligencia</text>
+        </g>
+      </svg>
+
+      <div class="sia6-pin">
+        <div class="head">Estáis aquí</div>
+        <div class="needle"></div>
+        <div class="tip"></div>
+      </div>
+    </div>
+
+    <div class="sia6-cards">
+      <div class="sia6-card k1 fragment" data-step="1">
+        <div class="t"><span class="num">1</span> IA estrecha</div>
+        <div class="d">Hace UNA cosa muy bien: leer una retinografía, jugar al ajedrez.
+          Ya está por todas partes. <span class="tag-here">Aquí viven los LLM de hoy</span></div>
+      </div>
+      <div class="sia6-card fragment" data-step="2">
+        <div class="t"><span class="num">2</span> IA general (AGI)</div>
+        <div class="d">Resolvería cualquier tarea intelectual humana. <b>¿Existe ya?</b> Quizá sí. Aún lo estamos evaluando.</div>
+      </div>
+      <div class="sia6-card fragment" data-step="3">
+        <div class="t"><span class="num">3</span> Superinteligencia</div>
+        <div class="d">Nos superaría en todo. Territorio especulativo.</div>
+      </div>
+    </div>
+
+    <div class="sia6-close fragment" data-step="5">
+      Todo lo que veréis hoy vive <span class="mk">aquí abajo.</span>
+      Nadie os va a hablar de robots conscientes.
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const g = window.gsap || null;
+    const steps = Array.from(root.querySelectorAll('.sia6-step'));
+    const pin = root.querySelector('.sia6-pin');
+    const cards = Array.from(root.querySelectorAll('.sia6-card'));
+    const clipRect = root.querySelector('#s6clipRect');
+    const CONNECT_MAXW = 700; // ancho máx. del clip (cubre los 3 escalones + margen para la flecha)
+    let built = [false, false, false];
+
+    function resetSteps(){
+      built = [false, false, false];
+      steps.forEach(s => {
+        if (g) g.set(s, { opacity: 0, y: 60 });
+        else s.style.opacity = 0;
+      });
+      if (g) g.set(pin, { opacity: 0, y: -140 });
+      else pin.style.opacity = 0;
+      if (g) cards.forEach(c => g.set(c, { x: 46 }));
+      if (clipRect) {
+        if (g) g.set(clipRect, { attr: { width: 0 } });
+        else clipRect.setAttribute('width', 0);
+      }
+    }
+
+    function raise(idx){
+      if (built[idx]) return;
+      built[idx] = true;
+      const s = steps[idx];
+      if (g) g.to(s, { opacity: 1, y: 0, duration: .7, ease: 'back.out(1.4)' });
+      else s.style.opacity = 1;
+
+      // Tarjeta de texto correspondiente entra con desplazamiento lateral sincronizado.
+      if (g && cards[idx]) g.to(cards[idx], { x: 0, duration: .6, ease: 'power2.out' });
+
+      // El conector punteado avanza un tramo más por cada nivel revelado.
+      if (clipRect) {
+        const target = CONNECT_MAXW * ((idx + 1) / steps.length);
+        if (g) g.to(clipRect, { attr: { width: target }, duration: .6, ease: 'power2.out' });
+        else clipRect.setAttribute('width', target);
+      }
+    }
+
+    function dropPin(){
+      if (g) g.to(pin, { opacity: 1, y: 0, duration: .9, ease: 'bounce.out' });
+      else pin.style.opacity = 1;
+    }
+
+    Deck.register("ia6", {
+      onReset(el){ resetSteps(); },
+      onEnter(el){ /* estado inicial lo fija onReset */ },
+      onLeave(el){
+        if (g) {
+          steps.forEach(s => g.killTweensOf(s));
+          g.killTweensOf(pin);
+          g.killTweensOf(cards);
+          if (clipRect) g.killTweensOf(clipRect);
+        }
+      },
+      onStep(el, i){
+        if (i >= 1) raise(0);
+        if (i >= 2) raise(1);
+        if (i >= 3) raise(2);
+        // Paso 4: cae la chincheta "Estáis aquí" entre el nivel 1 y el 2.
+        if (i >= 4) dropPin();
+        else if (g) g.set(pin, { opacity: 0, y: -140 });
+      }
+    });
+  })();
+  </script>
+</section>

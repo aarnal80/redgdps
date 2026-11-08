@@ -1,0 +1,293 @@
+<section class="slide" data-slide="ia10">
+  <style>
+    #sia10 { overflow: hidden; }
+    #sia10 .scene-canvas { z-index: 0; cursor: grab; }
+    #sia10 .scene-canvas:active { cursor: grabbing; }
+
+    #sia10 .sia10-head { position: absolute; left: 120px; top: 92px; z-index: 3; width: 1000px; pointer-events: none; }
+    #sia10 .sia10-head h2 { margin-top: 20px; }
+    #sia10 .sia10-head .mk { color: var(--accent); font-style: italic; }
+    #sia10 .sia10-head .sia10-veil {
+      position: absolute; left: -40px; top: -30px; right: -80px; bottom: -30px; z-index: -1;
+      background: radial-gradient(120% 130% at 10% 30%, rgba(255,255,255,.95) 45%, rgba(255,255,255,0) 80%);
+    }
+
+    /* Rótulo de paso / clúster enfocado */
+    #sia10 .sia10-focus {
+      position: absolute; left: 120px; bottom: 150px; z-index: 3; pointer-events: none;
+      background: rgba(255,255,255,.92); border-left: 5px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 20px 30px; box-shadow: var(--shadow-sm);
+      min-width: 620px; opacity: 0; transform: translateY(14px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    #sia10 .sia10-focus.on { opacity: 1; transform: none; }
+    #sia10 .sia10-focus .fk { font-size: 20px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+    #sia10 .sia10-focus .ft { font-family: var(--serif); font-size: 34px; color: var(--ink); margin-top: 6px; line-height: 1.35; }
+
+    #sia10 .sia10-close {
+      position: absolute; left: 120px; right: 118px; bottom: 84px; z-index: 3; pointer-events: none;
+    }
+    #sia10 .sia10-close .card {
+      background: rgba(255,255,255,.93); border-left: 5px solid var(--ink);
+      font-family: var(--serif); font-size: 34px; line-height: 1.4; color: var(--ink); padding: 28px 40px;
+    }
+    #sia10 .sia10-close .card b { color: var(--accent); font-style: italic; }
+
+    #sia10 .sia10-hint {
+      position: absolute; right: 130px; top: 108px; z-index: 3; pointer-events: none;
+      font-size: 21px; color: var(--faint); letter-spacing: .04em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    #sia10 .sia10-hint::before { content: ""; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line-2); }
+
+    #sia10 .fallback-3d svg { width: 1560px; height: auto; }
+  </style>
+
+  <div id="sia10" class="fill">
+    <canvas class="scene-canvas"></canvas>
+
+    <div class="fallback-3d">
+      <svg viewBox="0 0 1560 820" xmlns="http://www.w3.org/2000/svg" aria-label="Nube de palabras agrupadas por significado">
+        <g id="s10fb"></g>
+      </svg>
+    </div>
+
+    <div class="sia10-head">
+      <div class="sia10-veil"></div>
+      <div class="kicker">Cómo funciona</div>
+      <h2>Así &laquo;entiende&raquo;: <span class="mk">el significado es geometría</span></h2>
+    </div>
+
+    <div class="sia10-hint">Arrastra para girar el mapa</div>
+
+    <div class="sia10-focus"><div class="fk"></div><div class="ft"></div></div>
+
+    <!-- pasos ocultos 1-3 gobiernan el vuelo de cámara a cada clúster -->
+    <span class="fragment" data-step="1" style="display:none"></span>
+    <span class="fragment" data-step="2" style="display:none"></span>
+    <span class="fragment" data-step="3" style="display:none"></span>
+
+    <div class="sia10-close">
+      <!-- paso 4: revela el mensaje y vuela al plano general con la intrusa -->
+      <div class="card fragment fade-only" data-step="4">
+        Palabras que significan cosas parecidas están <b>cerca</b>.
+        &laquo;Hipoteca&raquo; no tiene nada que ver, y el modelo lo sabe.
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const THREE = window.THREE, gsap = window.gsap;
+    const canvas = root.querySelector('.scene-canvas');
+    const focusBox = root.querySelector('.sia10-focus');
+
+    let renderer, scene, camera, controls, raf = null;
+    let clusters = [], allLines = [], camTween = null, tgtTween = null;
+    const target = { x: 0, y: 2, z: -2 };
+    let started = false;
+
+    const INK = '#14171c', ACCENT = '#a6093d';
+
+    const DATA = [
+      { key: 'Infección', center: [-9, 3, 0], color: INK,
+        words: ['fiebre', 'infección', 'antibiótico', 'sepsis'] },
+      { key: 'Respiratorio', center: [9, 4, -2], color: INK,
+        words: ['disnea', 'EPOC', 'insuficiencia cardiaca', 'oxígeno'] },
+      { key: 'Cefalea', center: [-1, -8, 3], color: INK,
+        words: ['cefalea', 'migraña', 'aura', 'fotofobia'] },
+      { key: 'Palabra intrusa', center: [3, 15, -24], color: ACCENT, lone: true,
+        words: ['hipoteca'] }
+    ];
+
+    // Vuelo de cámara por paso: {label, sub, cam:[x,y,z], look:[x,y,z], focus:idx|-1, rotate}
+    const STEPS = [
+      { label: '', sub: '', cam: [0, 3, 34], look: [0, 2, -2], focus: -1, rotate: true },
+      { label: 'Infección', sub: 'fiebre · infección · antibiótico · sepsis', cam: [-9, 4, 12], look: [-9, 3, 0], focus: 0 },
+      { label: 'Respiratorio', sub: 'disnea · EPOC · insuficiencia cardiaca · oxígeno', cam: [9, 5, 12], look: [9, 4, -2], focus: 1 },
+      { label: 'Cefalea', sub: 'cefalea · migraña · aura · fotofobia', cam: [-1, -7, 15], look: [-1, -8, 3], focus: 2 },
+      { label: 'La intrusa', sub: '«hipoteca» flota sola, lejísimos de la medicina', cam: [1, 6, 46], look: [1, 5, -6], focus: 3 }
+    ];
+
+    function makeLabel(text, hex) {
+      const dpr = 3, pad = 22, font = 'bold 46px Georgia, serif';
+      const mc = document.createElement('canvas'), mx = mc.getContext('2d');
+      mx.font = font;
+      const tw = mx.measureText(text).width;
+      mc.width = (tw + pad * 2) * dpr; mc.height = 80 * dpr;
+      mx.scale(dpr, dpr);
+      mx.font = font; mx.textBaseline = 'middle'; mx.textAlign = 'center';
+      mx.fillStyle = hex;
+      mx.fillText(text, mc.width / dpr / 2, mc.height / dpr / 2);
+      const tex = new THREE.CanvasTexture(mc);
+      tex.minFilter = THREE.LinearFilter; tex.needsUpdate = true;
+      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: true });
+      const spr = new THREE.Sprite(mat);
+      const h = 1.5, w = h * (mc.width / mc.height);
+      spr.userData.base = h;
+      spr.scale.set(w, h, 1);
+      return spr;
+    }
+
+    function sizeOf() { return { w: canvas.clientWidth || 1920, h: canvas.clientHeight || 1080 }; }
+
+    function initGL() {
+      const { w, h } = sizeOf();
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setClearColor(0xffffff, 0);
+      renderer.setSize(w, h, false);
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 200);
+      camera.position.set(STEPS[0].cam[0], STEPS[0].cam[1], STEPS[0].cam[2]);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true; controls.dampingFactor = 0.08;
+      controls.enablePan = false;
+      controls.minDistance = 6; controls.maxDistance = 70;
+      controls.target.set(target.x, target.y, target.z);
+      controls.autoRotate = true; controls.autoRotateSpeed = 0.35;
+
+      clusters = []; allLines = [];
+      DATA.forEach(c => {
+        const g = new THREE.Group();
+        const sprites = [];
+        const pts = [];
+        c.words.forEach((wd, i) => {
+          const spr = makeLabel(wd, c.color);
+          if (c.lone) { spr.position.set(c.center[0], c.center[1], c.center[2]); }
+          else {
+            const a = (i / c.words.length) * Math.PI * 2 + Math.random();
+            const r = 1.6 + Math.random() * 1.4;
+            spr.position.set(
+              c.center[0] + Math.cos(a) * r,
+              c.center[1] + Math.sin(a) * r * 0.8 + (Math.random() - .5),
+              c.center[2] + (Math.random() - .5) * 2.4
+            );
+          }
+          pts.push(spr.position);
+          g.add(spr); sprites.push(spr);
+        });
+        // Líneas tenues entre palabras del mismo clúster
+        if (!c.lone && pts.length > 1) {
+          const seg = [];
+          for (let i = 0; i < pts.length; i++)
+            for (let j = i + 1; j < pts.length; j++)
+              seg.push(pts[i].x, pts[i].y, pts[i].z, pts[j].x, pts[j].y, pts[j].z);
+          const lg = new THREE.BufferGeometry();
+          lg.setAttribute('position', new THREE.Float32BufferAttribute(seg, 3));
+          const lm = new THREE.LineBasicMaterial({ color: 0xcfd4dc, transparent: true, opacity: 0.5 });
+          const ls = new THREE.LineSegments(lg, lm);
+          g.add(ls); allLines.push(lm);
+        }
+        scene.add(g);
+        clusters.push({ group: g, sprites, def: c });
+      });
+    }
+
+    function highlight(focusIdx) {
+      clusters.forEach((cl, i) => {
+        const on = focusIdx < 0 || i === focusIdx;
+        cl.sprites.forEach(s => {
+          s.material.opacity = on ? 1 : 0.16;
+          const sc = (focusIdx === i) ? 1.22 : 1;
+          const h = s.userData.base * sc, w = (s.scale.x / s.scale.y) * h;
+          if (gsap) gsap.to(s.scale, { x: w, y: h, duration: .5, ease: 'power2.out' });
+          else s.scale.set(w, h, 1);
+        });
+      });
+      allLines.forEach(lm => lm.opacity = focusIdx < 0 ? 0.5 : 0.28);
+    }
+
+    function gotoStep(i) {
+      const s = STEPS[Math.max(0, Math.min(STEPS.length - 1, i))];
+      controls.autoRotate = !!s.rotate;
+      if (camTween) camTween.kill();
+      if (tgtTween) tgtTween.kill();
+      if (gsap) {
+        camTween = gsap.to(camera.position, { x: s.cam[0], y: s.cam[1], z: s.cam[2], duration: 1.5, ease: 'power3.inOut' });
+        tgtTween = gsap.to(controls.target, { x: s.look[0], y: s.look[1], z: s.look[2], duration: 1.5, ease: 'power3.inOut' });
+      } else {
+        camera.position.set(s.cam[0], s.cam[1], s.cam[2]);
+        controls.target.set(s.look[0], s.look[1], s.look[2]);
+      }
+      highlight(s.focus);
+      if (s.label) {
+        focusBox.querySelector('.fk').textContent = s.label;
+        focusBox.querySelector('.ft').textContent = s.sub;
+        focusBox.classList.add('on');
+      } else {
+        focusBox.classList.remove('on');
+      }
+    }
+
+    function frame() {
+      controls.update();
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(frame);
+    }
+
+    function buildFallback() {
+      const g = root.querySelector('#s10fb');
+      if (!g || g.childElementCount) return;
+      const groups = [
+        { cx: 320, cy: 250, col: '#14171c', w: ['fiebre', 'infección', 'antibiótico', 'sepsis'] },
+        { cx: 1180, cy: 300, col: '#14171c', w: ['disnea', 'EPOC', 'insuf. cardiaca', 'oxígeno'] },
+        { cx: 640, cy: 620, col: '#14171c', w: ['cefalea', 'migraña', 'aura', 'fotofobia'] },
+        { cx: 1330, cy: 90, col: '#a6093d', w: ['hipoteca'] }
+      ];
+      let s = '';
+      groups.forEach(gr => {
+        const pos = gr.w.map((_, i) => {
+          const a = (i / gr.w.length) * Math.PI * 2;
+          return { x: gr.cx + Math.cos(a) * (gr.w.length > 1 ? 120 : 0), y: gr.cy + Math.sin(a) * (gr.w.length > 1 ? 80 : 0) };
+        });
+        for (let i = 0; i < pos.length; i++)
+          for (let j = i + 1; j < pos.length; j++)
+            s += `<line x1="${pos[i].x}" y1="${pos[i].y}" x2="${pos[j].x}" y2="${pos[j].y}" stroke="#cfd4dc" stroke-width="1"/>`;
+        pos.forEach((p, i) => {
+          s += `<circle cx="${p.x}" cy="${p.y}" r="6" fill="${gr.col}"/>`;
+          s += `<text x="${p.x + 12}" y="${p.y + 8}" font-family="Georgia, serif" font-size="30" fill="${gr.col}">${gr.w[i]}</text>`;
+        });
+      });
+      g.innerHTML = s;
+    }
+
+    function disposeGL() {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      if (camTween) { camTween.kill(); camTween = null; }
+      if (tgtTween) { tgtTween.kill(); tgtTween = null; }
+      if (controls) { controls.dispose(); controls = null; }
+      if (scene) scene.traverse(o => {
+        if (o.geometry) o.geometry.dispose();
+        if (o.material) {
+          const mm = Array.isArray(o.material) ? o.material : [o.material];
+          mm.forEach(m => { if (m.map) m.map.dispose(); m.dispose(); });
+        }
+      });
+      if (renderer) { renderer.dispose(); renderer.forceContextLoss && renderer.forceContextLoss(); }
+      renderer = scene = camera = null; clusters = []; allLines = [];
+      started = false;
+    }
+
+    Deck.register("ia10", {
+      onEnter() {
+        if (document.documentElement.classList.contains('no-webgl')) { buildFallback(); return; }
+        try {
+          if (!started) { initGL(); started = true; frame(); }
+          gotoStep(0);
+        } catch (e) {
+          document.documentElement.classList.add('no-webgl'); buildFallback();
+        }
+      },
+      onStep(el, i) {
+        if (!started) return;
+        gotoStep(Math.min(i, STEPS.length - 1));
+      },
+      onLeave() { disposeGL(); focusBox.classList.remove('on'); }
+    });
+  })();
+  </script>
+</section>

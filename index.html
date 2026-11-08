@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>La inteligencia artificial en el cuidado de las personas con diabetes. Experiencia de un médico de familia</title>
+  <meta name="description" content="Presentación · 5º Congreso Nacional de Diabetes redGDPS · Zaragoza">
+  <link rel="stylesheet" href="css/deck.css">
+  <link rel="stylesheet" href="css/congreso.css">
+</head>
+<body>
+
+  <div id="loader">
+    <div style="text-align:center">
+      <div style="font-size:22px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:26px">Diabetes · Inteligencia artificial</div>
+      <div class="lbar" role="progressbar" aria-label="Carga de la presentación" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+      <div class="ltext">Cargando presentación…</div>
+    </div>
+  </div>
+
+  <div id="viewport">
+    <div id="stage"><!-- las slides se inyectan aquí --></div>
+  </div>
+
+  <div id="progress"></div>
+  <div id="brand">Congreso redGDPS · Zaragoza</div>
+
+  <div id="hud-cluster">
+    <button id="menu-btn" type="button" aria-label="Abrir índice de diapositivas" aria-haspopup="true" aria-expanded="false" title="Índice (O)">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+        <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+      </svg>
+    </button>
+    <button id="next-slide" type="button" hidden>Siguiente diapositiva →</button>
+    <div id="hud">01 / 44</div>
+  </div>
+
+  <div id="hint">← →  o clic para avanzar · <b>F</b> pantalla completa · <b>O</b> índice</div>
+
+  <div id="menu-overlay" aria-hidden="true">
+    <div id="menu-panel" role="dialog" aria-modal="true" aria-label="Índice de diapositivas">
+      <div id="menu-head">
+        <div id="menu-title">Índice</div>
+        <input id="menu-search" type="text" placeholder="Buscar diapositiva…" autocomplete="off" aria-label="Buscar diapositiva">
+        <button id="menu-close" type="button" aria-label="Cerrar índice">&times;</button>
+      </div>
+      <div id="menu-list"><!-- generado por engine.js --></div>
+    </div>
+  </div>
+
+  <!-- Visor de apps: incrusta las herramientas SIN salir de la presentación -->
+  <div id="app-overlay" aria-hidden="true">
+    <div id="app-bar">
+      <span id="app-dot"></span>
+      <span id="app-title">Aplicación</span>
+      <span id="app-spacer"></span>
+      <a id="app-external" href="#" target="_blank" rel="noopener" title="Abrir en una pestaña nueva del navegador">Abrir en pestaña ↗</a>
+      <button id="app-close" type="button" aria-label="Volver a la presentación (Esc)">✕ Volver a la presentación</button>
+    </div>
+    <div id="app-frame-wrap">
+      <div id="app-loading">Cargando la aplicación…</div>
+      <iframe id="app-frame" title="Aplicación" allow="microphone; camera; clipboard-write; fullscreen; autoplay"></iframe>
+    </div>
+  </div>
+
+  <!-- Librerías vendorizadas (offline) -->
+  <script src="lib/three.min.js"></script>
+  <script src="lib/OrbitControls.js"></script>
+  <script src="lib/gsap.min.js"></script>
+
+  <!-- Manifiesto + motor -->
+  <script src="js/manifest.js"></script>
+  <script src="js/engine.js"></script>
+</body>
+</html>
+
+

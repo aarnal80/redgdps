@@ -1,0 +1,101 @@
+<section class="slide" data-slide="postconsulta-video">
+<style>
+#spost {padding:64px 110px 44px;background:var(--bg)}
+#spost h2 {font-family:var(--serif);font-size:70px;line-height:1.06;letter-spacing:-.025em;margin:18px 0 12px}
+#spost h2 em {color:var(--accent)}
+#spost .lead {font-size:28px;color:var(--muted);line-height:1.3;margin-bottom:32px}
+#spost .columns {display:grid;grid-template-columns:650px 1fr;gap:62px;align-items:start}
+#spost .media {background:var(--bg-2);border-radius:22px;padding:30px;text-align:center;min-height:670px}
+#spost .orb {width:450px;height:450px;border-radius:50%;overflow:hidden;border:9px solid #fff;box-shadow:0 0 0 5px var(--accent),var(--shadow-lg);position:relative;background:linear-gradient(150deg,#17365b,#1c6879);margin:0 auto 28px}
+#spost video {width:100%;height:100%;object-fit:cover;display:block;background:transparent}
+#spost .fallback {position:absolute;inset:0;display:grid;place-content:center;gap:14px;padding:40px;color:white;background:linear-gradient(145deg,#203c61,#0a6b78);font-size:25px;line-height:1.22}
+#spost .fallback strong {font-family:var(--serif);font-size:45px}
+#spost .fallback .mark {font-size:68px}
+#spost .media.ready .fallback {display:none}
+#spost .media-label {font-size:21px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+#spost .media-caption {font-size:27px;line-height:1.25;color:var(--ink-soft);margin-top:12px}
+#spost .transcript {border:1px solid var(--line);border-radius:20px;background:var(--panel);box-shadow:var(--shadow-sm);padding:30px 35px;min-height:670px}
+#spost .transcript-head {display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:19px}
+#spost .transcript h3 {font-family:var(--serif);font-size:44px}
+#spost .status {font-size:19px;color:var(--muted);text-align:right;max-width:300px;line-height:1.2}
+#spost .utterances {max-height:540px;overflow-y:auto;scrollbar-color:var(--line-2) transparent}
+#spost .line {border-left:4px solid transparent;border-bottom:1px solid var(--line);padding:18px 23px;opacity:.7;transition:background .25s,opacity .25s,border-color .25s}
+#spost .line.active {border-left-color:var(--accent);background:var(--accent-soft);opacity:1}
+#spost .line b {font-size:20px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+#spost .line.patient b {color:var(--teal)}
+#spost .line p {font-size:26px;line-height:1.29;color:var(--ink);margin-top:5px}
+#spost .line {cursor:pointer}
+#spost .foot {position:absolute;bottom:41px;left:110px;right:110px;border-top:1px solid var(--line);padding-top:15px;font-size:20px;color:var(--muted)}
+</style>
+<div id="spost" class="fill">
+  <div class="kicker">Sara · Postconsulta · Dos semanas después</div>
+  <h2>Adriana cuenta cómo sigue. <em>Sara escucha.</em></h2>
+  <p class="lead">La llamada revisa cómo lleva el plan y recoge las dudas que quiere tratar con el Dr. Arnal.</p>
+  <div class="columns">
+    <div class="media">
+      <div class="orb">
+        <video id="adriana-postconsulta-video" controls playsinline preload="metadata" poster="assets/postconsulta-adriana-poster.jpg" aria-label="Vídeo de la postconsulta simulada de Adriana" data-no-advance>
+          <source src="assets/postconsulta-adriana.mp4" type="video/mp4">
+          <track id="adriana-postconsulta-track" kind="subtitles" src="assets/postconsulta-adriana.vtt" srclang="es" label="Español">
+        </video>
+        <div class="fallback" aria-live="polite"><span class="mark">▶</span><strong>Postconsulta</strong><span>Vídeo pendiente de incorporar</span></div>
+      </div>
+      <div class="media-label">Adriana × Sara</div>
+      <p class="media-caption">El seguimiento continúa después de la consulta.</p>
+    </div>
+    <div class="transcript" data-no-advance>
+      <div class="transcript-head"><h3>La conversación</h3><span class="status" aria-live="polite">Cargando transcripción…</span></div>
+      <div class="utterances" aria-label="Transcripción de la postconsulta"></div>
+    </div>
+  </div>
+  <div class="foot">Postconsulta simulada · La transcripción acompaña el vídeo por intervenciones. Pulsa una intervención para ir a ese momento.</div>
+</div>
+<script>(function(){
+  const slide=document.currentScript.closest('.slide');
+  const media=slide.querySelector('.media');
+  const video=slide.querySelector('video');
+  const track=slide.querySelector('track');
+  const status=slide.querySelector('.status');
+  const transcript=slide.querySelector('.utterances');
+  let lines=[];
+  let cues=null;
+  let last=-1;
+  function highlight(){
+    if(!cues)return;
+    const current=[...cues].findIndex(c=>video.currentTime>=c.startTime&&video.currentTime<c.endTime);
+    if(current===last)return;
+    last=current;
+    lines.forEach((line,i)=>line.classList.toggle('active',i===current));
+    if(current>=0)lines[current].scrollIntoView({block:'nearest',behavior:'smooth'});
+  }
+  video.addEventListener('loadedmetadata',()=>{media.classList.add('ready');status.textContent='2 min 34 s · postconsulta simulada';});
+  video.addEventListener('error',()=>{media.classList.remove('ready');status.textContent='Extracto de transcripción · vídeo pendiente';});
+  track.addEventListener('load',()=>{
+    const textTrack=track.track;
+    textTrack.mode='hidden';
+    cues=textTrack.cues;
+    if(!cues||!cues.length){status.textContent='No se pudo cargar la transcripción';return;}
+    transcript.replaceChildren();
+    lines=[...cues].map((cue)=>{
+      const line=document.createElement('div');
+      const separator=cue.text.indexOf(': ');
+      const speaker=separator>=0?cue.text.slice(0,separator):'';
+      const words=separator>=0?cue.text.slice(separator+2):cue.text;
+      line.className='line'+(speaker==='Adriana'?' patient':'');
+      line.setAttribute('data-no-advance','');
+      const name=document.createElement('b');name.textContent=speaker;
+      const speech=document.createElement('p');speech.textContent=words;
+      line.append(name,speech);
+      line.addEventListener('click',()=>{video.currentTime=cue.startTime;video.play();});
+      transcript.append(line);
+      return line;
+    });
+    status.textContent='Transcripción completa · sincronizada por turnos';
+    highlight();
+  });
+  track.track.mode='hidden';
+  video.addEventListener('timeupdate',highlight);
+  Deck.register("postconsulta-video",{onLeave(){video.pause();}});
+})();</script>
+</section>
+

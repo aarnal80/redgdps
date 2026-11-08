@@ -1,0 +1,212 @@
+<section class="slide" data-slide="ia33">
+  <style>
+    #sia33 { padding: 68px 120px; }
+    #sia33 h2 .mk { color: var(--accent); font-style: italic; }
+    #sia33 .sia33-stage { margin-top: 30px; display: grid; grid-template-columns: 460px 1fr; gap: 80px; align-items: center; }
+
+    /* Maqueta de teléfono */
+    #sia33 .sia33-phone {
+      position: relative; width: 396px; height: 656px; margin: 0 auto;
+      background: #14171c; border-radius: 50px; padding: 14px;
+      box-shadow: var(--shadow-lg), inset 0 0 0 2px #2b3038;
+    }
+    #sia33 .sia33-screen {
+      position: relative; width: 100%; height: 100%; background: var(--bg-2);
+      border-radius: 38px; overflow: hidden; display: flex; flex-direction: column;
+    }
+    #sia33 .sia33-notch {
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 120px; height: 26px; background: #14171c; border-radius: 999px; z-index: 5;
+    }
+    #sia33 .sia33-appbar {
+      display: flex; align-items: center; gap: 12px; padding: 44px 22px 14px;
+      background: var(--panel); border-bottom: 1px solid var(--line);
+    }
+    #sia33 .sia33-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-family: var(--serif); font-weight: 700; font-size: 19px; }
+    #sia33 .sia33-appname { font-family: var(--font); font-size: 21px; font-weight: 700; color: var(--ink); }
+    #sia33 .sia33-appstatus { font-family: var(--font); font-size: 14px; color: var(--green); }
+
+    #sia33 .sia33-chat { flex: 1; padding: 20px 18px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+    #sia33 .sia33-bub {
+      max-width: 84%; font-family: var(--font); font-size: 18px; line-height: 1.38;
+      padding: 12px 15px; border-radius: 17px; opacity: 0; transform: translateY(14px);
+    }
+    #sia33 .sia33-bub.me { align-self: flex-end; background: var(--slate); color: #fff; border-bottom-right-radius: 5px; }
+    #sia33 .sia33-bub.ai { align-self: flex-start; background: var(--panel); color: var(--ink-soft); border: 1px solid var(--line); border-bottom-left-radius: 5px; }
+    #sia33 .sia33-bub.ai .em { color: var(--accent); font-weight: 700; }
+    #sia33 .sia33-typing { align-self: flex-start; display: inline-flex; gap: 6px; padding: 15px 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; opacity: 0; }
+    #sia33 .sia33-typing i { width: 9px; height: 9px; border-radius: 50%; background: var(--faint); animation: sia33dot 1.2s infinite ease-in-out; }
+    #sia33 .sia33-typing i:nth-child(2){ animation-delay: .18s; }
+    #sia33 .sia33-typing i:nth-child(3){ animation-delay: .36s; }
+    @keyframes sia33dot { 0%,60%,100%{ transform: translateY(0); opacity:.4 } 30%{ transform: translateY(-6px); opacity:1 } }
+
+    #sia33 .sia33-caption { text-align: center; margin-top: 14px; font-size: 19px; color: var(--faint); }
+
+    /* Burbuja "escribiendo…" persistente al llegar al cierre: la conversación sigue abierta */
+    #sia33 .sia33-typing.sia33-typing-close { display: none; }
+    #sia33 .sia33-typing.sia33-typing-close.show { display: inline-flex; }
+
+    /* Columna derecha */
+    #sia33 .sia33-lead {
+      font-family: var(--serif); font-size: 40px; line-height: 1.3; color: var(--ink); margin-bottom: 34px;
+    }
+    #sia33 .sia33-lead .mk { color: var(--accent); font-style: italic; }
+
+    #sia33 .sia33-stats { display: flex; gap: 44px; margin-bottom: 38px; }
+    #sia33 .sia33-stat .n { font-family: var(--serif); font-size: 78px; font-weight: 700; color: var(--accent); line-height: 1; }
+    #sia33 .sia33-stat .t { font-family: var(--font); font-size: 21px; color: var(--muted); line-height: 1.35; margin-top: 8px; max-width: 300px; }
+
+    #sia33 .sia33-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    #sia33 .sia33-block h3 {
+      font-family: var(--font); font-size: 22px; font-weight: 800; letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    #sia33 .sia33-block.risk h3 { color: var(--danger); }
+    #sia33 .sia33-block.handle h3 { color: var(--green); }
+    #sia33 .sia33-block li {
+      list-style: none; font-family: var(--font); font-size: 24px; line-height: 1.4;
+      color: var(--ink-soft); padding-left: 34px; position: relative; margin-bottom: 15px;
+    }
+    #sia33 .sia33-block.risk li::before { content: "\26A0"; position: absolute; left: 0; color: var(--danger); font-size: 22px; }
+    #sia33 .sia33-block.handle li::before { content: "\2713"; position: absolute; left: 0; color: var(--green); font-weight: 800; }
+
+    #sia33 .sia33-close {
+      margin-top: 28px; font-family: var(--serif); font-size: 36px; color: var(--ink);
+      border-left: 4px solid var(--accent); padding-left: 30px; line-height: 1.3;
+    }
+    #sia33 .sia33-close .mk { color: var(--accent); font-style: italic; }
+  </style>
+
+  <div id="sia33" class="fill">
+    <div>
+      <div class="kicker">Realidad</div>
+      <h2 style="margin-top:22px">Vuestros pacientes <span class="mk">ya usan IA</span></h2>
+    </div>
+
+    <div class="sia33-stage">
+      <div>
+        <div class="sia33-phone">
+          <div class="sia33-notch"></div>
+          <div class="sia33-screen">
+            <div class="sia33-appbar">
+              <div class="sia33-avatar">IA</div>
+              <div>
+                <div class="sia33-appname">Asistente IA</div>
+                <div class="sia33-appstatus">En línea</div>
+              </div>
+            </div>
+            <div class="sia33-chat">
+              <div class="sia33-bub me" data-t="0">Me han salido estos valores en la analítica de rutina. ¿Es grave?</div>
+              <div class="sia33-bub me" data-t="1">Colesterol 235, GGT 68, glucosa 108.</div>
+              <div class="sia33-typing" data-t="2"><i></i><i></i><i></i></div>
+              <div class="sia33-bub ai" data-t="3">Entiendo tu preocupación. Ninguno de esos valores es <span class="em">alarmante</span> por sí solo, pero conviene revisarlos. Podrían sugerir…</div>
+              <div class="sia33-bub me" data-t="4">¿Puede ser cáncer de hígado?</div>
+              <div class="sia33-typing sia33-typing-close" aria-hidden="true"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="sia33-caption">Conversación típica · caso ficticio</div>
+      </div>
+
+      <div>
+        <div class="sia33-lead">
+          De <span class="mk">«Dr. Google»</span> hemos pasado a <span class="mk">«Dr. ChatGPT»</span>: ya no buscan enlaces, mantienen una conversación.
+        </div>
+
+        <div class="sia33-stats">
+          <div class="sia33-stat fragment" data-step="1">
+            <!-- VERIFICAR: cifra de uso -->
+            <div class="n">~1 de&nbsp;3</div>
+            <div class="t">adultos ya ha consultado a una IA por un tema de salud</div>
+          </div>
+          <div class="sia33-stat fragment" data-step="1">
+            <!-- VERIFICAR: cifra de uso -->
+            <div class="n">antes</div>
+            <div class="t">de pedir cita, muchos llegan con una respuesta ya formada</div>
+          </div>
+        </div>
+
+        <div class="sia33-cols">
+          <div class="sia33-block risk fragment" data-step="2">
+            <h3>Los riesgos</h3>
+            <ul>
+              <li>Autodiagnóstico y automedicación</li>
+              <li>Ansiedad por respuestas alarmistas</li>
+              <li>Información errónea presentada con aplomo</li>
+            </ul>
+          </div>
+          <div class="sia33-block handle fragment" data-step="3">
+            <h3>Cómo manejarlo</h3>
+            <ul>
+              <li>Preguntad sin juzgar: «¿qué has leído?»</li>
+              <li>Corregid el dato, no a la persona</li>
+              <li>Ofreced una fuente fiable a la que volver</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sia33-close fragment fade-only" data-step="4">
+      No podéis elegir si vuestros pacientes usan IA. Lo que sí podéis elegir es <span class="mk">saber más que ellos.</span>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+    const items = Array.from(root.querySelectorAll('.sia33-chat > [data-t]'));
+    const closeTyping = root.querySelector('.sia33-typing-close');
+    let timers = [];
+
+    function clearTimers() { timers.forEach(t => clearTimeout(t)); timers = []; }
+
+    function hideCloseTyping() {
+      if (g) g.killTweensOf(closeTyping);
+      closeTyping.classList.remove('show');
+      closeTyping.style.opacity = 0;
+    }
+    function showCloseTyping() {
+      closeTyping.classList.add('show');
+      if (g) { g.killTweensOf(closeTyping); g.fromTo(closeTyping, { opacity: 0 }, { opacity: 1, duration: .4, ease: 'power2.out' }); }
+      else closeTyping.style.opacity = 1;
+    }
+
+    function reset() {
+      clearTimers();
+      hideCloseTyping();
+      items.forEach(el => {
+        if (g) g.set(el, { opacity: 0, y: el.classList.contains('sia33-typing') ? 0 : 14 });
+        else { el.style.opacity = 0; }
+      });
+    }
+
+    function playChat() {
+      let delay = 500;
+      items.forEach((el) => {
+        const isTyping = el.classList.contains('sia33-typing');
+        timers.push(setTimeout(() => {
+          if (g) g.to(el, { opacity: 1, y: 0, duration: .4, ease: 'power2.out' });
+          else { el.style.transition = 'opacity .4s ease, transform .4s ease'; el.style.opacity = 1; el.style.transform = 'none'; }
+          // el indicador de "escribiendo" se oculta al llegar la respuesta de IA
+        }, delay));
+        delay += isTyping ? 1150 : 900;
+        if (isTyping) {
+          // ocultar el typing justo antes de la burbuja siguiente
+          timers.push(setTimeout(() => {
+            if (g) g.to(el, { opacity: 0, duration: .25 }); else el.style.opacity = 0;
+          }, delay - 250));
+        }
+      });
+    }
+
+    Deck.register("ia33", {
+      onReset() { reset(); },
+      onEnter() { reset(); playChat(); },
+      onLeave() { clearTimers(); hideCloseTyping(); },
+      onStep(el, i) { if (i >= 4) showCloseTyping(); else hideCloseTyping(); }
+    });
+  })();
+  </script>
+</section>

@@ -1,0 +1,278 @@
+<section class="slide" data-slide="ia9">
+  <style>
+    #sia9 { overflow: hidden; }
+    #sia9 .sia9-canvas { z-index: 0; }
+    #sia9 .sia9-head { position: absolute; left: 120px; top: 96px; z-index: 3; width: 980px; }
+    #sia9 .sia9-head h2 { margin-top: 20px; max-width: 900px; }
+    #sia9 .sia9-head .sia9-h2 .mk { color: var(--accent); font-style: italic; }
+    #sia9 .sia9-head .sia9-veil {
+      position: absolute; left: -40px; top: -30px; right: -60px; bottom: -34px; z-index: -1;
+      background: radial-gradient(120% 130% at 12% 30%, rgba(255,255,255,.96) 42%, rgba(255,255,255,0) 78%);
+    }
+
+    /* Panel de contadores */
+    #sia9 .sia9-panel {
+      position: absolute; right: 118px; top: 300px; z-index: 3; width: 560px;
+      display: flex; flex-direction: column; gap: 26px;
+    }
+    #sia9 .sia9-metric {
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 26px 32px;
+      box-shadow: var(--shadow-sm);
+      opacity: 0; transform: translateX(26px);
+    }
+    #sia9 .sia9-metric .lab {
+      font-size: 20px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    #sia9 .sia9-metric .num {
+      font-family: var(--serif); font-weight: 700; color: var(--ink);
+      font-size: 62px; line-height: 1; margin-top: 8px; letter-spacing: -.01em;
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    #sia9 .sia9-metric .num b { color: var(--accent); font-weight: 700; }
+    #sia9 .sia9-metric .num .u { font-family: var(--font); font-size: 30px; font-weight: 700; color: var(--ink-soft); }
+    #sia9 .sia9-metric .sub { font-size: 21px; color: var(--faint); margin-top: 8px; }
+
+    /* Mensaje de cierre */
+    #sia9 .sia9-close {
+      position: absolute; left: 120px; right: 118px; bottom: 84px; z-index: 3;
+    }
+    #sia9 .sia9-close .card {
+      background: rgba(255,255,255,.93);
+      border-left: 5px solid var(--ink);
+      font-family: var(--serif); font-size: 34px; line-height: 1.4; color: var(--ink);
+      padding: 30px 40px;
+    }
+    #sia9 .sia9-close .card b { color: var(--accent); font-style: italic; font-weight: 700; }
+
+    /* Fallback */
+    #sia9 .fallback-3d svg { width: 1500px; height: auto; }
+  </style>
+
+  <div id="sia9" class="fill">
+    <canvas class="scene-canvas sia9-canvas"></canvas>
+
+    <div class="fallback-3d">
+      <svg viewBox="0 0 1500 760" xmlns="http://www.w3.org/2000/svg" aria-label="Red neuronal en capas">
+        <g id="s9fb"></g>
+      </svg>
+    </div>
+
+    <div class="sia9-head">
+      <div class="sia9-veil"></div>
+      <div class="kicker">Cómo funciona</div>
+      <h2 class="sia9-h2">No memoriza: <span class="mk">comprime el conocimiento</span></h2>
+    </div>
+
+    <div class="sia9-panel">
+      <div class="sia9-metric" data-m="0">
+        <div class="lab">Parámetros</div>
+        <div class="num"><b class="v">0</b><span class="u">millones</span></div>
+        <div class="sub">cientos de miles de millones de &laquo;diales&raquo;</div>
+      </div>
+      <div class="sia9-metric" data-m="1">
+        <div class="lab">Entrenamiento</div>
+        <div class="num"><b class="v">0</b><span class="u">millones de libros</span></div>
+        <div class="sub">el equivalente a leer casi todo lo escrito</div>
+      </div>
+      <div class="sia9-metric" data-m="2">
+        <div class="lab">Coste de entrenar</div>
+        <div class="num"><b class="v">0</b><span class="u">millones&nbsp;$</span></div>
+        <div class="sub">cientos de millones en cada gran modelo</div>
+      </div>
+    </div>
+
+    <!-- VERIFICAR: cifras ilustrativas (parámetros ~cientos de miles de millones; libros y coste orientativos) -->
+
+    <div class="sia9-close">
+      <div class="card fragment fade-only">
+        No memoriza frases: ajusta <b>miles de millones de &laquo;diales&raquo;</b> hasta que
+        predecir la siguiente palabra le obliga a comprimir lo que sabemos.
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const THREE = window.THREE, gsap = window.gsap;
+    const canvas = root.querySelector('.scene-canvas');
+
+    let renderer, scene, camera, group, raf = null, t = 0;
+    let pulses = [], edgeList = [], tweens = [];
+    let started = false;
+
+    const INK = 0x14171c, ACCENT = 0xa6093d, LINE = 0xcfd4dc;
+
+    function buildFallback() {
+      const g = root.querySelector('#s9fb');
+      if (!g || g.childElementCount) return;
+      const layers = [4, 6, 7, 6, 3], W = 1500, H = 760, padX = 170, padY = 90;
+      const cols = layers.map((_, i) => padX + (W - 2 * padX) * (i / (layers.length - 1)));
+      const pos = layers.map((c, li) => {
+        const arr = [];
+        for (let n = 0; n < c; n++) {
+          const y = c === 1 ? H / 2 : padY + (H - 2 * padY) * (n / (c - 1));
+          arr.push({ x: cols[li], y });
+        }
+        return arr;
+      });
+      let s = '';
+      for (let li = 0; li < pos.length - 1; li++)
+        pos[li].forEach(a => pos[li + 1].forEach(b =>
+          s += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#cfd4dc" stroke-width="1"/>`));
+      pos.forEach((col, li) => col.forEach(p => {
+        s += `<circle cx="${p.x}" cy="${p.y}" r="13" fill="#14171c"/>`;
+        if (li > 0 && li < pos.length - 1)
+          s += `<circle cx="${p.x - 40}" cy="${p.y}" r="5" fill="#a6093d"/>`;
+      }));
+      g.innerHTML = s;
+    }
+
+    function sizeOf() {
+      return { w: canvas.clientWidth || 1920, h: canvas.clientHeight || 1080 };
+    }
+
+    function initGL() {
+      const { w, h } = sizeOf();
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setClearColor(0xffffff, 0);
+      renderer.setSize(w, h, false);
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
+      camera.position.set(0.5, 1.2, 17);
+      camera.lookAt(0, 0, 0);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+      const dir = new THREE.DirectionalLight(0xffffff, 0.55);
+      dir.position.set(6, 10, 8); scene.add(dir);
+
+      group = new THREE.Group();
+      scene.add(group);
+
+      // Nodos por capas
+      const layers = [4, 6, 7, 6, 3];
+      const spanX = 12.5, spanY = 8.2;
+      const xs = layers.map((_, i) => -spanX / 2 + spanX * (i / (layers.length - 1)));
+      const nodes = [];
+      const sphereGeo = new THREE.SphereGeometry(0.34, 22, 22);
+      const nodeMat = new THREE.MeshStandardMaterial({ color: INK, roughness: 0.45, metalness: 0.1 });
+      layers.forEach((count, li) => {
+        const arr = [];
+        for (let n = 0; n < count; n++) {
+          const y = count === 1 ? 0 : -spanY / 2 + spanY * (n / (count - 1));
+          const v = new THREE.Vector3(xs[li], y + (Math.random() - .5) * 0.5, (Math.random() - .5) * 2.2);
+          const m = new THREE.Mesh(sphereGeo, nodeMat);
+          m.position.copy(v); group.add(m);
+          arr.push(v);
+        }
+        nodes.push(arr);
+      });
+
+      // Aristas (líneas grises tenues) + registro para pulsos
+      const linePts = [];
+      edgeList = [];
+      for (let li = 0; li < nodes.length - 1; li++)
+        nodes[li].forEach(a => nodes[li + 1].forEach(b => {
+          linePts.push(a.x, a.y, a.z, b.x, b.y, b.z);
+          edgeList.push({ a, b });
+        }));
+      const lg = new THREE.BufferGeometry();
+      lg.setAttribute('position', new THREE.Float32BufferAttribute(linePts, 3));
+      const lineMat = new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.55 });
+      group.add(new THREE.LineSegments(lg, lineMat));
+
+      // Pulsos carmesí que viajan de izquierda a derecha por las aristas
+      const pulseGeo = new THREE.SphereGeometry(0.13, 12, 12);
+      const pulseMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.95 });
+      pulses = [];
+      for (let i = 0; i < 54; i++) {
+        const m = new THREE.Mesh(pulseGeo, pulseMat);
+        const e = edgeList[(Math.random() * edgeList.length) | 0];
+        pulses.push({ mesh: m, e, t: Math.random(), sp: 0.006 + Math.random() * 0.012 });
+        group.add(m);
+      }
+    }
+
+    function frame() {
+      t += 0.016;
+      // Órbita lenta de la cámara alrededor de la red
+      const ang = 0.35 * Math.sin(t * 0.16);
+      camera.position.x = Math.sin(ang) * 17;
+      camera.position.z = Math.cos(ang) * 17;
+      camera.position.y = 1.2 + Math.sin(t * 0.12) * 1.1;
+      camera.lookAt(0, 0, 0);
+
+      for (const p of pulses) {
+        p.t += p.sp;
+        if (p.t >= 1) { p.t = 0; p.e = edgeList[(Math.random() * edgeList.length) | 0]; }
+        p.mesh.position.lerpVectors(p.e.a, p.e.b, p.t);
+        const k = Math.sin(p.t * Math.PI);
+        p.mesh.scale.setScalar(0.6 + k * 0.9);
+        p.mesh.material.opacity = 0.25 + k * 0.7;
+      }
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(frame);
+    }
+
+    function runCounters() {
+      const metrics = root.querySelectorAll('.sia9-metric');
+      const targets = [400000, 30, 300];
+      metrics.forEach((el, i) => {
+        const v = el.querySelector('.v');
+        if (gsap) {
+          tweens.push(gsap.to(el, { opacity: 1, x: 0, duration: .7, delay: .15 + i * 0.18, ease: 'power2.out' }));
+          const o = { n: 0 };
+          tweens.push(gsap.to(o, {
+            n: targets[i], duration: 2.0, delay: .3 + i * 0.18, ease: 'power2.out',
+            onUpdate() { v.textContent = Math.round(o.n).toLocaleString('es-ES'); }
+          }));
+        } else {
+          el.style.opacity = 1; el.style.transform = 'none';
+          v.textContent = targets[i].toLocaleString('es-ES');
+        }
+      });
+    }
+
+    function disposeGL() {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      tweens.forEach(tw => tw && tw.kill && tw.kill()); tweens = [];
+      if (scene) {
+        scene.traverse(o => {
+          if (o.geometry) o.geometry.dispose();
+          if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => m.dispose());
+        });
+      }
+      if (renderer) { renderer.dispose(); renderer.forceContextLoss && renderer.forceContextLoss(); }
+      renderer = scene = camera = group = null; pulses = []; edgeList = [];
+      started = false;
+    }
+
+    Deck.register("ia9", {
+      onEnter(el) {
+        if (document.documentElement.classList.contains('no-webgl')) { buildFallback(); }
+        else {
+          try {
+            if (!started) { initGL(); started = true; frame(); }
+          } catch (e) {
+            document.documentElement.classList.add('no-webgl'); buildFallback();
+          }
+        }
+        // Deja los contadores a 0 y ocultos; la animación se lanza al LLEGAR
+        // (onArrive), para que no se pierda mientras la cámara se desplaza.
+        root.querySelectorAll('.sia9-metric .v').forEach(v => v.textContent = '0');
+        root.querySelectorAll('.sia9-metric').forEach(m => { m.style.opacity = 0; m.style.transform = 'translateX(26px)'; });
+      },
+      // La cámara ya se ha detenido en esta slide: ahora sí, cuenta a la vista.
+      onArrive() { runCounters(); },
+      onLeave() { disposeGL(); }
+    });
+  })();
+  </script>
+</section>

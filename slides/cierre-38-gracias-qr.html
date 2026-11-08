@@ -1,0 +1,144 @@
+<section class="slide center" data-slide="ia44">
+  <style>
+    #sia44 { overflow: hidden; background: var(--bg); padding: 100px 120px; }
+
+    #sia44 .sia44-net { position: absolute; inset: 0; z-index: 0; }
+    #sia44 .sia44-content { position: relative; z-index: 2; width: 1560px; margin: 0 auto; text-align: center; }
+
+    #sia44 .sia44-thanks {
+      font-family: var(--serif); font-weight: 700; color: var(--ink);
+      font-size: 176px; line-height: 1; letter-spacing: -.02em; opacity: 0;
+    }
+    #sia44 .sia44-rule { width: 96px; height: 3px; background: var(--accent); margin: 40px auto 0; opacity: 0; }
+
+    #sia44 .sia44-who { margin-top: 40px; opacity: 0; }
+    #sia44 .sia44-who .name { font-family: var(--font); font-size: 34px; font-weight: 600; color: var(--ink); }
+    #sia44 .sia44-who .org  { margin-top: 12px; font-family: var(--font); font-size: 20px; letter-spacing: .16em;
+                          text-transform: uppercase; color: var(--faint); }
+
+    /* --- panel del QR --- */
+    #sia44 .sia44-qr { margin: 58px auto 0; width: 620px; opacity: 0; }
+    #sia44 .sia44-qr .qr-link { display: block; width: 300px; height: 300px; margin: 0 auto;
+                             border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-sm); }
+    #sia44 .sia44-qr img { display: block; width: 100%; height: 100%; border-radius: 13px; }
+    #sia44 .sia44-qr .qlabel { margin-top: 24px; font-family: var(--serif); font-size: 30px; color: var(--ink); font-weight: 700; }
+    #sia44 .sia44-qr .qnote  { margin-top: 8px; font-family: var(--font); font-size: 20px; color: var(--faint); }
+
+    /* --- pie tenue: turno de preguntas --- */
+    #sia44 .sia44-ask {
+      position: absolute; left: 0; right: 0; bottom: 70px; z-index: 2; text-align: center;
+      font-family: var(--serif); font-style: italic; font-size: 30px; color: var(--faint);
+      opacity: 0;
+    }
+  </style>
+
+  <div id="sia44" class="fill center-xy">
+    <canvas class="sia44-net"></canvas>
+
+    <div class="sia44-content">
+      <div class="sia44-thanks">Gracias</div>
+      <div class="sia44-rule"></div>
+
+      <div class="sia44-who">
+        <div class="name">Dr. Antonio José Arnal Meinhardt</div>
+        <div class="org">Medicina Familiar y Comunitaria · Medicina de Urgencias</div>
+      </div>
+
+      <div class="sia44-qr">
+        <a class="qr-link" href="https://antonioarnal.es/presentaciones/presentacion-ia/recursos-ia-consulta/" target="_blank" rel="noopener">
+          <img src="assets/qr-recursos.svg" alt="Código QR que abre los recursos, la encuesta y las preguntas">
+        </a>
+        <div class="qlabel">Recursos, encuesta y preguntas</div>
+        <div class="qnote">Escanea para abrir la página de materiales</div>
+      </div>
+    </div>
+
+    <div class="sia44-ask">¿Preguntas?</div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+
+    /* ---------- red de partículas que, al entrar, se DISPERSA y desvanece ---------- */
+    const cv = root.querySelector('.sia44-net');
+    const ctx = cv.getContext('2d');
+    let raf = null, W = 1920, H = 1080, t = 0, life = 0;
+    const N = 66, R = 220, CX = W / 2, CY = H / 2;
+    const pts = [];
+    function seed() {
+      pts.length = 0; life = 0;
+      for (let i = 0; i < N; i++) {
+        const x = Math.random() * W, y = Math.random() * H;
+        // velocidad base + empuje hacia afuera (efecto despedida)
+        const ang = Math.atan2(y - CY, x - CX);
+        pts.push({ x, y,
+                   vx: (Math.random()-.5)*0.25 + Math.cos(ang)*0.10,
+                   vy: (Math.random()-.5)*0.25 + Math.sin(ang)*0.10,
+                   r: Math.random()*1.8+1.0 });
+      }
+    }
+    function resize() { cv.width = W; cv.height = H; }
+    function frame() {
+      t += 0.004; life += 1;
+      // se mantiene visible ~1.6 s y luego se desvanece durante ~5 s
+      const fade = Math.max(0, 1 - Math.max(0, life - 100) / 300);
+      ctx.clearRect(0,0,W,H);
+      for (let i=0;i<N;i++){
+        const a = pts[i];
+        // el empuje hacia afuera se acentúa con el tiempo (dispersión)
+        const push = 1 + life / 260;
+        a.x += a.vx * push; a.y += a.vy * push;
+        for (let j=i+1;j<N;j++){
+          const b=pts[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
+          if(d<R){
+            const o=(1-d/R)*0.11*fade;
+            if (o <= 0.002) continue;
+            ctx.strokeStyle='rgba(166,9,61,'+o+')';
+            ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+      }
+      for(const p of pts){
+        ctx.fillStyle='rgba(20,23,28,'+(0.10*fade).toFixed(3)+')';
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,7); ctx.fill();
+      }
+      // cuando ya está prácticamente disperso, detenemos el bucle solo
+      if (fade <= 0.002) { ctx.clearRect(0,0,W,H); raf = null; return; }
+      raf = requestAnimationFrame(frame);
+    }
+
+    /* ---------- entrada del contenido ---------- */
+    const thanks = root.querySelector('.sia44-thanks');
+    const rule   = root.querySelector('.sia44-rule');
+    const who    = root.querySelector('.sia44-who');
+    const qr      = root.querySelector('.sia44-qr');
+    const ask    = root.querySelector('.sia44-ask');
+    const els = [thanks, rule, who, qr, ask];
+
+    function reset() {
+      if (g) g.set(els, { opacity: 0, y: 18 });
+      else els.forEach(e => e.style.opacity = 0);
+    }
+    function play() {
+      if (!g) { els.forEach(e => e.style.opacity = 1); return; }
+      const tl = g.timeline();
+      tl.to(thanks, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' })
+        .to(rule,   { opacity: 1, y: 0, duration: .6 }, '-=.4')
+        .to(who,    { opacity: 1, y: 0, duration: .7 }, '-=.2')
+        .to(qr,      { opacity: 1, y: 0, duration: .7 }, '-=.2')
+        .to(ask,    { opacity: 1, y: 0, duration: 1.2, ease: 'power1.out' }, '+=.3');
+    }
+
+    Deck.register("ia44", {
+      onReset() { reset(); },
+      onEnter() {
+        resize(); seed(); if (!raf) frame();
+        reset(); requestAnimationFrame(play);
+      },
+      onLeave() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+    });
+  })();
+  </script>
+</section>

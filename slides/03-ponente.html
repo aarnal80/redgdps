@@ -1,0 +1,187 @@
+<section class="slide" data-slide="3">
+  <style>
+    #s3 { padding: 0 140px; }
+    #s3 .s3-wrap { display: flex; align-items: center; gap: 110px; width: 100%; }
+
+    /* --- Columna avatar (foto circular del ponente + pertenencia) --- */
+    #s3 .s3-left { flex: 0 0 460px; display: flex; flex-direction: column; align-items: center; gap: 44px; }
+    #s3 .s3-photo { position: relative; width: 440px; height: 440px; }
+    #s3 .s3-img { position: absolute; inset: 16px; width: 408px; height: 408px;
+                  border-radius: 50%; object-fit: cover; box-shadow: var(--shadow); }
+    #s3 .s3-fallback { position: absolute; inset: 16px; border-radius: 50%;
+                       background: radial-gradient(circle at 50% 38%, #c33e63, var(--accent));
+                       display: none; place-items: center; box-shadow: var(--shadow); }
+    #s3 .s3-photo.noimg .s3-img { display: none; }
+    #s3 .s3-photo.noimg .s3-fallback { display: grid; }
+    #s3 .s3-ringsvg { position: absolute; inset: 0; width: 440px; height: 440px;
+                      transform: rotate(-90deg); pointer-events: none; }
+    #s3 .s3-tick { fill: none; stroke: var(--line-2); stroke-width: 3; }
+    #s3 .s3-ring { fill: none; stroke: var(--accent); stroke-width: 7; stroke-linecap: round;
+                   stroke-dasharray: 1000; }
+
+    /* --- Columna texto --- */
+    #s3 .s3-right { flex: 1 1 auto; }
+    #s3 .s3-name { font-family: var(--serif); font-size: 82px; font-weight: 700; line-height: 1.04; letter-spacing: -.02em; color: var(--ink); }
+    #s3 .s3-role { display: flex; align-items: center; gap: 16px; margin-top: 20px; }
+    #s3 .s3-role .bar { width: 54px; height: 3px; background: var(--accent); flex: 0 0 auto; }
+    #s3 .s3-role .txt { font-family: var(--font); font-size: 25px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    #s3 .s3-points { margin-top: 52px; }
+    #s3 .s3-point {
+      display: flex; align-items: flex-start; gap: 22px;
+      font-family: var(--font); font-size: 36px; line-height: 1.4; color: var(--ink-soft);
+      padding: 14px 0;
+    }
+    #s3 .s3-point + .s3-point { border-top: 1px solid var(--line); }
+    #s3 .s3-point .dot { flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); margin-top: 16px; }
+    #s3 .s3-point b { color: var(--ink); font-weight: 700; }
+
+    #s3 .s3-close { margin-top: 56px; }
+    #s3 .s3-close .rule { width: 78px; height: 4px; background: var(--accent); margin-bottom: 22px; }
+    #s3 .s3-close p { font-family: var(--serif); font-size: 50px; line-height: 1.14; font-weight: 700; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; }
+    #s3 .s3-close p .mk { color: var(--accent); font-style: italic; }
+
+    /* --- Pertenencia bajo la foto: mismo colegio y misma sanidad que el público --- */
+    #s3 .s3-affil { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; }
+    #s3 .s3-affil .cap {
+      font-family: var(--font); font-size: 16px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--faint); text-align: center;
+    }
+    #s3 .s3-affil .logos { display: flex; align-items: center; justify-content: center; gap: 26px; }
+    #s3 .s3-affil-logo { height: 52px; width: auto; display: block; }
+    #s3 .s3-affil-sep { width: 1px; height: 40px; background: var(--line-2); }
+  </style>
+
+  <div id="s3" class="fill center-xy">
+    <div class="s3-wrap">
+      <div class="s3-left">
+        <div class="s3-photo">
+          <img class="s3-img" src="assets/ponente.png" alt="Retrato del ponente: mitad médico, mitad inteligencia artificial"
+               onerror="if(!this.dataset.p){this.dataset.p='1';this.src='assets/ponente.jpg';}else{this.closest('.s3-photo').classList.add('noimg');}">
+          <div class="s3-fallback">
+            <svg viewBox="0 0 240 240" width="300" height="300" aria-hidden="true">
+              <!-- Medicina + IA: cruz médica trazada como circuito -->
+              <g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M120 58 V182 M58 120 H182"/>
+              </g>
+              <g fill="#fff">
+                <circle cx="120" cy="58" r="12"/><circle cx="120" cy="182" r="12"/>
+                <circle cx="58" cy="120" r="12"/><circle cx="182" cy="120" r="12"/>
+                <circle cx="120" cy="120" r="9"/>
+              </g>
+              <g fill="none" stroke="rgba(255,255,255,.6)" stroke-width="4">
+                <path d="M120 58 C 150 40, 175 55, 182 78"/>
+                <path d="M182 120 C 200 150, 185 175, 162 182"/>
+                <path d="M58 120 C 40 90, 55 65, 78 58"/>
+              </g>
+              <g fill="#fff" opacity=".85">
+                <circle cx="182" cy="78" r="6"/><circle cx="162" cy="182" r="6"/><circle cx="78" cy="58" r="6"/>
+              </g>
+            </svg>
+          </div>
+          <svg class="s3-ringsvg" viewBox="0 0 440 440" aria-hidden="true">
+            <circle class="s3-tick" cx="220" cy="220" r="214"></circle>
+            <circle class="s3-ring" cx="220" cy="220" r="206" pathLength="1000"></circle>
+          </svg>
+        </div>
+
+        <div class="s3-affil">
+          <div class="cap">El mismo colegio · la misma sanidad</div>
+          <div class="logos">
+            <img class="s3-affil-logo" src="assets/logo-colegio.png" alt="Colegio Oficial de Médicos de Zaragoza">
+            <span class="s3-affil-sep"></span>
+            <img class="s3-affil-logo" src="assets/logo-salud.png" alt="Servicio Aragonés de Salud">
+          </div>
+        </div>
+      </div>
+
+      <div class="s3-right">
+        <div class="kicker">Quién os habla</div>
+        <div class="s3-name" style="margin-top:22px">Dr. Antonio José<br>Arnal Meinhardt</div>
+        <div class="s3-role"><span class="bar"></span><span class="txt">Medicina Familiar y Comunitaria</span></div>
+        <div class="s3-role" style="margin-top:10px"><span class="bar"></span><span class="txt">Medicina de Urgencias</span></div>
+
+        <div class="s3-points">
+          <div class="s3-point fragment"><span class="dot"></span><span>Médico asistencial, <b>no ingeniero ni comercial</b>.</span></div>
+          <div class="s3-point fragment"><span class="dot"></span><span>Uso estas herramientas <b>en cada guardia y cada consulta</b>.</span></div>
+          <div class="s3-point fragment"><span class="dot"></span><span>Os cuento <b>lo que funciona y lo que no</b>, y puedo ayudaros a implementarlo.</span></div>
+        </div>
+
+        <div class="s3-close fragment">
+          <div class="rule"></div>
+          <p>Todo lo que os voy a enseñar <span class="mk">lo uso yo</span>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const _cs = document.currentScript;
+    const root = (_cs && _cs.closest('.slide')) || document.querySelector('.slide[data-slide="3"]');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+    const ring = root.querySelector('.s3-ring');
+    const photo = root.querySelector('.s3-photo');
+    const points = Array.from(root.querySelectorAll('.s3-point'));
+    const dots = points.map(p => p.querySelector('.dot'));
+    const texts = points.map(p => p.querySelector('span:not(.dot)'));
+    const closeRule = root.querySelector('.s3-close .rule');
+    let played = [false, false, false, false]; // 3 puntos + cierre
+
+    function resetPoints() {
+      played = [false, false, false, false];
+      if (!g) return;
+      dots.forEach(d => g.set(d, { scale: 0, transformOrigin: '50% 50%' }));
+      texts.forEach(t => g.set(t, { x: -20 }));
+      if (closeRule) g.set(closeRule, { scaleX: 0, transformOrigin: 'left center' });
+    }
+
+    // i = nº de fragments revelados (0..4). Los 3 primeros son los puntos, el 4º el cierre.
+    function syncPoints(i) {
+      if (!g) return;
+      points.forEach((p, k) => {
+        const active = i > k;
+        if (active && !played[k]) {
+          played[k] = true;
+          g.to(dots[k], { scale: 1, duration: .5, ease: 'back.out(3)' });
+          g.to(texts[k], { x: 0, duration: .5, ease: 'power2.out' });
+        } else if (!active && played[k]) {
+          played[k] = false;
+          g.set(dots[k], { scale: 0 });
+          g.set(texts[k], { x: -20 });
+        }
+      });
+      const closeActive = i >= points.length + 1;
+      if (closeRule) {
+        if (closeActive && !played[3]) {
+          played[3] = true;
+          g.to(closeRule, { scaleX: 1, duration: .6, ease: 'power2.out' });
+        } else if (!closeActive && played[3]) {
+          played[3] = false;
+          g.set(closeRule, { scaleX: 0 });
+        }
+      }
+    }
+
+    Deck.register(3, {
+      onEnter(el) {
+        if (g) {
+          g.set(ring, { strokeDashoffset: 1000 });
+          g.to(ring, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', delay: .15 });
+          g.from(photo, { opacity: 0, scale: .92, transformOrigin: '50% 50%', duration: .9, ease: 'power2.out' });
+        }
+        resetPoints();
+      },
+      onReset(el) { resetPoints(); },
+      onLeave(el) {
+        if (g) {
+          g.killTweensOf(ring);
+          g.killTweensOf(dots); g.killTweensOf(texts);
+          if (closeRule) g.killTweensOf(closeRule);
+        }
+      },
+      onStep(el, i) { syncPoints(i); }
+    });
+  })();
+  </script>
+</section>

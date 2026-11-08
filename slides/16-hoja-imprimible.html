@@ -1,0 +1,42 @@
+<section class="slide" data-slide="16"><style>
+#s16 {padding:64px 90px;background:var(--bg);font-family:var(--font);}
+#s16 .title {font-family:var(--serif);font-size:64px;line-height:1.06;margin:20px 0 18px;letter-spacing:-.02em;}
+#s16 .title em {color:var(--accent);}
+#s16 .subtitle {font-size:27px;line-height:1.35;color:var(--muted);margin-bottom:26px;}
+#s16 .cols {display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start;}
+#s16 .stack {display:flex;flex-direction:column;gap:18px;}
+#s16 .card {background:white;border:1px solid #dce4e9;border-top:4px solid var(--accent);border-radius:12px;padding:23px 27px;}
+#s16 h3 {font-family:var(--font);font-size:30px;line-height:1.2;margin:0 0 12px;}
+#s16 p {font-size:26px;line-height:1.35;margin:0;color:var(--ink-soft);}
+#s16 .step {font-size:18px;letter-spacing:.06em;color:var(--accent);font-weight:700;margin-bottom:10px;}
+#s16 .quote {padding:24px;background:#f4f6f8;border-radius:12px;margin-top:18px;}
+#s16 .quote p {font-family:var(--serif);font-size:31px;}
+#s16 .quote b {font-size:19px;color:var(--accent);display:block;margin-bottom:12px;}
+#s16 .badge {display:inline-block;padding:7px 12px;border-radius:7px;background:#eef5f1;color:#246447;font-size:20px;font-weight:650;margin-bottom:16px;}
+#s16 .note {position:absolute;left:90px;right:90px;bottom:66px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:19px;line-height:1.4;}
+#s16 .paper {background:white;border:1px solid #ccd4dc;box-shadow:0 12px 35px #172a4012;padding:25px 32px;border-radius:5px;}
+#s16 .paper h3 {font-family:var(--serif);font-size:34px;color:var(--accent);}
+#s16 .paper h4 {font-size:23px;margin:17px 0 8px;}
+#s16 .paper p,#s16 .paper li {font-size:22px;line-height:1.35;}
+#s16 .paper ul {padding-left:23px;margin:8px 0;}
+#s16 .paper li {margin-bottom:8px;}
+#s16 .paper .small {font-size:17px;color:var(--muted);}
+#s16 .action {display:inline-block;background:var(--accent);color:white;border-radius:8px;padding:14px 20px;font-size:23px;font-weight:650;text-decoration:none;margin-top:18px;}
+#s16 .action:focus-visible {outline:3px solid #1665b0;outline-offset:4px;}
+#s16 .timeline {border-left:4px solid #ccd9e5;padding-left:25px;}
+#s16 .event {padding:22px 26px;background:#f4f7fa;border-radius:12px;margin-bottom:18px;}
+#s16 .event .when {font-size:20px;color:var(--accent);font-weight:700;margin-bottom:10px;}
+#s16 .row {display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding:20px 0;font-size:25px;}
+#s16 .state {font-size:18px;background:#fff1d8;color:#87500f;padding:7px 12px;border-radius:7px;white-space:nowrap;}
+#s16 .paper {padding:20px 28px;}
+#s16 .paper p,#s16 .paper li {font-size:20px;}
+#s16 .paper h3 {font-size:30px;}
+#s16 .paper h4 {margin:12px 0 7px;}
+#s16 .paper li {margin-bottom:6px;}
+#s16 .paper .action {margin-top:12px;padding:12px 18px;}
+#s16 .card {padding:20px 25px;}
+#s16 .card p {font-size:25px;}
+#s16 .stack > * + * {margin-top:0;}
+</style>
+<div id="s16" class="fill"><div class="kicker">Indicaciones para Adriana · Entrega</div><h2 class="title">Una hoja que puede llevarse<br><em>y consultar en casa</em></h2><div class="subtitle">La IA redacta la hoja y el médico valida el contenido antes de entregarlo.</div><div class="cols"><article class="paper"><span class="badge">Ejemplo docente · plan acordado</span><h3>Adriana · Mi plan tras la consulta</h3><p>Mi objetivo: comer mejor y controlar el peso con cambios que pueda mantener.</p><h4>Qué hemos acordado</h4><ul><li>Preparar comida y merienda para evitar llegar con mucha hambre a la noche.</li><li>Planificar cenas con verdura, proteína y carbohidratos ricos en fibra.</li><li>Registrar horarios, hambre e ingestas nocturnas; mantener el gimnasio.</li><li>Llamada de Sara a las dos semanas para revisar dificultades y dudas.</li></ul><h4>Tratamiento</h4><p>Metformina con la comida según la pauta médica. Comentar tolerancia y dudas.</p><p class="small">La medicación para el peso queda para valoración compartida.</p><a class="action" href="hoja-adriana.html" data-embed="Adriana · Hoja de la consulta" data-internal>Abrir hoja e imprimir →</a></article><div class="stack"><article class="card"><div class="step">UN SOLO PLAN</div><h3>Lenguaje que Adriana entiende</h3><p>Qué hacer con las comidas, cómo tomar la medicación acordada y cuándo revisar el plan.</p></article><article class="card"><div class="step">VERSIÓN REVISADA</div><h3>Decisiones validadas</h3><p>La hoja refleja la consulta y coincide con la pauta prescrita.</p></article><article class="card"><div class="step">ENTREGA</div><h3>Papel o PDF</h3><p>Una hoja A4 para consultar en casa y llevar a la siguiente revisión.</p></article></div></div><div class="note">Hoja docente imprimible · completar medicación y contacto antes de entregar. Los campos no se guardan ni se envían.</div></div>
+<script>(function(){const root=document.currentScript.closest('.slide');Deck.register(16,{onEnter(){if(window.gsap)gsap.fromTo(root.querySelector('.title'),{opacity:0,y:12},{opacity:1,y:0,duration:.5});},onLeave(){if(window.gsap)gsap.killTweensOf(root.querySelector('.title'));}});})();</script></section>

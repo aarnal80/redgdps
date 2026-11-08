@@ -1,0 +1,42 @@
+<section class="slide congreso-plantilla congreso-portada" data-slide="1">
+  <style>
+    #s1 { overflow:hidden; background:#fff; color:#404040; font-family:Arial,sans-serif; }
+    #s1 .s1-art { position:absolute; inset:0; width:1920px; height:1080px; pointer-events:none; }
+    #s1 .s1-title { position:absolute; left:1008px; top:79px; width:878px; height:473px;
+      display:flex; align-items:center; justify-content:center; margin:0;
+      font-family:"Arial Black",Arial,sans-serif; font-size:64px; font-weight:900;
+      line-height:1.18; letter-spacing:0; text-align:center; color:#404040; }
+    #s1 .s1-sub { position:absolute; left:1008px; top:498px; width:878px;
+      font-size:34px; line-height:1.35; text-align:center; color:#404040; }
+    #s1 .s1-byline { position:absolute; left:1008px; top:572px; width:878px; height:167px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:18px; text-align:center; }
+    #s1 .who { font-size:38px; font-weight:400; line-height:1.2; }
+    #s1 .spec { font-size:30px; line-height:1.35; }
+  </style>
+
+  <div id="s1" class="fill">
+    <img class="s1-art" src="assets/congreso/portada.png" width="1920" height="1080"
+      alt="5º Congreso Nacional de Diabetes de la Fundación redGDPS. Los pilares de la diabetes. Zaragoza, Auditorio Princesa Leonor, 12–13 de noviembre de 2026.">
+    <h1 class="s1-title">La inteligencia artificial<br>en el cuidado de las<br>personas con diabetes.</h1>
+    <p class="s1-sub">Experiencia de un médico de familia</p>
+    <div class="s1-byline">
+      <div class="who">Dr. Antonio José Arnal Meinhardt</div>
+      <div class="spec">Medicina Familiar y Comunitaria<br>Medicina de Urgencias</div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const content = root.querySelectorAll('.s1-title,.s1-sub,.s1-byline');
+    const g = window.gsap;
+    Deck.register(1, {
+      onEnter() {
+        if (g) g.fromTo(content, {opacity:0,y:14}, {opacity:1,y:0,duration:.7,stagger:.12,ease:'power2.out'});
+      },
+      onLeave() { if (g) g.killTweensOf(content); }
+    });
+  })();
+  </script>
+</section>

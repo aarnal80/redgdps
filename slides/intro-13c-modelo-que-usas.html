@@ -1,0 +1,101 @@
+<section class="slide" data-slide="ia15">
+  <style>
+    #sia15 { padding: 72px 120px 54px; }
+    #sia15 h2 .mk { color: var(--accent); font-style: italic; }
+    #sia15 .sia15-sub { max-width: 1500px; margin-top: 18px; }
+    #sia15 .sia15-stage { margin-top: 46px; display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: stretch; }
+    #sia15 .sia15-card { position: relative; min-height: 500px; background: #fff; border: 1px solid var(--line); border-top: 7px solid var(--slate); border-radius: 14px; padding: 30px 38px 28px; box-shadow: var(--shadow-sm); }
+    #sia15 .sia15-card.free { border-top-color: var(--teal); }
+    #sia15 .sia15-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; }
+    #sia15 .sia15-label { font-family: var(--font); font-size: 20px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+    #sia15 .sia15-year { font-family: var(--font); font-size: 24px; color: var(--faint); }
+    #sia15 .sia15-model { margin-top: 10px; font-family: var(--serif); font-size: 46px; font-weight: 700; color: var(--ink); }
+    #sia15 .sia15-card.free .sia15-model { color: var(--teal); }
+    #sia15 .sia15-desc { margin-top: 10px; min-height: 70px; font-family: var(--font); font-size: 25px; line-height: 1.35; color: var(--muted); }
+    #sia15 .sia15-barbox { position: relative; height: 205px; margin-top: 24px; border-bottom: 2px solid var(--line); background: repeating-linear-gradient(to top, transparent 0, transparent 67px, rgba(31,58,95,.10) 68px, transparent 69px); }
+    #sia15 .sia15-fill { position: absolute; left: 0; bottom: 0; width: 100%; height: 0; border-radius: 10px 10px 0 0; background: linear-gradient(180deg, #7aa7d9, #1f3a5f); }
+    #sia15 .sia15-card.free .sia15-fill { background: linear-gradient(180deg, #8ad2b0, #1c7a4d); }
+    #sia15 .sia15-value { position: absolute; left: 50%; top: 18px; z-index: 2; transform: translateX(-50%); color: #18212c; background: rgba(255,255,255,.94); border-radius: 999px; padding: 4px 16px 7px; box-shadow: 0 2px 8px rgba(15,24,36,.16); font-family: var(--serif); font-size: 42px; line-height: 1; font-weight: 700; opacity: 0; white-space: nowrap; }
+    #sia15 .sia15-scale { display: flex; justify-content: space-between; margin-top: 10px; color: var(--faint); font-family: var(--font); font-size: 18px; }
+    #sia15 .sia15-callout { margin-top: 32px; border-left: 5px solid var(--accent); padding-left: 22px; font-family: var(--serif); font-size: 31px; line-height: 1.22; color: var(--ink); }
+    #sia15 .sia15-callout .mk { color: var(--accent); font-style: italic; }
+    #sia15 .sia15-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; margin-top: 28px; font-family: var(--font); font-size: 22px; color: var(--ink-soft); }
+    #sia15 .sia15-bottom b { color: var(--ink); }
+    #sia15 .sia15-source { position: absolute; left: 120px; right: 120px; bottom: 26px; font-family: var(--font); font-size: 16px; color: var(--faint); }
+  </style>
+
+  <div id="sia15" class="fill">
+    <div class="kicker">El nivel de acceso importa · 1/2</div>
+    <h2 style="margin-top:22px">Luna ya está en la <span class="mk">misma liga</span> que o3</h2>
+    <p class="lead sia15-sub">Comparación de referencia en GPQA Diamond. La generación actual es GPT-6 Luna; conservamos las cifras de las versiones que fueron evaluadas.</p>
+
+    <div class="sia15-stage">
+      <div class="sia15-card">
+        <div class="sia15-card-head">
+          <div class="sia15-label">Modelo de pago</div>
+          <div class="sia15-year">2025</div>
+        </div>
+        <div class="sia15-model">o3</div>
+        <div class="sia15-desc">Razonamiento avanzado. Durante un tiempo, esta era la referencia para tareas difíciles.</div>
+        <div class="sia15-barbox">
+          <div class="sia15-fill" data-pct="81.8"></div>
+          <div class="sia15-value">81,8 %</div>
+        </div>
+        <div class="sia15-scale"><span>0</span><span>GPQA Diamond · 100</span></div>
+      </div>
+
+      <div class="sia15-card free">
+        <div class="sia15-card-head">
+          <div class="sia15-label">Modelo económico · referencia publicada</div>
+          <div class="sia15-year">2026</div>
+        </div>
+        <div class="sia15-model">GPT-5.6 Luna</div>
+        <div class="sia15-desc">Modelo rápido y de menor coste. El 92,3 % mostrado corresponde a esta versión publicada.</div>
+        <div class="sia15-barbox">
+          <div class="sia15-fill" data-pct="92.3"></div>
+          <div class="sia15-value">92,3 %</div>
+        </div>
+        <div class="sia15-scale"><span>0</span><span>GPQA Diamond · 100</span></div>
+      </div>
+    </div>
+
+    <div class="sia15-bottom">
+      <div><b>La etiqueta «gratis» no equivale a «tonto».</b> El acceso, el modo y las herramientas cambian el resultado.</div>
+      <div><b>La comparación es orientativa:</b> el porcentaje pertenece a GPQA Diamond, no es un índice universal de inteligencia.</div>
+    </div>
+    <div class="sia15-source">Fuentes: OpenAI, <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener" style="color:inherit">GPT-5.6</a> (GPQA: Luna 92,3 %) y comparativa original de o3 (81,8 %). Cada resultado conserva su modelo de origen; las configuraciones de evaluación pueden diferir.</div>
+  </div>
+
+  <script>
+  (function () {
+    const root = document.currentScript.closest('.slide');
+    const g = window.gsap || null;
+    const fills = Array.from(root.querySelectorAll('.sia15-fill'));
+    const values = Array.from(root.querySelectorAll('.sia15-value'));
+    let tl = null;
+    function reset() {
+      fills.forEach(el => { el.style.height = '0%'; });
+      values.forEach(el => { el.style.opacity = 0; });
+    }
+    function play() {
+      reset();
+      if (!g) {
+        fills.forEach(el => { el.style.transition = 'height 1s ease'; el.style.height = el.dataset.pct + '%'; });
+        values.forEach(el => { el.style.opacity = 1; });
+        return;
+      }
+      if (tl) tl.kill();
+      tl = g.timeline({ delay: .15 });
+      fills.forEach((el, i) => {
+        tl.to(el, { height: el.dataset.pct + '%', duration: 1.1, ease: 'power2.out' }, i * .25);
+        tl.to(values[i], { opacity: 1, duration: .35 }, i * .25 + .65);
+      });
+    }
+    Deck.register("ia15", {
+      onReset() { reset(); },
+      onEnter() { requestAnimationFrame(play); },
+      onLeave() { if (tl) { tl.kill(); tl = null; } }
+    });
+  })();
+  </script>
+<aside hidden data-speaker-notes>Se restaura la gráfica original o3 81,8 % frente a GPT-5.6 Luna 92,3 %. No atribuir el 92,3 % a GPT-6 Luna ni a GPT-6.1 Luna. El catálogo oficial consultado el 03-11-2026 incluye GPT-6 Luna, no GPT-6.1 Luna. No se dispone de una fuente verificada para la denominación solicitada ni de una puntuación GPQA comparable para esa versión. Se conserva el gráfico con la atribución correcta y se menciona la generación actual en el subtítulo.</aside></section>

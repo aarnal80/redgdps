@@ -1,0 +1,459 @@
+/* ============================================================
+   IA EN LA CONSULTA — Sistema de diseño (estilo NEJM)
+   Fondo blanco, editorial, tipografía serif para titulares,
+   carmesí NEJM como acento. Escenario fijo 1920x1080 escalado.
+   NO EDITAR desde las slides. Estilos propios de cada slide van
+   en un <style> scopeado dentro del archivo de la slide.
+   ============================================================ */
+
+:root {
+  /* --- Paleta clara / NEJM --- */
+  --bg:        #ffffff;
+  --bg-2:      #f5f6f8;   /* secciones en gris muy claro */
+  --bg-3:      #eef0f3;
+  --panel:     #ffffff;
+  --panel-2:   #f7f8fa;
+  --ink:       #14171c;   /* casi negro editorial */
+  --ink-soft:  #2b3038;
+  --muted:     #545b66;
+  --faint:     #8b93a0;
+  --line:      #e2e5ea;   /* filetes/hairlines */
+  --line-2:    #cfd4dc;
+
+  --accent:    #a6093d;   /* CARMESÍ NEJM (masthead) */
+  --accent-ink:#7d072e;   /* carmesí oscuro para texto sobre blanco */
+  --accent-soft:#fbeef2;  /* fondo carmesí muy claro */
+  --slate:     #1f3a5f;   /* azul pizarra para datos */
+  --teal:      #0a6b78;   /* apoyo en gráficos */
+  --amber:     #b26a00;   /* avisos */
+  --green:     #1c7a4d;   /* positivo/validado */
+  --danger:    #b3261e;   /* error/rojo alerta */
+
+  --shadow-sm: 0 1px 2px rgba(20,23,28,.06), 0 2px 8px rgba(20,23,28,.05);
+  --shadow:    0 10px 30px -12px rgba(20,23,28,.20);
+  --shadow-lg: 0 24px 60px -24px rgba(20,23,28,.28);
+
+  /* --- Tipografía --- */
+  --serif: "Georgia", "Iowan Old Style", "Times New Roman", serif;      /* titulares */
+  --font:  "Inter", "Helvetica Neue", "Segoe UI", system-ui, -apple-system, sans-serif; /* cuerpo/UI */
+  --mono:  "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* Escala para 1920x1080, legible desde el fondo del salón */
+  --fs-hero:   128px;
+  --fs-h1:     88px;
+  --fs-h2:     62px;
+  --fs-h3:     42px;
+  --fs-lead:   36px;
+  --fs-body:   29px;
+  --fs-small:  23px;
+  --fs-kicker: 21px;
+
+  --radius:    16px;
+  --radius-sm: 10px;
+  --gap:       40px;
+  --pad:       120px;   /* margen interior estándar de una slide */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: #e9ebef;         /* letterbox algo más oscuro que el papel */
+  color: var(--ink);
+  font-family: var(--font);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* --- Escenario / letterbox --- */
+#viewport {
+  position: fixed; inset: 0;
+  background: #e9ebef;
+  overflow: hidden;
+}
+#stage {
+  position: absolute; left: 50%; top: 50%;
+  width: 1920px; height: 1080px;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) scale(0.5);
+  background: var(--bg);
+  box-shadow: 0 30px 80px -30px rgba(20,23,28,.45);
+  overflow: hidden;                 /* recorta la lona al marco de la pantalla */
+  will-change: transform;
+}
+
+/* --- Lona Prezi: contiene todas las slides; recibe el transform de cámara --- */
+#world {
+  position: absolute; top: 0; left: 0; width: 1920px; height: 1080px;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* --- Slides (tarjetas colocadas sobre la lona; left/top los pone el motor) --- */
+.slide {
+  position: absolute; top: 0; left: 0; width: 1920px; height: 1080px;
+  padding: var(--pad);
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--bg);
+  pointer-events: none;
+  box-shadow: 0 24px 70px -24px rgba(20,23,28,.45);   /* relieve de tarjeta en el mapa */
+  backface-visibility: hidden;
+}
+.slide.active { pointer-events: auto; z-index: 2; }
+.slide.far { visibility: hidden; }     /* fuera de cámara: no se pinta (rendimiento) */
+
+/* --- Transiciones "ruta" · Push & Focus ------------------------------------
+   Metáfora de recorrido con profundidad, estilo keynote:
+   · Parallax  → la saliente se va poco (--route-out) y la entrante llega de
+     lejos (--route-in): sensación de capas, no de diapositiva plana.
+   · Enfoque   → la entrante aterriza escalando y desenfocando a cero, como si
+     entrara en foco de cámara. La saliente retrocede (escala <1) y se difumina.
+   · Ritmo     → entrada con expo-out (aterrizaje suave); salida más corta y
+     acelerada, para que la nueva slide sea la protagonista.
+   Eje: horizontal = avance dentro de un bloque; vertical = cambio de capítulo.
+   Todo parametrizado aquí arriba para ajustar el gusto en un único sitio.   */
+:root {
+  --route-in: 300px;                       /* viaje de la entrante (lejos) */
+  --route-out: 110px;                      /* viaje de la saliente (parallax) */
+  --route-scale-in: 1.045;                 /* entra ligeramente “adelantada” */
+  --route-scale-out: .955;                 /* sale retrocediendo al fondo */
+  --route-blur: 7px;                        /* desenfoque de foco */
+  --route-ease-in: cubic-bezier(.16,1,.3,1);   /* expo-out: aterrizaje premium */
+  --route-ease-out: cubic-bezier(.4,0,.7,1);   /* acelera al marcharse */
+  --route-dur-in: .74s;
+  --route-dur-out: .5s;
+}
+
+.slide.active.from-right { animation: inFromRight var(--route-dur-in) var(--route-ease-in) both; }
+.slide.active.from-left  { animation: inFromLeft  var(--route-dur-in) var(--route-ease-in) both; }
+.slide.active.from-below { animation: inFromBelow var(--route-dur-in) var(--route-ease-in) both; }
+.slide.active.from-above { animation: inFromAbove var(--route-dur-in) var(--route-ease-in) both; }
+.slide.leaving.to-left   { animation: outToLeft   var(--route-dur-out) var(--route-ease-out) both; }
+.slide.leaving.to-right  { animation: outToRight  var(--route-dur-out) var(--route-ease-out) both; }
+.slide.leaving.to-up     { animation: outToUp     var(--route-dur-out) var(--route-ease-out) both; }
+.slide.leaving.to-down   { animation: outToDown   var(--route-dur-out) var(--route-ease-out) both; }
+
+@keyframes inFromRight {
+  from { transform: translateX(var(--route-in)) scale(var(--route-scale-in)); filter: blur(var(--route-blur)); opacity: 0 }
+  55%  { opacity: 1 }
+  to   { transform: none; filter: blur(0); opacity: 1 }
+}
+@keyframes inFromLeft {
+  from { transform: translateX(calc(-1 * var(--route-in))) scale(var(--route-scale-in)); filter: blur(var(--route-blur)); opacity: 0 }
+  55%  { opacity: 1 }
+  to   { transform: none; filter: blur(0); opacity: 1 }
+}
+@keyframes inFromBelow {
+  from { transform: translateY(var(--route-in)) scale(var(--route-scale-in)); filter: blur(var(--route-blur)); opacity: 0 }
+  55%  { opacity: 1 }
+  to   { transform: none; filter: blur(0); opacity: 1 }
+}
+@keyframes inFromAbove {
+  from { transform: translateY(calc(-1 * var(--route-in))) scale(var(--route-scale-in)); filter: blur(var(--route-blur)); opacity: 0 }
+  55%  { opacity: 1 }
+  to   { transform: none; filter: blur(0); opacity: 1 }
+}
+@keyframes outToLeft  { from { transform: none; filter: blur(0); opacity: 1 } to { transform: translateX(calc(-1 * var(--route-out))) scale(var(--route-scale-out)); filter: blur(var(--route-blur)); opacity: 0 } }
+@keyframes outToRight { from { transform: none; filter: blur(0); opacity: 1 } to { transform: translateX(var(--route-out)) scale(var(--route-scale-out)); filter: blur(var(--route-blur)); opacity: 0 } }
+@keyframes outToUp    { from { transform: none; filter: blur(0); opacity: 1 } to { transform: translateY(calc(-1 * var(--route-out))) scale(var(--route-scale-out)); filter: blur(var(--route-blur)); opacity: 0 } }
+@keyframes outToDown  { from { transform: none; filter: blur(0); opacity: 1 } to { transform: translateY(var(--route-out)) scale(var(--route-scale-out)); filter: blur(var(--route-blur)); opacity: 0 } }
+
+.slide.tint  { background: var(--bg-2); }              /* slide en gris claro */
+.slide.center{ align-items: center; text-align: center; }
+
+/* Filete superior de "portada de sección" tipo revista */
+.slide.section { background: var(--bg-2); }
+.rule-top { border-top: 3px solid var(--part, var(--accent)); width: 120px; }
+
+/* --- Fragments (pasos internos) --- */
+.fragment {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .45s ease, transform .45s ease; will-change: opacity, transform;
+}
+.fragment.revealed { opacity: 1; transform: none; }
+.fragment.fade-only { transform: none; }
+.fragment.scale-in { transform: scale(.94); }
+.fragment.scale-in.revealed { transform: scale(1); }
+
+/* --- Tipografía utilitaria --- */
+.kicker {
+  font-family: var(--font);
+  font-size: var(--fs-kicker); font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--part, var(--accent));      /* color de la parte de la charla */
+  display: inline-flex; align-items: center; gap: 16px;
+}
+.kicker::before { content: ""; width: 42px; height: 3px; background: var(--part, var(--accent)); display: inline-block; }
+.kicker.plain::before { display:none; }
+
+.hero   { font-family: var(--serif); font-size: var(--fs-hero); font-weight: 700; line-height: 1.0; letter-spacing: -.015em; color: var(--ink); }
+h1,.h1  { font-family: var(--serif); font-size: var(--fs-h1); font-weight: 700; line-height: 1.05; letter-spacing: -.01em; color: var(--ink); }
+h2,.h2  { font-family: var(--serif); font-size: var(--fs-h2); font-weight: 700; line-height: 1.1; color: var(--ink); }
+h3,.h3  { font-family: var(--font); font-size: var(--fs-h3); font-weight: 700; line-height: 1.2; color: var(--ink); }
+.lead   { font-family: var(--font); font-size: var(--fs-lead); font-weight: 400; color: var(--muted); line-height: 1.4; }
+.body   { font-family: var(--font); font-size: var(--fs-body); font-weight: 400; color: var(--muted); line-height: 1.5; }
+.small  { font-size: var(--fs-small); color: var(--faint); }
+.mono   { font-family: var(--mono); }
+.serif  { font-family: var(--serif); }
+.drop::first-letter { /* capital editorial opcional */
+  font-family: var(--serif); font-size: 2.6em; float: left; line-height: .8;
+  padding: 6px 14px 0 0; color: var(--accent);
+}
+
+.accent  { color: var(--accent); }
+.slate   { color: var(--slate); }
+.teal    { color: var(--teal); }
+.green   { color: var(--green); }
+.amber   { color: var(--amber); }
+.danger  { color: var(--danger); }
+.muted   { color: var(--muted); }
+.ink     { color: var(--ink); }
+
+.stack > * + * { margin-top: 26px; }
+.stack-sm > * + * { margin-top: 14px; }
+.stack-lg > * + * { margin-top: 44px; }
+.underline-accent { border-bottom: 3px solid var(--accent); padding-bottom: 4px; }
+
+/* --- Componentes --- */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: var(--shadow-sm);
+}
+.card.raised { box-shadow: var(--shadow); }
+.card.accent-top { border-top: 4px solid var(--accent); }
+.card.flat { box-shadow: none; background: var(--bg-2); border-color: transparent; }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 11px 22px; border-radius: 999px;
+  border: 1px solid var(--line-2); background: var(--bg);
+  font-size: var(--fs-small); font-weight: 600; color: var(--ink);
+}
+.tag {
+  font-family: var(--font); font-size: 17px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 6px; display:inline-block;
+}
+.tag.ok   { background: rgba(28,122,77,.10);  color: var(--green);  border:1px solid rgba(28,122,77,.28); }
+.tag.no   { background: rgba(179,38,30,.09);  color: var(--danger); border:1px solid rgba(179,38,30,.26); }
+.tag.warn { background: rgba(178,106,0,.10);  color: var(--amber);  border:1px solid rgba(178,106,0,.28); }
+.tag.ce   { background: var(--accent-soft);   color: var(--accent-ink); border:1px solid rgba(166,9,61,.25); }
+
+.grid { display: grid; gap: var(--gap); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.row { display: flex; gap: var(--gap); }
+.center-xy { display: flex; align-items: center; justify-content: center; }
+.fill { position: absolute; inset: 0; }
+
+/* Cifra grande / dato */
+.stat { font-family: var(--serif); font-size: 148px; font-weight: 700; line-height: 1; letter-spacing: -.02em; color: var(--accent); }
+.stat-label { font-family: var(--font); font-size: var(--fs-body); color: var(--muted); }
+
+/* Cita editorial */
+.pullquote { font-family: var(--serif); font-size: 56px; line-height: 1.25; color: var(--ink); font-style: italic; }
+.pullquote .mk { color: var(--accent); }
+
+/* Canvas 3D / lienzo a pantalla completa dentro de la slide */
+.scene-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.scene-overlay { position: relative; z-index: 1; pointer-events: none; }
+.scene-overlay * { pointer-events: auto; }
+.fallback-3d { position: absolute; inset: 0; display: none; place-items: center; text-align: center; color: var(--muted); }
+.no-webgl .fallback-3d { display: grid; }
+.no-webgl .scene-canvas { display: none; }
+
+/* Botón / control */
+.btn {
+  font-family: var(--font); font-size: var(--fs-small); font-weight: 700;
+  color: #fff; background: var(--accent); border: none; border-radius: 999px;
+  padding: 16px 36px; cursor: pointer; box-shadow: var(--shadow-sm);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.btn:hover { transform: translateY(-2px); background: var(--accent-ink); box-shadow: var(--shadow); }
+.btn.ghost { background: #fff; color: var(--accent); border: 1.5px solid var(--accent); }
+.btn.ghost:hover { background: var(--accent-soft); }
+
+/* Cursor máquina de escribir */
+.caret::after { content: "▍"; color: var(--accent); font-weight: 400; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0 } }
+
+/* Filete/hairline */
+.hr { height: 1px; background: var(--line); border: 0; }
+.hr.strong { height: 2px; background: var(--ink); }
+.hr.accent { height: 3px; background: var(--accent); }
+
+/* --- Chrome del deck (fuera del stage) --- */
+#progress {
+  position: fixed; left: 0; bottom: 0; height: 4px; width: 0%;
+  background: var(--accent); z-index: 50; transition: width .4s ease;
+}
+#hud-cluster {
+  position: fixed; right: 24px; bottom: 14px; z-index: 50;
+  display: flex; align-items: center; gap: 12px;
+}
+#hud {
+  font-family: var(--mono); font-size: 14px; color: var(--faint); letter-spacing: .1em; user-select: none;
+}
+#hud b { color: var(--ink-soft); }
+
+/* --- Botón de índice (tipo app) --- */
+#menu-btn {
+  display: grid; place-items: center; width: 34px; height: 34px;
+  border-radius: 9px; border: 1px solid var(--line-2); background: #fff;
+  color: var(--muted); cursor: pointer; padding: 0;
+  box-shadow: var(--shadow-sm);
+  transition: color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
+}
+#menu-btn svg rect { fill: currentColor; }
+#menu-btn:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+#menu-btn:active { transform: translateY(0); }
+#menu-btn.on { color: #fff; background: var(--accent); border-color: var(--accent); }
+#menu-btn.on svg rect { fill: #fff; }
+
+/* --- Overlay + panel del índice --- */
+#menu-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(20,23,28,.46); backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: opacity .22s ease;
+}
+#menu-overlay.open { opacity: 1; visibility: visible; }
+
+#menu-panel {
+  width: min(1040px, 92vw); height: min(760px, 84vh);
+  background: #fff; border-radius: 20px; box-shadow: var(--shadow-lg);
+  display: flex; flex-direction: column; overflow: hidden;
+  transform: translateY(14px) scale(.98); transition: transform .25s cubic-bezier(.2,.7,.2,1);
+}
+#menu-overlay.open #menu-panel { transform: none; }
+
+#menu-head {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 18px;
+  padding: 22px 26px; border-bottom: 1px solid var(--line);
+}
+#menu-title {
+  font-family: var(--serif); font-size: 26px; font-weight: 700; color: var(--ink);
+  flex: 0 0 auto;
+}
+#menu-search {
+  flex: 1 1 auto; min-width: 0; font-family: var(--font); font-size: 17px;
+  border: 1px solid var(--line-2); border-radius: 10px; padding: 10px 16px;
+  color: var(--ink); background: var(--bg-2); outline: none;
+  transition: border-color .15s ease, background .15s ease;
+}
+#menu-search:focus { border-color: var(--accent); background: #fff; }
+#menu-close {
+  flex: 0 0 auto; width: 34px; height: 34px; border-radius: 9px; border: none;
+  background: transparent; color: var(--faint); font-size: 24px; line-height: 1; cursor: pointer;
+  display: grid; place-items: center; transition: color .15s ease, background .15s ease;
+}
+#menu-close:hover { color: var(--ink); background: var(--bg-2); }
+
+#menu-list { flex: 1 1 auto; overflow-y: auto; padding: 10px 14px 22px; }
+.menu-group + .menu-group { margin-top: 8px; }
+.menu-group-title {
+  font-family: var(--font); font-size: 13px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); padding: 16px 12px 8px;
+  display: flex; align-items: center;
+}
+.mg-dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; flex: 0 0 auto; }
+.menu-item {
+  display: flex; align-items: baseline; gap: 16px; width: 100%; text-align: left;
+  border: none; background: none; cursor: pointer; border-radius: 10px;
+  padding: 10px 12px; font-family: var(--font);
+  transition: background .12s ease;
+}
+.menu-item:hover { background: var(--bg-2); }
+.menu-item.active { background: var(--accent-soft); }
+.menu-item .mi-num {
+  flex: 0 0 40px; font-family: var(--mono); font-size: 14px; color: var(--faint); text-align: right;
+}
+.menu-item.active .mi-num { color: var(--accent); font-weight: 700; }
+.menu-item .mi-label { font-size: 18px; color: var(--ink-soft); }
+.menu-item.active .mi-label { color: var(--ink); font-weight: 600; }
+.menu-item.hidden { display: none; }
+#menu-empty { display: none; padding: 40px 20px; text-align: center; color: var(--faint); font-size: 17px; }
+#menu-empty.show { display: block; }
+#brand {
+  position: fixed; left: 24px; bottom: 16px; z-index: 50;
+  font-family: var(--font); font-size: 13px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--faint); user-select: none;
+}
+#hint {
+  position: fixed; left: 50%; bottom: 15px; transform: translateX(-50%); z-index: 50;
+  font-size: 13px; color: var(--faint); letter-spacing: .06em; transition: opacity .6s ease;
+}
+#hint.hide { opacity: 0; }
+
+/* --- Loader --- */
+#loader {
+  position: fixed; inset: 0; z-index: 200; background: var(--bg);
+  display: grid; place-items: center; transition: opacity .6s ease;
+}
+#loader.done { opacity: 0; pointer-events: none; }
+#loader .lbar { width: 300px; max-width: 80vw; margin-inline: auto; height: 3px; background: var(--line); border-radius: 3px; overflow: hidden; }
+#loader .lbar > i { display: block; height: 100%; width: 0%; background: var(--accent); }
+#loader .ltext { margin-top: 16px; font-family: var(--mono); font-size: 13px; color: var(--faint); letter-spacing: .1em; }
+
+/* --- Movimiento y accesibilidad --------------------------------------------
+   NOTA: esta presentación está diseñada a propósito con transiciones de
+   cámara (Push & Focus) y animaciones de intro. Es un artefacto controlado por
+   el ponente, así que reproduce su motion design AUNQUE el sistema operativo
+   tenga activado "Reducir movimiento" (prefers-reduced-motion). Antes, ese
+   ajuste de Windows/macOS convertía toda animación en instantánea (0.01ms) y
+   por eso las diapositivas "saltaban" sin transición.
+   Si algún día se quiere una versión calmada, basta con reactivar el bloque
+   de más abajo (comentado) para acortar y suavizar bajo reduce-motion.       */
+
+/*
+/* --- Visor de apps incrustadas (web dentro de la presentación) ------------- */
+#app-overlay {
+  position: fixed; inset: 0; z-index: 300; background: #0b0d10;
+  display: none; flex-direction: column;
+}
+#app-overlay.open { display: flex; }
+#app-bar {
+  flex: 0 0 auto; height: 58px; display: flex; align-items: center; gap: 14px;
+  padding: 0 20px; background: #14171c; color: #fff;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35); position: relative; z-index: 2;
+}
+#app-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); flex: 0 0 auto; }
+#app-title { font-family: var(--font); font-weight: 700; font-size: 18px; letter-spacing: .01em; }
+#app-spacer { flex: 1; }
+#app-external {
+  font-family: var(--font); font-size: 14px; color: #c7ced6; text-decoration: none;
+  padding: 9px 14px; border-radius: 9px; transition: background .15s ease, color .15s ease;
+}
+#app-external:hover { background: rgba(255,255,255,.09); color: #fff; }
+#app-close {
+  font-family: var(--font); font-weight: 700; font-size: 15px; color: #fff; cursor: pointer;
+  background: var(--accent); border: 0; border-radius: 9px; padding: 10px 18px;
+  transition: filter .15s ease, transform .15s ease;
+}
+#app-close:hover { filter: brightness(1.1); transform: translateY(-1px); }
+#app-frame-wrap { flex: 1; position: relative; background: #fff; }
+#app-frame { width: 100%; height: 100%; border: 0; display: block; }
+#app-loading {
+  position: absolute; inset: 0; display: grid; place-items: center; background: #fff;
+  font-family: var(--mono); font-size: 15px; color: var(--faint); letter-spacing: .06em;
+}
+#app-overlay.loaded #app-loading { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide.active[class*="from-"],
+  .slide.leaving[class*="to-"] { animation-duration: .3s !important; }
+  :root { --route-blur: 0px; --route-in: 120px; --route-out: 60px; }
+}
+
+#next-slide {border:0;border-radius:9px;background:var(--accent);color:white;padding:12px 18px;font:700 16px var(--font);cursor:pointer;}
+#next-slide[hidden] {display:none;}
+#next-slide:focus-visible {outline:3px solid #1665b0;outline-offset:4px;}
+#app-frame-wrap {min-height:0;}
+#app-frame {position:absolute;inset:0;}
+#app-external[hidden] {display:none;}

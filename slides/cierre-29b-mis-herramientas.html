@@ -1,0 +1,254 @@
+<section class="slide congreso-plantilla" data-slide="ia35">
+  <style>
+    #sia35 { padding: 46px 100px; }
+    #sia35 h2 .mk { color: var(--accent); font-style: italic; }
+    #sia35 .sia35-sub { margin-top: 12px; max-width: 1400px; font-size: 30px; }
+
+    #sia35 .sia35-cards { margin-top: 30px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px 40px; }
+    #sia35 .app {
+      position: relative; display: flex; flex-direction: column;
+      background: #fff; border: 1px solid var(--line); border-left: 6px solid;
+      border-radius: 16px; padding: 26px 34px; box-shadow: var(--shadow-sm);
+    }
+    #sia35 .app.va { border-left-color: var(--teal); }
+    #sia35 .app.ac { border-left-color: var(--accent); }
+    #sia35 .app.uh { border-left-color: var(--amber); }
+    #sia35 .app.pr { border-left-color: var(--slate); }
+
+    #sia35 .app-head { display: flex; align-items: center; gap: 18px; }
+    #sia35 .app-ic { flex: 0 0 auto; width: 62px; height: 62px; border-radius: 14px; display: grid; place-items: center; }
+    #sia35 .app.va .app-ic { background: rgba(10,107,120,.10); }
+    #sia35 .app.ac .app-ic { background: var(--accent-soft); }
+    #sia35 .app.uh .app-ic { background: rgba(178,106,0,.12); }
+    #sia35 .app.pr .app-ic { background: rgba(31,58,95,.10); }
+    #sia35 .app-name { font-family: var(--serif); font-size: 38px; font-weight: 700; line-height: 1.02; }
+    #sia35 .app.va .app-name { color: var(--teal); }
+    #sia35 .app.ac .app-name { color: var(--accent); }
+    #sia35 .app.uh .app-name { color: var(--amber); }
+    #sia35 .app.pr .app-name { color: var(--slate); }
+    #sia35 .app-tag { font-family: var(--font); font-size: 21px; color: var(--muted); margin-left: auto; text-align: right; max-width: 300px; line-height: 1.2; }
+
+    #sia35 .app-body { display: flex; align-items: flex-end; justify-content: space-between; gap: 26px; margin-top: 20px; }
+    #sia35 .app ul { list-style: none; }
+    #sia35 .app li { font-family: var(--font); font-size: 20px; line-height: 1.3; color: var(--ink-soft); padding-left: 24px; position: relative; margin-bottom: 9px; }
+    #sia35 .app li:last-child { margin-bottom: 0; }
+    #sia35 .app li::before { content: ""; position: absolute; left: 0; top: 9px; width: 10px; height: 10px; border-radius: 3px; }
+    #sia35 .app.va li::before { background: var(--teal); }
+    #sia35 .app.ac li::before { background: var(--accent); }
+    #sia35 .app.uh li::before { background: var(--amber); }
+    #sia35 .app.pr li::before { background: var(--slate); }
+    #sia35 .app-hint { font-family: var(--font); font-style: italic; color: var(--faint); }
+    #sia35 .app-hint::before { background: var(--line-2) !important; }
+
+    #sia35 .launch {
+      flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+      font-family: var(--font); font-size: 21px; font-weight: 700; color: #fff;
+      border-radius: 999px; padding: 13px 26px; box-shadow: var(--shadow-sm); white-space: nowrap;
+      transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    #sia35 .app.va .launch { background: var(--teal); }
+    #sia35 .app.ac .launch { background: var(--accent); }
+    #sia35 .app.uh .launch { background: var(--amber); }
+    #sia35 .app.pr .launch { background: var(--slate); }
+    #sia35 .launch:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: var(--shadow); }
+    #sia35 .launch .arw { font-size: 20px; }
+
+    #sia35 .sia35-foot { margin-top: 26px; display: flex; align-items: center; gap: 20px; }
+    #sia35 .sia35-live { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font); font-size: 19px; color: var(--faint); }
+    #sia35 .sia35-live .pulse { width: 11px; height: 11px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 0 rgba(10,107,120,.5); animation: sia35pulse 1.8s infinite; }
+    @keyframes sia35pulse { 0%{ box-shadow: 0 0 0 0 rgba(10,107,120,.5) } 70%{ box-shadow: 0 0 0 13px rgba(10,107,120,0) } 100%{ box-shadow: 0 0 0 0 rgba(10,107,120,0) } }
+    #sia35 .sia35-close { font-family: var(--serif); font-size: 27px; color: var(--ink); border-left: 4px solid var(--accent); padding-left: 24px; line-height: 1.3; margin-left: auto; }
+    #sia35 .sia35-close .mk { color: var(--accent); font-style: italic; }
+  </style>
+
+  <div id="sia35" class="fill">
+    <div>
+      <div class="kicker">De la teoría a la práctica</div>
+      <h2 style="margin-top:14px">Hecho en la consulta, <span class="mk">con IA</span></h2>
+      <p class="lead sia35-sub">No hace falta ser ingeniero: estas las he construido yo. Podéis abrirlas ahora mismo.</p>
+    </div>
+
+    <div class="sia35-cards">
+      <!-- Vital Assist -->
+      <div class="app va">
+        <div class="app-head">
+          <div class="app-ic">
+            <svg width="40" height="40" viewBox="0 0 52 52" aria-hidden="true">
+              <path d="M4 27 h9 l4-11 6 22 5-26 5 18 3-3 h7" fill="none" stroke="#0a6b78" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <g fill="#0a6b78"><rect x="42" y="6" width="6" height="16" rx="2"/><rect x="37" y="11" width="16" height="6" rx="2"/></g>
+            </svg>
+          </div>
+          <div class="app-name">Vital Assist</div>
+          <div class="app-tag">Soporte a la decisión en urgencias</div>
+        </div>
+        <div class="app-body">
+          <ul>
+            <li>RCP, intubación, ictus, sepsis, pediatría</li>
+            <li>Calculadoras y pizarra de casos</li>
+          </ul>
+          <a class="launch" href="https://vital-assist.vercel.app/menu" target="_blank" rel="noopener"
+             data-embed="Vital Assist" data-embed-color="#0a6b78">Abrir <span class="arw">↗</span></a>
+        </div>
+      </div>
+
+      <!-- AppConsulta 360 -->
+      <div class="app ac">
+        <div class="app-head">
+          <div class="app-ic">
+            <svg width="38" height="38" viewBox="0 0 52 52" aria-hidden="true">
+              <rect x="20" y="6" width="12" height="24" rx="6" fill="#a6093d"/>
+              <path d="M14 24 a12 12 0 0 0 24 0" fill="none" stroke="#a6093d" stroke-width="4" stroke-linecap="round"/>
+              <line x1="26" y1="36" x2="26" y2="44" stroke="#a6093d" stroke-width="4" stroke-linecap="round"/>
+              <line x1="18" y1="44" x2="34" y2="44" stroke="#a6093d" stroke-width="4" stroke-linecap="round"/>
+              <g stroke="#c33e63" stroke-width="3" stroke-linecap="round"><path d="M42 16 a10 10 0 0 1 0 12"/></g>
+            </svg>
+          </div>
+          <div class="app-name">AppConsulta&nbsp;360</div>
+          <div class="app-tag">Escriba ambiental + HCE</div>
+        </div>
+        <div class="app-body">
+          <ul>
+            <li>Transcribe y analiza la consulta (IA)</li>
+            <li>Extrae y resume la historia clínica</li>
+          </ul>
+          <a class="launch" href="assets/appconsulta360.png" target="_blank" rel="noopener"
+             data-embed="AppConsulta 360" data-embed-color="#a6093d">Ver <span class="arw">↗</span></a>
+        </div>
+      </div>
+
+      <!-- UrgenciasHell -->
+      <div class="app uh">
+        <div class="app-head">
+          <div class="app-ic">
+            <svg width="38" height="38" viewBox="0 0 52 52" aria-hidden="true">
+              <path d="M10 10 h20 a6 6 0 0 1 6 6 v30 h-20 a6 6 0 0 1 -6 -6 z" fill="none" stroke="#b26a00" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M36 16 h6 v34 h-20 a6 6 0 0 1 -6 -6" fill="none" stroke="#b26a00" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M25 20 l-5 9 h6 l-5 9" fill="none" stroke="#b26a00" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="app-name">UrgenciasHell</div>
+          <div class="app-tag">Manual de urgencias, consulta rápida</div>
+        </div>
+        <div class="app-body">
+          <ul>
+            <li>Temas, fármacos y escalas clínicas</li>
+            <li>Búsqueda instantánea (⌘K)</li>
+          </ul>
+          <a class="launch" href="https://aarnal80.github.io/urgenciashell/" target="_blank" rel="noopener"
+             data-embed="UrgenciasHell" data-embed-color="#b26a00">Abrir <span class="arw">↗</span></a>
+        </div>
+      </div>
+
+      <!-- Proa -->
+      <div class="app pr">
+        <div class="app-head">
+          <div class="app-ic">
+            <svg width="38" height="38" viewBox="0 0 52 52" aria-hidden="true">
+              <path d="M14 38 L38 14" stroke="#1f3a5f" stroke-width="6" stroke-linecap="round"/>
+              <rect x="10" y="34" width="14" height="10" rx="3" transform="rotate(-45 17 39)" fill="#1f3a5f"/>
+              <rect x="28" y="10" width="14" height="10" rx="3" transform="rotate(-45 35 15)" fill="none" stroke="#1f3a5f" stroke-width="3"/>
+              <path d="M20 24 l4 4 M26 18 l4 4" stroke="#1f3a5f" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="app-name">Proa</div>
+          <div class="app-tag">PROA · Sector de Alcañiz</div>
+        </div>
+        <div class="app-body">
+          <ul>
+            <li>Optimización del uso de antibióticos</li>
+            <li>Guías de tratamiento locales del sector</li>
+          </ul>
+          <a class="launch" href="https://huggingface.co/spaces/aarnal80/Proa" target="_blank" rel="noopener"
+             data-embed="Proa" data-embed-color="#1f3a5f" data-embed-src="https://aarnal80-proa.static.hf.space">Abrir <span class="arw">↗</span></a>
+        </div>
+      </div>
+      <!-- VERIFICAR: alcance exacto de la herramienta Proa (inferido: PROA = Programa de Optimización de Antibióticos, Sector Alcañiz) -->
+    </div>
+
+    <div class="sia35-foot">
+      <span class="sia35-live"><span class="pulse"></span> Demo en directo · requiere conexión a internet</span>
+      <span class="sia35-close">Con IA, un médico construye sus <span class="mk">propias herramientas</span>.</span>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const _cs = document.currentScript;
+    const root = (_cs && _cs.closest('.slide')) || document.querySelector('.slide[data-slide="ia35"]');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+    const cards = Array.from(root.querySelectorAll('.app'));
+
+    // Prepara, una sola vez, los trazos "dibujables" de cada icono: solo los
+    // elementos realmente trazados con stroke (paths/lines; algún rect con
+    // stroke:none propio pero heredado del <g>). Los shapes rellenos (fill)
+    // se quedan tal cual, no se tocan.
+    const icons = cards.map(card => {
+      const svg = card.querySelector('.app-ic svg');
+      const ic = card.querySelector('.app-ic');
+      const strokes = [];
+      if (svg) {
+        Array.from(svg.querySelectorAll('path, line, rect, circle, ellipse, polyline, polygon')).forEach(el => {
+          let stroked = false;
+          try { stroked = getComputedStyle(el).stroke !== 'none'; } catch (e) { stroked = false; }
+          if (!stroked) return;
+          try {
+            const len = el.getTotalLength();
+            if (len && isFinite(len)) {
+              el.style.strokeDasharray = String(len);
+              strokes.push({ el, len });
+            }
+          } catch (e) { /* sin getTotalLength (circle/rect en algún motor): se deja estático, sin romper */ }
+        });
+      }
+      return { card, ic, strokes };
+    });
+
+    function resetIcons() {
+      // Sin GSAP no hay quien los dibuje: deja el trazo completo y visible
+      // (degradado seguro) en vez de escondido a medio dibujar.
+      icons.forEach(({ strokes }) => {
+        strokes.forEach(({ el, len }) => { el.style.strokeDashoffset = g ? String(len) : '0'; });
+      });
+      if (g) icons.forEach(({ ic }) => { if (ic) g.set(ic, { clearProps: 'transform' }); });
+    }
+
+    function killAllTweens() {
+      if (!g) return;
+      g.killTweensOf(cards);
+      icons.forEach(({ ic, strokes }) => {
+        if (ic) g.killTweensOf(ic);
+        strokes.forEach(({ el }) => g.killTweensOf(el));
+      });
+    }
+
+    function traceIcons() {
+      if (!g) return;
+      icons.forEach(({ ic, strokes }, ci) => {
+        if (!strokes.length) return;
+        const t0 = ci * .11 + .62; // arranca tras la entrada+aterrizaje de esa tarjeta
+        strokes.forEach(({ el }) => {
+          g.to(el, { strokeDashoffset: 0, duration: .6, delay: t0, ease: 'power2.out' });
+        });
+        if (ic) {
+          g.fromTo(ic, { scale: .92 }, { scale: 1, duration: .3, delay: t0 + .6, ease: 'back.out(1.6)' });
+        }
+      });
+    }
+
+    Deck.register("ia35", {
+      onEnter() {
+        // Reentrada: nunca dejar un icono a medio dibujar.
+        killAllTweens();
+        resetIcons();
+        if (g) {
+          g.from(cards, { opacity: 0, y: 22, duration: .55, stagger: .11, ease: 'power2.out' });
+          traceIcons();
+        }
+      },
+      onLeave() { killAllTweens(); }
+    });
+  })();
+  </script>
+
+<div class="congreso-pie"><img src="assets/congreso/pie.png" width="1920" height="1080" alt="5º Congreso Nacional de Diabetes de la Fundación redGDPS · Los pilares de la diabetes"></div>
+</section>

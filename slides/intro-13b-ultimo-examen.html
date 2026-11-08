@@ -1,0 +1,130 @@
+<section class="slide" data-slide="ia14">
+  <style>
+    #sia14 { padding: 78px 120px; }
+    #sia14 h2 .mk { color: var(--accent); font-style: italic; }
+    #sia14 .sia14-sub { margin-top: 16px; max-width: 1560px; }
+    #sia14 .sia14-stage { margin-top: 40px; display: grid; grid-template-columns: 1080px 1fr; gap: 70px; align-items: center; }
+
+    /* --- gráfico de barras --- */
+    #sia14 .sia14-chart { display: flex; flex-direction: column; gap: 26px; }
+    #sia14 .bar-row { display: grid; grid-template-columns: 300px 1fr; align-items: center; gap: 24px; }
+    #sia14 .bar-name { font-family: var(--font); font-size: 25px; color: var(--ink-soft); text-align: right; line-height: 1.15; }
+    #sia14 .bar-name small { display: block; font-size: 18px; color: var(--faint); }
+    #sia14 .bar-track { position: relative; height: 52px; background: var(--bg-3); border-radius: 9px; overflow: hidden; }
+    #sia14 .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 9px; }
+    #sia14 .bar-fill.f1 { background: linear-gradient(90deg,#c084c9,#a6093d); }
+    #sia14 .bar-fill.f2 { background: linear-gradient(90deg,#7aa7d9,#1f3a5f); }
+    #sia14 .bar-fill.f3 { background: linear-gradient(90deg,#8ad2b0,#1c7a4d); }
+    #sia14 .bar-fill.human { background: linear-gradient(90deg,#f0c674,#b26a00); }
+    #sia14 .bar-fill.human2 { background: linear-gradient(90deg,#b9c0cc,#545b66); }
+    #sia14 .bar-val { position: absolute; top: 50%; transform: translateY(-50%); font-family: var(--serif); font-weight: 700; font-size: 30px; line-height: 1; color: var(--ink); background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 7px 12px; right: 16px; opacity: 0; }
+
+    #sia14 .sia14-side { align-self: center; }
+    #sia14 .sia14-facts { list-style: none; margin-bottom: 34px; }
+    #sia14 .sia14-facts li { font-family: var(--font); font-size: 26px; line-height: 1.35; color: var(--ink-soft); padding-left: 34px; position: relative; margin-bottom: 18px; }
+    #sia14 .sia14-facts li::before { content: ""; position: absolute; left: 0; top: 13px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+    #sia14 .sia14-facts b { color: var(--ink); }
+    #sia14 .sia14-close {
+      font-family: var(--serif); font-size: 38px; line-height: 1.3; color: var(--ink);
+      border-left: 4px solid var(--accent); padding-left: 30px;
+    }
+    #sia14 .sia14-close .mk { color: var(--accent); font-style: italic; }
+    #sia14 .sia14-note { margin-top: 22px; font-size: 21px; color: var(--faint); }
+  </style>
+
+  <div id="sia14" class="fill">
+    <div>
+      <div class="kicker">La otra cara</div>
+      <h2 style="margin-top:22px">El <span class="mk">último examen de la humanidad</span></h2>
+      <p class="lead sia14-sub">
+        <b>Humanity's Last Exam</b>: 2.500 preguntas de dificultad extrema —matemáticas, ciencias, humanidades— diseñadas
+        para que ni los mejores modelos las resuelvan. Aquí sí se ve el techo actual.
+      </p>
+    </div>
+
+    <div class="sia14-stage">
+      <div class="sia14-chart">
+        <div class="bar-row">
+          <div class="bar-name">Experto humano<small>en su propia especialidad</small></div>
+          <div class="bar-track"><div class="bar-fill human" data-pct="90"></div><span class="bar-val" data-v="~90%">~90%</span></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Persona instruida<small>examen completo, todas las áreas</small></div>
+          <!-- VERIFICAR: no hay una cifra oficial medida; el examen está diseñado explícitamente
+               para que nadie domine todas las áreas a la vez, así que fuera de su especialidad
+               cualquier persona (por instruida que sea) roza el 0%. Cifra ilustrativa. -->
+          <div class="bar-track"><div class="bar-fill human2" data-pct="2"></div><span class="bar-val dark" data-v="≈0%">≈0%</span></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Claude Fable 5.1<small>Con herramientas · evaluación publicada por OpenAI</small></div>
+          <div class="bar-track"><div class="bar-fill f1" data-pct="65"></div><span class="bar-val" data-v="65,0%">65,0%</span></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">GPT-6 Astra<small>Con herramientas · evaluación publicada por OpenAI</small></div>
+          <div class="bar-track"><div class="bar-fill f2" data-pct="57.2"></div><span class="bar-val" data-v="57,2%">57,2%</span></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Gemini 3.1 Pro</div>
+          <div class="bar-track"><div class="bar-fill f3" data-pct="45"></div><span class="bar-val" data-v="45%">45%</span></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Modelos en 2023<small>al salir el examen</small></div>
+          <div class="bar-track"><div class="bar-fill f2" data-pct="8" style="opacity:.5"></div><span class="bar-val dark" data-v="&lt;10%">&lt;10%</span></div>
+        </div>
+      </div>
+
+      <div class="sia14-side">
+        <ul class="sia14-facts">
+          <li class="fragment" data-step="1">Ni el generalista más brillante aprueba el examen completo: <b>nadie domina todas las áreas</b> a la vez.</li>
+          <li class="fragment" data-step="2">La IA no es experta en nada — pero <b>sabe un poco de todo</b>, y eso ya supera a una persona no especializada.</li>
+          <li class="fragment" data-step="3">Aun así, sigue <b>lejos del especialista</b>… y contesta con exceso de seguridad.</li>
+        </ul>
+        <div class="sia14-close fragment fade-only" data-step="4">
+          Su fuerza no es la <span class="mk">profundidad de un experto</span>: es una anchura que ningún humano tiene.
+        </div>
+        <div class="sia14-note">
+          Fuente: evaluación publicada por OpenAI · Humanity's Last Exam con herramientas.
+          <!-- VERIFICAR: nombres, puntuaciones y configuración exacta del benchmark antes de la charla. -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const _cs = document.currentScript;
+    const root = (_cs && _cs.closest('.slide')) || document.querySelector('.slide[data-slide="ia14"]');
+    const g = window.gsap || (window.Deck && Deck.gsap) || null;
+    const fills = Array.from(root.querySelectorAll('.bar-fill'));
+    const vals  = Array.from(root.querySelectorAll('.bar-val'));
+    let tl = null;
+
+    function reset() {
+      fills.forEach(f => { f.style.width = '0%'; });
+      vals.forEach(v => { v.style.opacity = 0; });
+    }
+
+    function play() {
+      reset();
+      if (g) {
+        if (tl) tl.kill();
+        tl = g.timeline({ delay: .2 });
+        fills.forEach((f, i) => {
+          const pct = +f.getAttribute('data-pct');
+          tl.to(f, { width: pct + '%', duration: 1.0, ease: 'power2.out' }, i * 0.22);
+          tl.to(vals[i], { opacity: 1, duration: .4 }, i * 0.22 + 0.55);
+        });
+      } else {
+        fills.forEach(f => { f.style.transition = 'width 1s ease'; f.style.width = f.getAttribute('data-pct') + '%'; });
+        vals.forEach(v => { v.style.opacity = 1; });
+      }
+    }
+
+    Deck.register("ia14", {
+      onReset() { reset(); },
+      onEnter() { reset(); requestAnimationFrame(play); },
+      onLeave() { if (tl) { tl.kill(); tl = null; } }
+    });
+  })();
+  </script>
+</section>
