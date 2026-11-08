@@ -21,7 +21,6 @@ window.DECK_MANIFEST = [
   "intro-14-agentes.html",
   "04-cupo.html",
   "05-llamada.html",
-  "06-glucemias-habitos.html",
   "07-cita-analitica.html",
   "08-dossier.html",
   "09-consulta-inicio.html",
