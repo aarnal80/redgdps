@@ -15,7 +15,7 @@
 #s4 .fact.wide {grid-column:1/-1}
 #s4 .handoff {display:grid;grid-template-columns:1fr 1fr;gap:24px;align-content:start}
 #s4 .agent {border:1px solid var(--line);border-top:5px solid var(--tone);border-radius:16px;background:var(--panel);box-shadow:var(--shadow-sm);padding:22px 28px 24px;min-height:390px}
-#s4 .portrait {width:196px;height:158px;margin:0 auto 6px;background-image:url('assets/agents-clinic.png');background-size:400% 100%;background-repeat:no-repeat;background-position:var(--position);filter:drop-shadow(0 10px 12px rgba(20,23,28,.12))}
+#s4 .portrait {width:196px;height:158px;margin:0 auto 6px;background-image:var(--portrait);background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 10px 12px rgba(20,23,28,.12))}
 #s4 .agent h3 {font-family:var(--serif);font-size:46px;color:var(--tone);line-height:1.1;margin:0 0 12px}
 #s4 .agent h3 small {font:700 23px var(--font);color:var(--ink)}
 #s4 .agent p {font-size:25px;line-height:1.3;color:var(--ink-soft)}
@@ -41,12 +41,12 @@
       </div>
     </div>
     <div class="handoff">
-      <div class="agent fragment" style="--tone:#1665b0;--position:0% center">
+      <div class="agent fragment" style="--tone:#1665b0;--portrait:url('assets/agent-ada-3d.webp')">
         <div class="portrait" role="img" aria-label="Ada, agente de agenda"></div>
         <h3>Ada <small>Agenda</small></h3>
         <p>Gestiona la cita y comunica a Lía el motivo: control del peso y mejora de la alimentación.</p>
       </div>
-      <div class="agent fragment" style="--tone:#087e8b;--position:33.333% center">
+      <div class="agent fragment" style="--tone:#087e8b;--portrait:url('assets/agent-lia-3d.webp')">
         <div class="portrait" role="img" aria-label="Lía, agente de preconsulta"></div>
         <h3>Lía <small>Preconsulta</small></h3>
         <p>Recibe el resumen de la historia y pregunta por hábitos, medicación y prioridades de Adriana.</p>
