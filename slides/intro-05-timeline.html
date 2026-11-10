@@ -6,25 +6,19 @@
 
     #sia5 .sia5-wrap { position:absolute; left:120px; top:322px; width:1680px; height:600px; }
 
-    /* Zona "punto de inflexión" (2017 en adelante): tinte carmesí MUY sutil y ESTÁTICO.
-       Sin animación de raya: solo un fondo tenue que aparece al llegar a 2017. */
-    #sia5 .sia5-band { position:absolute; top:2px; height:300px; border-radius:16px;
+    /* Zona de inflexión: desde 2017 hasta el final. */
+    #sia5 .sia5-band { position:absolute; left:1050px; top:2px; width:630px; height:300px; border-radius:16px;
                    background:linear-gradient(180deg, rgba(166,9,61,.085), rgba(166,9,61,.015));
-                   opacity:0; transition:opacity .5s ease; pointer-events:none; z-index:0; }
+                   pointer-events:none; z-index:0; }
 
-    /* Eje estático y sutil (sin animación de dibujado) */
     #sia5 .sia5-axis { position:absolute; left:0; right:0; top:152px; height:2px;
                    background:var(--line-2); border-radius:2px; z-index:1; }
-
-    /* Línea de progreso: crece sobre el eje en sincronía con los hitos revelados */
     #sia5 .sia5-progress { position:absolute; left:105px; top:150.5px; width:1470px; height:3px;
-                       background:var(--accent); border-radius:2px; z-index:1;
-                       transform-origin:left center; transform:scaleX(0); pointer-events:none; }
+                       background:var(--accent); border-radius:2px; z-index:1; pointer-events:none; }
 
-    #sia5 .sia5-flag { position:absolute; top:-46px; margin-left:-105px; width:210px; text-align:center;
+    #sia5 .sia5-flag { position:absolute; left:1155px; top:-46px; margin-left:-105px; width:210px; text-align:center;
                    font-family:var(--font); font-size:17px; font-weight:700; letter-spacing:.13em;
-                   text-transform:uppercase; color:var(--accent); opacity:0; transition:opacity .5s ease; z-index:3; }
-    #sia5 .sia5-flag.on { opacity:1; }
+                   text-transform:uppercase; color:var(--accent); z-index:3; }
     #sia5 .sia5-flag::after { content:""; display:block; width:2px; height:20px; margin:6px auto 0;
                           background:var(--accent); opacity:.45; border-radius:2px; }
 
@@ -43,12 +37,6 @@
     #sia5 .sia5-mile.hot .ic  { opacity:1; filter:drop-shadow(0 6px 14px rgba(166,9,61,.16)); }
     #sia5 .sia5-mile.hot .dot { background:var(--accent); box-shadow:0 0 0 3px var(--accent); }
     #sia5 .sia5-mile.hot .txt { color:var(--ink); font-weight:600; }
-    #sia5 .sia5-mile.hot.revealed .dot { animation: s5pulse 1.6s ease-out 1; }
-    @keyframes s5pulse {
-      0%   { box-shadow:0 0 0 3px var(--accent), 0 0 0 4px rgba(166,9,61,.5); }
-      100% { box-shadow:0 0 0 3px var(--accent), 0 0 0 24px rgba(166,9,61,0); }
-    }
-
     #sia5 .sia5-close { position:absolute; left:120px; bottom:74px; font-family:var(--serif);
                     font-size:38px; font-style:italic; color:var(--ink); }
     #sia5 .sia5-close .mk { color:var(--accent); font-style:normal; }
@@ -67,7 +55,7 @@
       <div class="sia5-flag">Punto de inflexión</div>
 
       <!-- 1950 · Turing -->
-      <div class="sia5-mile fragment" data-step="1" style="left:105px">
+      <div class="sia5-mile" style="left:105px">
         <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
           <circle cx="44" cy="46" r="34" fill="#eef2f7"/>
           <path d="M20 74c0-14 11-22 24-22s24 8 24 22z" fill="#1f3a5f"/>
@@ -80,7 +68,7 @@
       </div>
 
       <!-- 1966 · ELIZA -->
-      <div class="sia5-mile fragment" data-step="2" style="left:315px">
+      <div class="sia5-mile" style="left:315px">
         <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
           <rect x="10" y="18" width="68" height="52" rx="7" fill="#14171c"/>
           <path d="M10 25a7 7 0 0 1 7-7h54a7 7 0 0 1 7 7v4H10z" fill="#1f3a5f"/>
@@ -96,7 +84,7 @@
       </div>
 
       <!-- 1997 · Deep Blue -->
-      <div class="sia5-mile fragment" data-step="3" style="left:525px">
+      <div class="sia5-mile" style="left:525px">
         <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
           <ellipse cx="44" cy="80" rx="26" ry="4.5" fill="#1f3a5f" opacity=".16"/>
           <rect x="41" y="8" width="6" height="14" rx="2" fill="#1f3a5f"/>
@@ -112,7 +100,7 @@
       </div>
 
       <!-- 2011 · Watson -->
-      <div class="sia5-mile fragment" data-step="4" style="left:735px">
+      <div class="sia5-mile" style="left:735px">
         <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
           <rect x="12" y="14" width="64" height="60" rx="6" fill="#1f3a5f"/>
           <rect x="17" y="19" width="54" height="50" rx="3" fill="#274a78"/>
@@ -125,7 +113,7 @@
       </div>
 
       <!-- 2016 · AlphaGo -->
-      <div class="sia5-mile fragment" data-step="5" style="left:945px">
+      <div class="sia5-mile" style="left:945px">
         <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
           <rect x="12" y="12" width="64" height="64" rx="4" fill="#e6b96f"/>
           <g stroke="#8a5a1e" stroke-width="1.6">
@@ -148,7 +136,7 @@
       </div>
 
       <!-- 2017 · Transformers (PUNTO DE INFLEXIÓN) -->
-      <div class="sia5-mile hot fragment" data-step="6" style="left:1155px">
+      <div class="sia5-mile hot" style="left:1155px">
         <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
           <g stroke="#c9ced7" stroke-width="1.6">
             <line x1="18" y1="22" x2="44" y2="33"/><line x1="18" y1="22" x2="44" y2="55"/>
@@ -172,7 +160,7 @@
       </div>
 
       <!-- 2022 · ChatGPT -->
-      <div class="sia5-mile hot fragment" data-step="7" style="left:1365px">
+      <div class="sia5-mile hot" style="left:1365px">
         <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
           <path d="M48 16h24a6 6 0 0 1 6 6v13a6 6 0 0 1-6 6H61l-8 7 1.4-7H48a6 6 0 0 1-6-6V22a6 6 0 0 1 6-6z" fill="#0a6b78" opacity=".92"/>
           <path d="M16 30h34a7 7 0 0 1 7 7v17a7 7 0 0 1-7 7H33l-12 9 2.4-9H16a7 7 0 0 1-7-7V37a7 7 0 0 1 7-7z" fill="#a6093d"/>
@@ -185,7 +173,7 @@
       </div>
 
       <!-- 2024-26 · Hoy -->
-      <div class="sia5-mile hot fragment" data-step="8" style="left:1575px">
+      <div class="sia5-mile hot" style="left:1575px">
         <svg class="ic" viewBox="0 0 88 88" aria-hidden="true">
           <path d="M44 76C23 61 11 50 11 34 11 23.5 19 16 28.5 16c6 0 11.4 3 15.5 8 4.1-5 9.5-8 15.5-8C69 16 77 23.5 77 34c0 16-12 27-33 42z" fill="#a6093d"/>
           <path d="M17 47h11l4-10 6.5 20 5-13 4 6.5h20" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
@@ -196,78 +184,9 @@
       </div>
     </div>
 
-    <div class="sia5-close fragment" data-step="9">
+    <div class="sia5-close">
       70 años de historia. Pero algo cambió <span class="mk">hace muy poco.</span>
     </div>
   </div>
 
-  <script>
-  (function () {
-    const root = document.currentScript.closest('.slide');
-    const g = window.gsap || null;
-    const band = root.querySelector('.sia5-band');
-    const flag = root.querySelector('.sia5-flag');
-    const progress = root.querySelector('.sia5-progress');
-    const miles = Array.from(root.querySelectorAll('.sia5-mile'));
-    // Zona de inflexión: desde la columna de 2017 (centro x=1155) hasta el final.
-    band.style.left = '1050px';
-    band.style.width = '630px';
-    flag.style.left = '1155px';
-
-    const MILE_STEPS = miles.length; // 8 hitos = pasos 1..8
-    let milePlayed = new Array(MILE_STEPS).fill(false);
-    let settling = true; // tras onEnter: posiciona sin animar hasta el primer avance real del usuario
-
-    function progressFrac(i) { return Math.max(0, Math.min(i, MILE_STEPS)) / MILE_STEPS; }
-    function setProgress(i, instant) {
-      const frac = progressFrac(i);
-      if (g) {
-        if (instant) g.set(progress, { scaleX: frac });
-        else g.to(progress, { scaleX: frac, duration: .6, ease: 'power2.out' });
-      } else {
-        progress.style.transform = 'scaleX(' + frac + ')';
-      }
-    }
-
-    function setMile(k, i, instant) {
-      if (!g) return;
-      const m = miles[k];
-      const active = i > k;
-      if (active && !milePlayed[k]) {
-        milePlayed[k] = true;
-        if (instant) g.set(m, { scale: 1 });
-        else g.to(m, { scale: 1, duration: .55, ease: 'back.out(1.6)' });
-      } else if (!active && milePlayed[k]) {
-        milePlayed[k] = false;
-        g.set(m, { scale: .55 });
-      }
-    }
-
-    function reset() {
-      milePlayed = new Array(MILE_STEPS).fill(false);
-      band.style.opacity = 0;
-      flag.classList.remove('on');
-      setProgress(0, true);
-      if (g) miles.forEach(m => g.set(m, { scale: .55, transformOrigin: '50% 60%' }));
-    }
-
-    Deck.register("ia5", {
-      onReset(el){ reset(); },
-      onEnter(el){
-        settling = true;
-        requestAnimationFrame(() => { settling = false; });
-      },
-      onLeave(el){ if (g) { g.killTweensOf(progress); g.killTweensOf(miles); } },
-      onStep(el, i){
-        // Al alcanzar los Transformers (2017 = paso 6) se enciende la zona carmesí.
-        const on = i >= 6;
-        band.style.opacity = on ? 1 : 0;
-        flag.classList.toggle('on', on);
-
-        setProgress(i, settling);
-        for (let k = 0; k < MILE_STEPS; k++) setMile(k, i, settling);
-      }
-    });
-  })();
-  </script>
 </section>

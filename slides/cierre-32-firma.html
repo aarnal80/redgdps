@@ -80,21 +80,21 @@
           Ninguna herramienta firma por ti.
         </p>
         <div class="sia38-chips">
-          <div class="sia38-chip fragment" data-step="1">
+          <div class="sia38-chip">
             <span class="ck">AI Act</span>
             <div class="cb">
               <h3>Reglamento europeo de IA</h3>
               <p>La IA en salud es de alto riesgo: exige supervisión humana.</p>
             </div>
           </div>
-          <div class="sia38-chip fragment" data-step="2">
+          <div class="sia38-chip">
             <span class="ck">MDR</span>
             <div class="cb">
               <h3>Productos sanitarios</h3>
               <p>La IA diagnóstica es un producto sanitario y necesita marcado CE.</p>
             </div>
           </div>
-          <div class="sia38-chip fragment" data-step="3">
+          <div class="sia38-chip">
             <span class="ck">OMC</span>
             <div class="cb">
               <h3>Colegios de Médicos</h3>
@@ -113,7 +113,7 @@
           </div>
           <div class="sia38-sign">
             <div class="sia38-fdo">Fdo.:</div>
-            <svg class="sia38-sig" viewBox="0 0 620 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <svg class="sia38-sig fragment fade-only" viewBox="0 0 620 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path class="sig-path" d="M 20 130
                 C 40 60, 70 40, 78 90 C 84 130, 96 132, 108 82 C 116 48, 140 52, 146 104
                 C 150 138, 168 138, 182 92 C 196 46, 214 60, 214 110
@@ -127,7 +127,7 @@
             <div class="sia38-name"><b>Dra. Marta Ruiz</b> · nº colegiado 50/12345</div>
           </div>
         </div>
-        <div class="sia38-msg fragment fade-only" data-step="4">
+        <div class="sia38-msg">
           Todo lo de hoy <span class="mk">asiste</span>. Nada decide por vosotros.
         </div>
       </div>
@@ -211,8 +211,7 @@
 
     Deck.register("ia38", {
       onReset() { armSig(); },
-      onEnter() { if (!signed) armSig(); if ((Deck.step || 0) >= 4) sign(); },
-      onStep(el, i) { if (i >= 4) sign(); else if (i < 4 && signed) armSig(); },
+      onStep(el, i) { if (i > 0) sign(); else if (signed) armSig(); },
       onLeave() { killPen(); }
     });
   })();

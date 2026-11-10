@@ -75,11 +75,11 @@
 
       <div class="sia14-side">
         <ul class="sia14-facts">
-          <li class="fragment" data-step="1">Ni el generalista más brillante aprueba el examen completo: <b>nadie domina todas las áreas</b> a la vez.</li>
-          <li class="fragment" data-step="2">La IA no es experta en nada — pero <b>sabe un poco de todo</b>, y eso ya supera a una persona no especializada.</li>
-          <li class="fragment" data-step="3">Aun así, sigue <b>lejos del especialista</b>… y contesta con exceso de seguridad.</li>
+          <li class="">Ni el generalista más brillante aprueba el examen completo: <b>nadie domina todas las áreas</b> a la vez.</li>
+          <li class="">La IA no es experta en nada — pero <b>sabe un poco de todo</b>, y eso ya supera a una persona no especializada.</li>
+          <li class="">Aun así, sigue <b>lejos del especialista</b>… y contesta con exceso de seguridad.</li>
         </ul>
-        <div class="sia14-close fragment fade-only" data-step="4">
+        <div class="sia14-close">
           Su fuerza no es la <span class="mk">profundidad de un experto</span>: es una anchura que ningún humano tiene.
         </div>
         <div class="sia14-note">
@@ -108,7 +108,7 @@
       reset();
       if (g) {
         if (tl) tl.kill();
-        tl = g.timeline({ delay: .2 });
+        tl = g.timeline();
         fills.forEach((f, i) => {
           const pct = +f.getAttribute('data-pct');
           tl.to(f, { width: pct + '%', duration: 1.0, ease: 'power2.out' }, i * 0.22);

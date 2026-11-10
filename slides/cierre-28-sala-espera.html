@@ -114,12 +114,12 @@
         </div>
 
         <div class="sia33-stats">
-          <div class="sia33-stat fragment" data-step="1">
+          <div class="sia33-stat">
             <!-- VERIFICAR: cifra de uso -->
             <div class="n">~1 de&nbsp;3</div>
             <div class="t">adultos ya ha consultado a una IA por un tema de salud</div>
           </div>
-          <div class="sia33-stat fragment" data-step="1">
+          <div class="sia33-stat">
             <!-- VERIFICAR: cifra de uso -->
             <div class="n">antes</div>
             <div class="t">de pedir cita, muchos llegan con una respuesta ya formada</div>
@@ -127,7 +127,7 @@
         </div>
 
         <div class="sia33-cols">
-          <div class="sia33-block risk fragment" data-step="2">
+          <div class="sia33-block risk">
             <h3>Los riesgos</h3>
             <ul>
               <li>Autodiagnóstico y automedicación</li>
@@ -135,7 +135,7 @@
               <li>Información errónea presentada con aplomo</li>
             </ul>
           </div>
-          <div class="sia33-block handle fragment" data-step="3">
+          <div class="sia33-block handle">
             <h3>Cómo manejarlo</h3>
             <ul>
               <li>Preguntad sin juzgar: «¿qué has leído?»</li>
@@ -147,7 +147,7 @@
       </div>
     </div>
 
-    <div class="sia33-close fragment fade-only" data-step="4">
+    <div class="sia33-close">
       No podéis elegir si vuestros pacientes usan IA. Lo que sí podéis elegir es <span class="mk">saber más que ellos.</span>
     </div>
   </div>
@@ -176,9 +176,10 @@
     function reset() {
       clearTimers();
       hideCloseTyping();
+      if (g) g.killTweensOf(items);
       items.forEach(el => {
         if (g) g.set(el, { opacity: 0, y: el.classList.contains('sia33-typing') ? 0 : 14 });
-        else { el.style.opacity = 0; }
+        else { el.style.transition = 'none'; el.style.opacity = 0; el.style.transform = 'translateY(14px)'; }
       });
     }
 
@@ -199,13 +200,12 @@
           }, delay - 250));
         }
       });
+      timers.push(setTimeout(showCloseTyping, delay));
     }
 
     Deck.register("ia33", {
-      onReset() { reset(); },
       onEnter() { reset(); playChat(); },
-      onLeave() { clearTimers(); hideCloseTyping(); },
-      onStep(el, i) { if (i >= 4) showCloseTyping(); else hideCloseTyping(); }
+      onLeave() { reset(); }
     });
   })();
   </script>

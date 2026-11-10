@@ -15,17 +15,10 @@
     #sia36 .sia36-item:first-child { border-top: 1px solid var(--line); }
 
     #sia36 .sia36-x { width: 54px; height: 54px; flex: none; transform-box: fill-box; transform-origin: 50% 50%; }
-    /* Cascada "sello de rechazo": el círculo se dibuja primero, luego las dos líneas del aspa. */
-    #sia36 .sia36-x circle { fill: none; stroke: rgba(179,38,30,.32); stroke-width: 3;
-      stroke-dasharray: 158; stroke-dashoffset: 158; transition: stroke-dashoffset .38s ease; }
-    #sia36 .sia36-x line { stroke: var(--danger); stroke-width: 5; stroke-linecap: round;
-      stroke-dasharray: 60; stroke-dashoffset: 60; transition: stroke-dashoffset .3s ease; transition-delay: .28s; }
-    #sia36 .sia36-item.drawn .sia36-x circle { stroke-dashoffset: 0; }
-    #sia36 .sia36-item.drawn .sia36-x line { stroke-dashoffset: 0; }
-    #sia36 .sia36-item.drawn .sia36-x line:nth-child(3) { transition-delay: .44s; }
+    #sia36 .sia36-x circle { fill: none; stroke: rgba(179,38,30,.32); stroke-width: 3; }
+    #sia36 .sia36-x line { stroke: var(--danger); stroke-width: 5; stroke-linecap: round; }
 
-    #sia36 .sia36-txt { font-family: var(--serif); font-size: 42px; font-weight: 700; color: #6d7480; line-height: 1.2; }
-    #sia36 .sia36-item.drawn .sia36-txt { color: var(--ink); }
+    #sia36 .sia36-txt { font-family: var(--serif); font-size: 42px; font-weight: 700; color: var(--ink); line-height: 1.2; }
     #sia36 .sia36-txt .q { font-family: var(--font); font-size: 25px; font-weight: 400; color: var(--faint); display: block; margin-top: 6px; }
     #sia36 .sia36-txt .todavia { color: var(--danger); font-style: italic; }
 
@@ -44,76 +37,31 @@
     </div>
 
     <div class="sia36-list">
-      <div class="sia36-item fragment fade-only">
+      <div class="sia36-item">
         <svg class="sia36-x" viewBox="0 0 54 54"><circle cx="27" cy="27" r="25"/><line x1="17" y1="17" x2="37" y2="37"/><line x1="37" y1="17" x2="17" y2="37"/></svg>
         <div class="sia36-txt">Diagnóstico autónomo sin supervisión<span class="q">La decisión clínica sigue siendo del médico.</span></div>
       </div>
-      <div class="sia36-item fragment fade-only">
+      <div class="sia36-item">
         <svg class="sia36-x" viewBox="0 0 54 54"><circle cx="27" cy="27" r="25"/><line x1="17" y1="17" x2="37" y2="37"/><line x1="37" y1="17" x2="17" y2="37"/></svg>
         <div class="sia36-txt">Triaje sin médico detrás<span class="q">Ningún sistema asume solo el riesgo de un paciente.</span></div>
       </div>
-      <div class="sia36-item fragment fade-only">
+      <div class="sia36-item">
         <svg class="sia36-x" viewBox="0 0 54 54"><circle cx="27" cy="27" r="25"/><line x1="17" y1="17" x2="37" y2="37"/><line x1="37" y1="17" x2="17" y2="37"/></svg>
         <div class="sia36-txt">Integración real con la HCE del SNS <span class="todavia">(todavía)</span><span class="q">Aún es copiar y pegar; no hay conexión nativa.</span></div>
       </div>
-      <div class="sia36-item fragment fade-only">
+      <div class="sia36-item">
         <svg class="sia36-x" viewBox="0 0 54 54"><circle cx="27" cy="27" r="25"/><line x1="17" y1="17" x2="37" y2="37"/><line x1="37" y1="17" x2="17" y2="37"/></svg>
         <div class="sia36-txt">Fiabilidad en fármacos y dosis sin verificar<span class="q">Puede equivocarse con aplomo: verifica siempre.</span></div>
       </div>
-      <div class="sia36-item fragment fade-only">
+      <div class="sia36-item">
         <svg class="sia36-x" viewBox="0 0 54 54"><circle cx="27" cy="27" r="25"/><line x1="17" y1="17" x2="37" y2="37"/><line x1="37" y1="17" x2="17" y2="37"/></svg>
         <div class="sia36-txt">Predicción individual de la evolución de un paciente<span class="q">Estima poblaciones, no destinos personales.</span></div>
       </div>
     </div>
 
-    <div class="sia36-close fragment fade-only">
+    <div class="sia36-close">
       Quien os venda esto hoy, <span class="mk">os está vendiendo humo</span>. Y eso también hay que saberlo.
     </div>
   </div>
 
-  <script>
-  (function () {
-    const root = document.currentScript.closest('.slide');
-    const g = window.gsap || (window.Deck && Deck.gsap) || null;
-    const items = Array.from(root.querySelectorAll('.sia36-item'));
-
-    // Micro golpe de sello: solo en la transición no-drawn -> drawn (nunca al
-    // retroceder ni si el item ya estaba marcado).
-    function stampHit(item) {
-      if (!g) return;
-      const xEl = item.querySelector('.sia36-x');
-      if (xEl) {
-        g.killTweensOf(xEl);
-        g.fromTo(xEl, { scale: 1.35, opacity: .4 }, { scale: 1, opacity: 1, duration: .28, ease: 'power3.out' });
-      }
-      g.killTweensOf(item);
-      g.fromTo(item, { backgroundColor: 'rgba(179,38,30,.08)' }, { backgroundColor: 'rgba(179,38,30,0)', duration: .5, ease: 'power1.out' });
-    }
-
-    function syncDrawn() {
-      items.forEach(it => {
-        const wasDrawn = it.classList.contains('drawn');
-        const shouldDraw = it.classList.contains('revealed');
-        if (shouldDraw && !wasDrawn) {
-          it.classList.add('drawn');
-          stampHit(it);
-        } else if (!shouldDraw && wasDrawn) {
-          it.classList.remove('drawn');
-        }
-      });
-    }
-
-    function resetAll() {
-      if (g) items.forEach(it => { g.killTweensOf(it); const x = it.querySelector('.sia36-x'); if (x) g.killTweensOf(x); });
-      items.forEach(it => { it.classList.remove('drawn'); it.style.backgroundColor = ''; });
-    }
-
-    Deck.register("ia36", {
-      onReset() { resetAll(); },
-      onEnter() { syncDrawn(); },
-      onStep() { syncDrawn(); },
-      onLeave() { resetAll(); }
-    });
-  })();
-  </script>
 </section>

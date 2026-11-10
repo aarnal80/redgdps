@@ -97,8 +97,10 @@
     status.textContent='Transcripción completa · sincronizada por turnos';
     highlight();
   });
+  track.track.addEventListener('cuechange',highlight);
   track.track.mode='hidden';
   video.addEventListener('timeupdate',highlight);
+  video.addEventListener('seeked',highlight);
   const ring=slide.querySelector('.phone-ring');
   const replay=slide.querySelector('.ring-replay');
   let ringing=false;

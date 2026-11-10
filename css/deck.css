@@ -294,6 +294,7 @@ h3,.h3  { font-family: var(--font); font-size: var(--fs-h3); font-weight: 700; l
   background: var(--accent); z-index: 50; transition: width .4s ease;
 }
 #hud-cluster {
+  --hud-control-size: 34px;
   position: fixed; right: 24px; bottom: 14px; z-index: 50;
   display: flex; align-items: center; gap: 12px;
 }
@@ -302,9 +303,24 @@ h3,.h3  { font-family: var(--font); font-size: var(--fs-h3); font-weight: 700; l
 }
 #hud b { color: var(--ink-soft); }
 
+/* --- Reloj de la charla --- */
+#talk-clock {
+  width: var(--hud-control-size); height: var(--hud-control-size); flex: 0 0 auto;
+  color: #008b67;
+  pointer-events: none;
+}
+#talk-clock[data-phase="yellow"] { color: #c88b00; }
+#talk-clock[data-phase="red"] { color: #d92351; }
+#talk-clock svg { display: block; width: 100%; height: 100%; }
+#talk-clock path {
+  fill: currentColor; fill-opacity: .69;
+  stroke: currentColor; stroke-width: .7; stroke-linejoin: round;
+}
+#talk-clock path.spent { color: var(--faint); opacity: .2; }
+
 /* --- Botón de índice (tipo app) --- */
 #menu-btn {
-  display: grid; place-items: center; width: 34px; height: 34px;
+  display: grid; place-items: center; width: var(--hud-control-size); height: var(--hud-control-size);
   border-radius: 9px; border: 1px solid var(--line-2); background: #fff;
   color: var(--muted); cursor: pointer; padding: 0;
   box-shadow: var(--shadow-sm);

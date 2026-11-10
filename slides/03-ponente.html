@@ -102,12 +102,12 @@
         <div class="s3-role" style="margin-top:10px"><span class="bar"></span><span class="txt">Medicina de Urgencias</span></div>
 
         <div class="s3-points">
-          <div class="s3-point fragment"><span class="dot"></span><span>Médico asistencial, <b>no ingeniero ni comercial</b>.</span></div>
-          <div class="s3-point fragment"><span class="dot"></span><span>Uso estas herramientas <b>en cada guardia y cada consulta</b>.</span></div>
-          <div class="s3-point fragment"><span class="dot"></span><span>Os cuento <b>lo que funciona y lo que no</b>, y puedo ayudaros a implementarlo.</span></div>
+          <div class="s3-point"><span class="dot"></span><span>Médico asistencial, <b>no ingeniero ni comercial</b>.</span></div>
+          <div class="s3-point"><span class="dot"></span><span>Uso estas herramientas <b>en cada guardia y cada consulta</b>.</span></div>
+          <div class="s3-point"><span class="dot"></span><span>Os cuento <b>lo que funciona y lo que no</b>, y puedo ayudaros a implementarlo.</span></div>
         </div>
 
-        <div class="s3-close fragment">
+        <div class="s3-close">
           <div class="rule"></div>
           <p>Todo lo que os voy a enseñar <span class="mk">lo uso yo</span>.</p>
         </div>
@@ -122,65 +122,15 @@
     const g = window.gsap || (window.Deck && Deck.gsap) || null;
     const ring = root.querySelector('.s3-ring');
     const photo = root.querySelector('.s3-photo');
-    const points = Array.from(root.querySelectorAll('.s3-point'));
-    const dots = points.map(p => p.querySelector('.dot'));
-    const texts = points.map(p => p.querySelector('span:not(.dot)'));
-    const closeRule = root.querySelector('.s3-close .rule');
-    let played = [false, false, false, false]; // 3 puntos + cierre
-
-    function resetPoints() {
-      played = [false, false, false, false];
-      if (!g) return;
-      dots.forEach(d => g.set(d, { scale: 0, transformOrigin: '50% 50%' }));
-      texts.forEach(t => g.set(t, { x: -20 }));
-      if (closeRule) g.set(closeRule, { scaleX: 0, transformOrigin: 'left center' });
-    }
-
-    // i = nº de fragments revelados (0..4). Los 3 primeros son los puntos, el 4º el cierre.
-    function syncPoints(i) {
-      if (!g) return;
-      points.forEach((p, k) => {
-        const active = i > k;
-        if (active && !played[k]) {
-          played[k] = true;
-          g.to(dots[k], { scale: 1, duration: .5, ease: 'back.out(3)' });
-          g.to(texts[k], { x: 0, duration: .5, ease: 'power2.out' });
-        } else if (!active && played[k]) {
-          played[k] = false;
-          g.set(dots[k], { scale: 0 });
-          g.set(texts[k], { x: -20 });
-        }
-      });
-      const closeActive = i >= points.length + 1;
-      if (closeRule) {
-        if (closeActive && !played[3]) {
-          played[3] = true;
-          g.to(closeRule, { scaleX: 1, duration: .6, ease: 'power2.out' });
-        } else if (!closeActive && played[3]) {
-          played[3] = false;
-          g.set(closeRule, { scaleX: 0 });
-        }
-      }
-    }
-
     Deck.register(3, {
       onEnter(el) {
         if (g) {
           g.set(ring, { strokeDashoffset: 1000 });
           g.to(ring, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', delay: .15 });
-          g.from(photo, { opacity: 0, scale: .92, transformOrigin: '50% 50%', duration: .9, ease: 'power2.out' });
-        }
-        resetPoints();
-      },
-      onReset(el) { resetPoints(); },
-      onLeave(el) {
-        if (g) {
-          g.killTweensOf(ring);
-          g.killTweensOf(dots); g.killTweensOf(texts);
-          if (closeRule) g.killTweensOf(closeRule);
+          g.fromTo(photo, { opacity: 0, scale: .92 }, { opacity: 1, scale: 1, transformOrigin: '50% 50%', duration: .9, ease: 'power2.out' });
         }
       },
-      onStep(el, i) { syncPoints(i); }
+      onLeave() { if (g) g.killTweensOf([ring, photo]); }
     });
   })();
   </script>

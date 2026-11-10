@@ -216,6 +216,46 @@
     });
   }
 
+  /* ---------- Reloj de la charla ---------- */
+  const talkClock = $("#talk-clock");
+  const clockSectors = $$("#talk-clock path");
+  const sectorMs = 5 * 60 * 1000;
+  const clockKey = "diabetes-ia:talk-started-at";
+  let talkStartedAt = 0;
+  let clockTick;
+
+  function renderTalkClock(spent) {
+    talkClock.hidden = false;
+    talkClock.dataset.phase = spent < 3 ? "green" : spent < 6 ? "yellow" : "red";
+    clockSectors.forEach((sector, i) => sector.classList.toggle("spent", i < spent));
+  }
+
+  function resetTalkClock() {
+    if (!talkClock) return;
+    clearTimeout(clockTick);
+    talkStartedAt = 0;
+    try { sessionStorage.removeItem(clockKey); } catch {}
+    renderTalkClock(0);
+  }
+
+  function updateTalkClock() {
+    if (!talkClock || !talkStartedAt) return;
+    clearTimeout(clockTick);
+    const elapsed = Math.max(0, Date.now() - talkStartedAt);
+    const spent = Math.min(clockSectors.length, Math.floor(elapsed / sectorMs));
+    renderTalkClock(spent);
+    if (spent < clockSectors.length) {
+      clockTick = setTimeout(updateTalkClock, (spent + 1) * sectorMs - elapsed);
+    }
+  }
+
+  function startTalkClock() {
+    if (!talkClock || talkStartedAt) return;
+    talkStartedAt = Date.now();
+    try { sessionStorage.setItem(clockKey, String(talkStartedAt)); } catch {}
+    updateTalkClock();
+  }
+
   /* ---------- Navegación ---------- */
   function show(newIndex, dir, instant) {
     newIndex = Math.max(0, Math.min(Deck.slides.length - 1, newIndex));
@@ -238,6 +278,8 @@
     if (nh && nh.onEnter) { try { nh.onEnter(next); } catch (e) { console.error(e); } }
     applyStep(next, 0);
     updateChrome();
+    if (newIndex === 0) resetTalkClock();
+    else if (!instant && prevIndex === 0 && newIndex === 1) startTalkClock();
     moveCamera(prev && prev !== next ? prevIndex : null, newIndex, instant);
     Deck._emit("change", { index: newIndex, slide: next });
     if (location.hash !== "#" + (newIndex + 1)) history.replaceState(null, "", "#" + (newIndex + 1));
@@ -279,7 +321,7 @@
     { title: "Qué es la IA", color: "#1665b0", ids: ["ia5", "ia6", "ia8", "ia9", "ia10"] },
     { title: "De juguete a herramienta", color: "#b45309", ids: ["ia13", "ia14", "ia15", "ia16", "amie-consulta", "amie-seguimiento", "mai-dxo-comite", "mai-dxo-resultados", "ia-agentes"] },
     { title: "Preparar la consulta", color: "#2a7d4f", ids: ["4", "5", "7", "8"] },
-    { title: "Durante la consulta", color: "#6a3d9a", ids: ["9", "10", "consulta3000-web"] },
+    { title: "Durante la consulta", color: "#6a3d9a", ids: ["9", "10"] },
     { title: "GlucoGuía y feedback", color: "#b02a7d", ids: ["13", "feedback"] },
     { title: "Indicaciones para Adriana", color: "#087e8b", ids: ["16"] },
     { title: "Seguimiento", color: "#4338ca", ids: ["sara-seguimiento", "postconsulta-video", "18"] },
@@ -319,7 +361,6 @@
     "8": "Adriana: dossier preconsulta para el médico",
     "9": "Transcripción: iniciar con permiso",
     "10": "Escuchar a Adriana sin perder el contacto",
-    "consulta3000-web": "Demo de Consulta3000 en ChatGPT",
     "13": "GlucoGuía · Edición Congreso redGDPS",
     "feedback": "Antonio y ChatGPT: feedback de la presentación",
     "16": "Una hoja imprimible para Adriana",
@@ -494,6 +535,13 @@
     // loader off
     const loader = $("#loader");
     if (loader) { loader.classList.add("done"); setTimeout(() => loader.remove(), 700); }
+    if (talkClock) {
+      try { talkStartedAt = Number(sessionStorage.getItem(clockKey)) || 0; } catch {}
+      updateTalkClock();
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) updateTalkClock();
+      });
+    }
     // primera slide (respeta hash), cámara colocada de golpe (sin viaje)
     const fromHash = parseInt((location.hash || "").replace("#", ""), 10);
     show(Number.isFinite(fromHash) && fromHash > 0 ? fromHash - 1 : 0, 1, true);
